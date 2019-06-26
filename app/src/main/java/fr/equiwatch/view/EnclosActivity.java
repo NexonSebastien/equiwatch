@@ -20,7 +20,7 @@ public class EnclosActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chevaux);
+        setContentView(R.layout.activity_enclos);
         init();
     }
 
