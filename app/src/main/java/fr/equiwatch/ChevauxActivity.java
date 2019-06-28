@@ -15,8 +15,8 @@ public class ChevauxActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tableauEnclos();
         setContentView(R.layout.activity_chevaux);
+        tableauEnclos();
 
     }
 
@@ -57,7 +57,7 @@ public class ChevauxActivity extends AppCompatActivity {
             row.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // faites ici ce que vous voulez
+                    // action on click
                     Log.d("Id","i="+id);
                 }
             });
