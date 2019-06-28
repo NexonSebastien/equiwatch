@@ -7,11 +7,9 @@
     tools:context=".MenuEquiwatch">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -22,6 +20,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/activity_maps_equiwatch" />
+    <include
+        android:id="@+id/container_menu"
+        layout="@layout/content_menu_equiwatch" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
