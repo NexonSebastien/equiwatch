@@ -1,13 +1,10 @@
-package fr.equiwatch;
+package fr.equiwatch.view;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,11 +16,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
-import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.google.android.material.navigation.NavigationView;
+
+import fr.equiwatch.R;
 
 public class MenuEquiwatch extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
