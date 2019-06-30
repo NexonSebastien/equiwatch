@@ -29,7 +29,9 @@ public class EnclosActivity extends AppCompatActivity {
 
     private void init(){
         this.enclosController = EnclosController.getInstance(this);
+        //Log.d("EnclosController", "**********"+this.enclosController.toString());
         tableauEnclos();
+
     }
 
     /**
