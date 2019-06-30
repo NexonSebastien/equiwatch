@@ -2,4 +2,22 @@
     <string name="app_name">equiwatch</string>
     <string name="title_activity_maps_equiwatch">Map</string>
     <string name="bt_maps_text">go to maps !</string>
+    <string name="title_activity_menu_equiwatch">menuEquiwatch</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Acceuil</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="menu_chevaux">Mes chevaux</string>
+    <string name="menu_enclos">Mes enclos</string>
+    <string name="menu_capteurs">Mes capteurs</string>
+    <string name="menu_parametre">Paramètres</string>
 </resources>

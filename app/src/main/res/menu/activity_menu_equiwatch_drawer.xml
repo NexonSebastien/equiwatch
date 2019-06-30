@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_chevaux"
+            android:title="@string/menu_chevaux" />
+        <item
+            android:id="@+id/nav_enclos"
+            android:title="@string/menu_enclos" />
+        <item
+            android:id="@+id/nav_capteurs"
+            android:title="@string/menu_capteurs" />
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+        <item
+                android:id="@+id/nav_parametre"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="@string/menu_parametre" />
+    </group>
+
+</menu>

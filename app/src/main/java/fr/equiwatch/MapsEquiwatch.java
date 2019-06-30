@@ -1,30 +1,35 @@
 package fr.equiwatch;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsEquiwatch extends FragmentActivity implements OnMapReadyCallback {
+public class MapsEquiwatch extends Fragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_maps_equiwatch);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+    public MapsEquiwatch() {
+        // Required empty public constructor
     }
 
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.activity_maps_equiwatch, container, false);
+    }
 
     /**
      * Manipulates the map once available.
