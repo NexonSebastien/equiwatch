@@ -1,6 +1,7 @@
 package fr.equiwatch.controller;
 
 import android.content.Context;
+import android.util.Log;
 
 import org.json.JSONArray;
 
@@ -44,6 +45,10 @@ public final class EnclosController {
         accesBdd.envoie("enreg", enclos.convertToJSONArray());
     }
 
+    public void deleteEnclos(EnclosClass unEnclos){
+        accesBdd.envoie("delete", unEnclos.convertToJSONArray());
+        lesEnclos.remove(unEnclos);
+    }
     public void setEnclos(EnclosClass enclos){
         EnclosController.enclos = enclos;
         ((EnclosActivity)context).recupEnclos();

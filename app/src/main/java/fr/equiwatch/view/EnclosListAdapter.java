@@ -11,16 +11,19 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import fr.equiwatch.R;
+import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.model.EnclosClass;
 
 public class EnclosListAdapter extends BaseAdapter {
 
     private ArrayList<EnclosClass> lesEnclos;
     private LayoutInflater inflater;
+    private EnclosController enclosController;
 
     public EnclosListAdapter(Context context, ArrayList<EnclosClass> lesEnclos){
         this.lesEnclos = lesEnclos;
         this.inflater = LayoutInflater.from(context);
+        this.enclosController = EnclosController.getInstance(null);
     }
 
     /**
@@ -88,6 +91,20 @@ public class EnclosListAdapter extends BaseAdapter {
         holder.imgBtnUpdateEnclos.setTag(i);
         holder.imgBtnDeleteEnclos.setTag(i);
 
+        // clic pour supprimer un enclos
+        holder.imgBtnDeleteEnclos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = (int) view.getTag();
+
+
+                //demande de suppression au controller
+                enclosController.deleteEnclos(lesEnclos.get(position));
+
+                //rafraichir la liste
+                notifyDataSetChanged();
+            }
+        });
 
         return view;
     }

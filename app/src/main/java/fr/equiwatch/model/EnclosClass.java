@@ -41,10 +41,9 @@ public class EnclosClass implements Serializable{
      */
     public JSONArray convertToJSONArray(){
         List liste = new ArrayList();
+        liste.add(id);
         liste.add(label);
 
         return new JSONArray(liste);
     }
-
-
 }
