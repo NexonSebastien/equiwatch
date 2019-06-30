@@ -3,7 +3,12 @@ package fr.equiwatch.model;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+
+import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.tools.AccesHTTP;
 import fr.equiwatch.tools.AsyncResponse;
 
@@ -11,9 +16,9 @@ public class AccesBdd implements AsyncResponse {
 
     //constante
     private static final String SERVERADDR = "http://192.168.1.38/equiwatch/serveurEquiwatch.php"; //snexon Home
-
+    private EnclosController enclosController;
     public AccesBdd() {
-        super();
+        enclosController = EnclosController.getInstance(null);
     }
 
     /**
@@ -34,8 +39,22 @@ public class AccesBdd implements AsyncResponse {
                 Log.d("enreg","**********"+message[1]);
             }
             else{
-                if(message[0].equals("dernier")){
-                    Log.d("dernier","**********"+message[1]);
+                if(message[0].equals("listeEnclos")){
+                    Log.d("listeEnclos","**********"+message[1]);
+                    try {
+                        JSONArray jSonData = new JSONArray(message[1]);
+                        ArrayList<EnclosClass> lesEnclos = new ArrayList<EnclosClass>();
+                        for(int i=0; i<jSonData.length();i++){
+                            JSONObject data = new JSONObject(jSonData.get(i).toString());
+                            int id = data.getInt("id");
+                            String label = data.getString("label");
+                            EnclosClass enclos = new EnclosClass(id,label);
+                            lesEnclos.add(enclos);
+                        }
+                        enclosController.setLesEnclos(lesEnclos);
+                    } catch (JSONException e) {
+                        Log.d("Erreur !","**********Conversion JSON impossible"+e.toString());
+                    }
                 }
                 else{
                     if(message[0].equals("Erreur !")){
