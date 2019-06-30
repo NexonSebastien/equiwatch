@@ -1,4 +1,4 @@
-package fr.equiwatch;
+package fr.equiwatch.view;
 
 import androidx.fragment.app.FragmentActivity;
 
@@ -10,6 +10,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import fr.equiwatch.R;
 
 public class MapsEquiwatch extends FragmentActivity implements OnMapReadyCallback {
 
