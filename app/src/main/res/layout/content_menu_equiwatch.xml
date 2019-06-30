@@ -5,6 +5,6 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".MainActivity"
+    tools:context=".view.MainActivity"
     tools:showIn="@layout/app_bar_menu_equiwatch">
 </FrameLayout>

@@ -1,5 +1,6 @@
 package fr.equiwatch.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
@@ -88,7 +89,9 @@ public class MenuEquiwatch extends AppCompatActivity
         if (id == R.id.nav_chevaux) {
             // Handle the camera action
         } else if (id == R.id.nav_enclos) {
-            showFragment(new EnclosFragment());
+//            showFragment(new EnclosFragment());
+            Intent intent = new Intent(this, EnclosActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_capteurs) {
 
         } else if (id == R.id.nav_parametre) {
