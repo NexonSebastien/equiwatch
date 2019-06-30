@@ -32,8 +32,10 @@
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/scrollView"
+
         android:layout_width="412dp"
         android:layout_height="567dp"
+
         android:layout_marginStart="77dp"
         android:layout_marginLeft="77dp"
         android:layout_marginTop="103dp"
@@ -52,6 +54,5 @@
             android:layout_height="wrap_content"
             android:background="@color/colorBlue"
             android:stretchColumns="0"></TableLayout>
-
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

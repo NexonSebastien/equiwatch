@@ -5,7 +5,6 @@ import org.json.JSONArray;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-//inport java.util.Date;
 
 public class EnclosClass implements Serializable{
 
