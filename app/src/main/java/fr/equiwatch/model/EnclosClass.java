@@ -10,10 +10,20 @@ import java.util.List;
 public class EnclosClass implements Serializable{
 
     // attributs
+    private int id;
     private String label;
 
-    public EnclosClass(String label){
+    public EnclosClass(int id, String label){
+        this.id = id;
         this.label = label;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getLabel() {
@@ -24,12 +34,14 @@ public class EnclosClass implements Serializable{
         this.label = label;
     }
 
+
     /**
      * Convertion de l'enclos en format JSONArray
      * @return
      */
     public JSONArray convertToJSONArray(){
         List liste = new ArrayList();
+        liste.add(id);
         liste.add(label);
 
         return new JSONArray(liste);
