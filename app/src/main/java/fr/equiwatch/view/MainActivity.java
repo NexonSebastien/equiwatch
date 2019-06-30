@@ -1,4 +1,4 @@
-package fr.equiwatch;
+package fr.equiwatch.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.Window;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import fr.equiwatch.R;
+import fr.equiwatch.view.MapsEquiwatch;
 
 public class MainActivity extends AppCompatActivity {
     private Button bt_maps;
