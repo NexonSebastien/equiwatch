@@ -4,6 +4,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -13,14 +14,16 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallback {
+public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallback, OnMarkerClickListener {
 
     private static final String TAG = MapsEquiwatch.class.getSimpleName();
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
@@ -31,6 +34,11 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
     private Location mLastKnownLocation;
     private FusedLocationProviderClient mFusedLocationProviderClient;
 
+    // Keys for storing activity state.
+    private static final String KEY_CAMERA_POSITION = "camera_position";
+    private static final String KEY_LOCATION = "location";
+
+
     public MapsEquiwatch() {
         // Required empty public constructor
     }
@@ -38,7 +46,23 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            mLastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+        }
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         getMapAsync(this);
+    }
+
+    /**
+     * Saves the state of the map when the activity is paused.
+     */
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mMap != null) {
+            outState.putParcelable(KEY_CAMERA_POSITION, mMap.getCameraPosition());
+            outState.putParcelable(KEY_LOCATION, mLastKnownLocation);
+            super.onSaveInstanceState(outState);
+        }
     }
 
     /**
@@ -52,14 +76,15 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         mMap = googleMap;
 
+        getLocationPermission();
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation(true);
+        mMap.setOnMarkerClickListener(this);
     }
 
     private void getLocationPermission() {
@@ -150,5 +175,11 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         } catch (SecurityException e)  {
             Log.e("Exception: %s", e.getMessage());
         }
+    }
+
+    /** Called when the user clicks a marker. */
+    @Override
+    public boolean onMarkerClick(final Marker marker) {
+        return true;
     }
 }
