@@ -182,4 +182,13 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
     public boolean onMarkerClick(final Marker marker) {
         return true;
     }
+
+    //Added public method to be called from the Activity
+    public void placeMarker(String title, double lat, double lon) {
+        if (mMap != null) {
+            LatLng marker = new LatLng(lat, lon);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15));
+            mMap.addMarker(new MarkerOptions().title(title).position(marker));
+        }
+    }
 }
