@@ -15,7 +15,7 @@ import fr.equiwatch.tools.AsyncResponse;
 public class AccesBdd implements AsyncResponse {
 
     //constante
-    private static final String SERVERADDR = "http://192.168.1.38/equiwatch/serveurEquiwatch.php"; //snexon Home
+    private static final String SERVERADDR = "http://172.16.97.228/equiwatch/serveurEquiwatch.php"; //snexon Home
     private EnclosController enclosController;
     public AccesBdd() {
         enclosController = EnclosController.getInstance(null);
