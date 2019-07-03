@@ -30,7 +30,7 @@ public class AccesBdd implements AsyncResponse {
         Log.d("serveur", "**********"+output);
         // decoupage message recus
         String[] message = output.split("%");
-        // dans message[0] : "dernier", "enreg", "Erreur !"
+        // dans message[0] : "liste", "enreg", delete, "Erreur !"
         // dans message[1] : reste du message
 
         // s'il y a 2 case
