@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 import fr.equiwatch.R;
@@ -97,12 +99,52 @@ public class EnclosListAdapter extends BaseAdapter {
             public void onClick(View view) {
                 int position = (int) view.getTag();
 
+                Snackbar snackbarSupr = Snackbar.make(view, "Suppression de l'enclos : " + lesEnclos.get(position).getLabel(), Snackbar.LENGTH_LONG);
 
                 //demande de suppression au controller
                 enclosController.deleteEnclos(lesEnclos.get(position));
 
+                View viewEnclos = snackbarSupr.getView();
+                viewEnclos.setBackgroundResource(R.color.colorPrimary);
+                snackbarSupr.show();
+
                 //rafraichir la liste
                 notifyDataSetChanged();
+            }
+        });
+
+        // clic pour modifier un enclos
+        holder.imgBtnUpdateEnclos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = (int) view.getTag();
+
+
+                //demande de l'affichage au controller
+//                enclosController.deleteEnclos(lesEnclos.get(position));
+
+                Snackbar snackbarSupr = Snackbar.make(view, "modifier " + lesEnclos.get(position).getId(), Snackbar.LENGTH_LONG);
+                View viewEnclos = snackbarSupr.getView();
+                viewEnclos.setBackgroundResource(R.color.colorPrimary);
+                snackbarSupr.show();
+
+            }
+        });
+
+        // clic pour voir un enclos
+        holder.imgBtnViewEnclos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = (int) view.getTag();
+
+
+                //demande de suppression au controller
+//                enclosController.deleteEnclos(lesEnclos.get(position));
+
+                Snackbar snackbarSupr = Snackbar.make(view, "voir " + lesEnclos.get(position).getId(), Snackbar.LENGTH_LONG);
+                View viewEnclos = snackbarSupr.getView();
+                viewEnclos.setBackgroundResource(R.color.colorPrimary);
+                snackbarSupr.show();
             }
         });
 

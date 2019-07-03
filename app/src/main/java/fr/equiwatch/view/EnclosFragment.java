@@ -1,5 +1,6 @@
 package fr.equiwatch.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
@@ -52,20 +55,12 @@ public class EnclosFragment extends Fragment {
             TextView textVide = (TextView) getView().findViewById(R.id.txtVide);
             textVide.setText("Vous n'avez aucun enclos pour le moment cliqué sur le plus pour en ajouter.");
         }
-    }
-
-    private void init(){
-
-        //Log.d("EnclosController", "**********"+this.enclosController.toString());
-        creerListe();
-
-    }
-
-    /**
-     * Création de la liste des enclos
-     */
-    private void creerListe()
-    {
-
+        getView().findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent nextAct = new Intent(getContext(),EnclosActivity.class);
+                startActivity(nextAct);
+            }
+        });
     }
 }

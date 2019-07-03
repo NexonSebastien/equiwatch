@@ -3,6 +3,8 @@ package fr.equiwatch.controller;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.json.JSONArray;
 
 import java.util.ArrayList;
@@ -39,19 +41,19 @@ public final class EnclosController {
         return EnclosController.instance;
     }
 
-    public void creerEnclos(int id, String label){
+    public void creerEnclos(String label){
+        int id = 0;
         enclos = new EnclosClass(id, label);
         lesEnclos.add(enclos);
-        accesBdd.envoie("enreg", enclos.convertToJSONArray());
+        accesBdd.envoie("createEnclos", enclos.convertToJSONArray());
     }
 
     public void deleteEnclos(EnclosClass unEnclos){
-        accesBdd.envoie("delete", unEnclos.convertToJSONArray());
+        accesBdd.envoie("deleteEnclos", unEnclos.convertToJSONArray());
         lesEnclos.remove(unEnclos);
     }
     public void setEnclos(EnclosClass enclos){
         EnclosController.enclos = enclos;
-        ((EnclosActivity)context).recupEnclos();
     }
 
     public ArrayList<EnclosClass> getLesEnclos() {

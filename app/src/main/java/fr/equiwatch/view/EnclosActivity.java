@@ -1,15 +1,20 @@
 package fr.equiwatch.view;
 
+<<<<<<< HEAD
 import android.os.Bundle;
 import android.widget.ListView;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import fr.equiwatch.R;
 import fr.equiwatch.controller.EnclosController;
-import fr.equiwatch.model.EnclosClass;
 
 public class EnclosActivity extends MenuEquiwatch {
 
@@ -22,34 +27,23 @@ public class EnclosActivity extends MenuEquiwatch {
         CoordinatorLayout dynamicContent = findViewById(R.id.dynamic_content);
         getLayoutInflater().inflate(R.layout.activity_enclos, dynamicContent, true);
         super.onCreate(savedInstanceState);
-        init();
-    }
-
-    private void init(){
+        setContentView(R.layout.fragment_enclos_create);
         this.enclosController = EnclosController.getInstance(this);
-        //Log.d("EnclosController", "**********"+this.enclosController.toString());
-        creerListe();
-
-    }
-
-    /**
-     * Création de la liste des enclos
-     */
-    private void creerListe()
-    {
-        ArrayList<EnclosClass> lesEnclos = enclosController.getLesEnclos();
-        if(lesEnclos != null){
-            ListView lvListeEnclos = findViewById(R.id.lvListeEnclos);
-            EnclosListAdapter adapter = new EnclosListAdapter(this, lesEnclos);
-            lvListeEnclos.setAdapter(adapter);
-        }
-        else{
-            TextView textVide = (TextView) findViewById(R.id.txtVide);
-            textVide.setText("Vous n'avez aucun enclos pour le moment cliqué sur le plus pour en ajouter.");
-        }
-    }
-
-    public void recupEnclos(){
-
+        findViewById(R.id.btnEnclosCreate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EditText inpNomEnclos = (EditText) findViewById(R.id.iptNomEnclos);
+                String nomEnclos = inpNomEnclos.getText().toString();
+//                Log.v("***********",nomEnclos);
+                enclosController.creerEnclos(nomEnclos);
+//              @todo refreach le fragment
+//              @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
+                Snackbar snackbarSupr = Snackbar.make(view, "Vous venez de créer l'enclos : " + nomEnclos, Snackbar.LENGTH_LONG);
+                View viewEnclos = snackbarSupr.getView();
+                viewEnclos.setBackgroundResource(R.color.colorPrimary);
+                snackbarSupr.show();
+                finish();
+            }
+        });
     }
 }

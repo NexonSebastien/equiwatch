@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:id="@+id/txtViewListeEnclos"
-        android:layout_width="467dp"
+        android:layout_width="516dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
@@ -16,7 +16,7 @@
         <TextView
             android:id="@+id/txtLabelListeEnclos"
             android:layout_width="match_parent"
-            android:layout_height="53dp"
+            android:layout_height="50dp"
             android:text="TextView" />
     </LinearLayout>
 
@@ -29,22 +29,22 @@
             android:id="@+id/imgBtnViewEnclos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background= "@android:color/transparent"
+            android:background="@android:color/transparent"
             app:srcCompat="@drawable/eye" />
 
         <ImageButton
             android:id="@+id/imgBtnUpdateEnclos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background= "@android:color/transparent"
+            android:background="@android:color/transparent"
             app:srcCompat="@drawable/edit" />
 
         <ImageButton
             android:id="@+id/imgBtnDeleteEnclos"
-            android:layout_width="wrap_content"
+            android:layout_width="37dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background= "@android:color/transparent"
+            android:background="@android:color/transparent"
             app:srcCompat="@drawable/delete" />
     </LinearLayout>
 </LinearLayout>
