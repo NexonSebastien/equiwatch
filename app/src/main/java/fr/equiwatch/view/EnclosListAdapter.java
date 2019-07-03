@@ -70,7 +70,7 @@ public class EnclosListAdapter extends BaseAdapter {
         if(view == null){
             holder = new ViewHolder();
 
-            // la ligne est construite avec un formatage (inflater) remié à layout_liste_enclos
+            // la ligne est construite avec un formatage (inflater) relié à layout_liste_enclos
             view = inflater.inflate(R.layout.layout_list_enclos,null);
 
             //chaque propriété du holder est relié à une propriété graphique
