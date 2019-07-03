@@ -59,15 +59,20 @@ public class AccesHTTP extends AsyncTask<String, Integer, Long> {
             //connexion et envoi de parametre et attente de reponse
             HttpResponse reponse = conexionHttp.execute(conexionParams);
 
+
             // transformation de la reponse
             ret = EntityUtils.toString(reponse.getEntity());
         } catch (UnsupportedEncodingException e) {
             Log.d("Erreur encodage", "**********"+e.toString());
+            ret = "Erreur!";
 
         } catch (ClientProtocolException e) {
             Log.d("Erreur protocole", "**********"+e.toString());
+            ret = "Erreur!";
+
         } catch (IOException e) {
-            Log.d("Erreur I/O", "**********"+e.toString());
+            Log.d("Erreur I/O ", "********** connexion impossible "+e.toString());
+            ret = "Erreur!";
         }
 
         return null;
