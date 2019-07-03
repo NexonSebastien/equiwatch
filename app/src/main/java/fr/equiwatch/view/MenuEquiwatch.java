@@ -2,21 +2,19 @@ package fr.equiwatch.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.core.view.GravityCompat;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-
+import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import androidx.drawerlayout.widget.DrawerLayout;
-
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.view.Menu;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -25,9 +23,12 @@ import fr.equiwatch.R;
 public class MenuEquiwatch extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private MapsEquiwatch mMapFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mMapFragment = new MapsEquiwatch();
         setContentView(R.layout.activity_menu_equiwatch);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -97,7 +98,7 @@ public class MenuEquiwatch extends AppCompatActivity
         } else if (id == R.id.nav_parametre) {
 
         } else if (id == R.id.nav_home) {
-            showFragment(new MapsEquiwatch());
+            showFragment(mMapFragment);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -111,5 +112,11 @@ public class MenuEquiwatch extends AppCompatActivity
                 .replace(R.id.container_menu, fragment)
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .commit();
+    }
+
+    private void placeMarkerInMap(String title, double lat, double lon) {
+        if (mMapFragment != null) {
+            mMapFragment.placeMarker(title, lat, lon);
+        }
     }
 }
