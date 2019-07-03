@@ -1,6 +1,7 @@
 package fr.equiwatch.view;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,8 @@ public class EnclosFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         this.enclosController = EnclosController.getInstance(this.getContext());
         ArrayList<EnclosClass> lesEnclos = enclosController.getLesEnclos();
-        if(lesEnclos != null){
+        Log.d("lesEnclos", "**********"+lesEnclos.size());
+        if(lesEnclos.size() != 0){
             ListView lvListeEnclos = (ListView) getView().findViewById(R.id.lvListeEnclos);
             EnclosListAdapter adapter = new EnclosListAdapter(this.getContext(), lesEnclos);
             lvListeEnclos.setAdapter(adapter);
