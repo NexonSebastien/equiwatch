@@ -20,7 +20,7 @@ public final class EnclosController {
     private static EnclosClass enclos;
     private static ArrayList<EnclosClass> lesEnclos =  new ArrayList<EnclosClass>();
     private static AccesBdd accesBdd;
-    private static  Context context;
+    private static Context context;
 
     /**
      * constructeur private

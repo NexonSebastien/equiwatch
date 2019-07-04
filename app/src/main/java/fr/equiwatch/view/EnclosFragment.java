@@ -25,6 +25,8 @@ public class EnclosFragment extends Fragment {
 
     // propriétés
     private EnclosController enclosController;
+    private static EnclosFragment enclosFragment;
+
 
     public EnclosFragment() {
         // Required empty public constructor
@@ -34,6 +36,7 @@ public class EnclosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.enclosFragment = new EnclosFragment();
 //        init();
 
         // Inflate the layout for this fragment
@@ -60,7 +63,13 @@ public class EnclosFragment extends Fragment {
             public void onClick(View view) {
                 Intent nextAct = new Intent(getContext(),EnclosActivity.class);
                 startActivity(nextAct);
+//                MenuEquiwatch.getMenuEquiwatch().showFragment(new EnclosCreateFragment());
+
             }
         });
+    }
+
+    public static EnclosFragment getEnclosFragment() {
+        return enclosFragment;
     }
 }
