@@ -19,14 +19,14 @@ import fr.equiwatch.R;
 import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.model.EnclosClass;
 
-public class EnclosFragment extends Fragment {
+public class EnclosActivity extends Fragment {
 
     // propriétés
     private EnclosController enclosController;
-    private static EnclosFragment enclosFragment;
+    private static EnclosActivity enclosActivity;
 
 
-    public EnclosFragment() {
+    public EnclosActivity() {
         // Required empty public constructor
     }
 
@@ -34,7 +34,7 @@ public class EnclosFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.enclosFragment = new EnclosFragment();
+        this.enclosActivity = new EnclosActivity();
 //        init();
 
         // Inflate the layout for this fragment
@@ -67,7 +67,7 @@ public class EnclosFragment extends Fragment {
         });
     }
 
-    public static EnclosFragment getEnclosFragment() {
-        return enclosFragment;
+    public static EnclosActivity getEnclosActivity() {
+        return enclosActivity;
     }
 }

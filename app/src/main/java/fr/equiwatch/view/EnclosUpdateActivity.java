@@ -35,7 +35,6 @@ public class EnclosUpdateActivity extends AppCompatActivity {
                 enclosController.updateEnclos(enclosUpdate);
 
 //              @todo refrech le fragment
-                MenuEquiwatch.getMenuEquiwatch().simultationClickMenu(R.id.nav_enclos);
 
 //              @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
                 Snackbar snackbarSupr = Snackbar.make(view, "Vous venez de modifier l'enclos : " + enclosUpdate.getLabel(), Snackbar.LENGTH_LONG);
