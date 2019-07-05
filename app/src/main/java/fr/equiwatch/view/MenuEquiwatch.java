@@ -16,7 +16,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
 
 import fr.equiwatch.R;
 
@@ -24,11 +29,14 @@ public class MenuEquiwatch extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private MapsEquiwatch mMapFragment;
+    private ArrayList<Marker> listMarkerEnclos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMapFragment = new MapsEquiwatch();
+        listMarkerEnclos = new ArrayList<>();
+
         setContentView(R.layout.activity_menu_equiwatch);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -42,8 +50,43 @@ public class MenuEquiwatch extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        // On ouvre le première item du menu
         navigationView.setCheckedItem(R.id.nav_home);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
+
+//        // Code pour les boutons flottants
+        Log.d("MenuEquiwatch","*********** "+ R.id.fab_add);
+        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Marker marker = placeMarkerInMapOnPositionUser("marqueur enclos");
+                listMarkerEnclos.add(marker);
+
+                if (listMarkerEnclos.size() > 3) {
+
+                }
+            }
+        });
+
+        FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
+        fabDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listMarkerEnclos.size() < 3) {
+
+                }
+            }
+        });
+
+        FloatingActionButton fabValidate = findViewById(R.id.fab_delete);
+        fabValidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     @Override
@@ -106,6 +149,11 @@ public class MenuEquiwatch extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Permet de remplacer le le contenu du container du DrawerNavigation par le fragment passé en paramètre
+     *
+     * @param fragment
+     */
     private void showFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -114,9 +162,17 @@ public class MenuEquiwatch extends AppCompatActivity
                 .commit();
     }
 
-    private void placeMarkerInMap(String title, double lat, double lon) {
+    /**
+     * Permet de placer un marqueur sur la map en faisant en propriété du MenuEquiwatch grâce a une fonction de MapsEquiwatch
+     *
+     * @param title
+     */
+    private Marker placeMarkerInMapOnPositionUser(String title) {
+        Marker marker = null;
         if (mMapFragment != null) {
-            mMapFragment.placeMarker(title, lat, lon);
+            marker = mMapFragment.placeMarkerOnUserPosition(title);
         }
+
+        return marker;
     }
 }
