@@ -3,15 +3,11 @@ package fr.equiwatch.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import java.util.ArrayList;
 
@@ -19,50 +15,37 @@ import fr.equiwatch.R;
 import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.model.EnclosClass;
 
-public class EnclosActivity extends Fragment {
+public class EnclosActivity extends MenuEquiwatch  {
 
     // propriétés
     private EnclosController enclosController;
     private static EnclosActivity enclosActivity;
 
 
-    public EnclosActivity() {
-        // Required empty public constructor
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_menu_equiwatch);
+        CoordinatorLayout dynamicContent = findViewById(R.id.dynamic_content);
+        getLayoutInflater().inflate(R.layout.activity_enclos, dynamicContent, true);
         super.onCreate(savedInstanceState);
-        this.enclosActivity = new EnclosActivity();
-//        init();
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_enclos, container, false);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        this.enclosController = EnclosController.getInstance(this.getContext());
+        enclosActivity = this;
+        this.enclosController = EnclosController.getInstance(this);
         ArrayList<EnclosClass> lesEnclos = enclosController.getLesEnclos();
-        Log.d("lesEnclos", "**********"+lesEnclos.size());
-        if(lesEnclos.size() != 0){
-            ListView lvListeEnclos = (ListView) getView().findViewById(R.id.lvListeEnclos);
-            EnclosListAdapter adapter = new EnclosListAdapter(this.getContext(), lesEnclos);
+        Log.d("lesEnclos", "**********" + lesEnclos.size());
+        if (lesEnclos.size() != 0) {
+            ListView lvListeEnclos = (ListView) findViewById(R.id.lvListeEnclos);
+            EnclosListAdapter adapter = new EnclosListAdapter(this, lesEnclos);
             lvListeEnclos.setAdapter(adapter);
-        }
-        else{
-            TextView textVide = (TextView) getView().findViewById(R.id.txtVide);
+        } else {
+            TextView textVide = (TextView) findViewById(R.id.txtVide);
             textVide.setText("Vous n'avez aucun enclos pour le moment cliqué sur le plus pour en ajouter.");
         }
-        getView().findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent nextAct = new Intent(getContext(), EnclosCreateActivity.class);
+                Intent nextAct = new Intent(enclosActivity, EnclosCreateActivity.class);
                 startActivity(nextAct);
-//                MenuEquiwatch.getMenuEquiwatch().showFragment(new EnclosCreateFragment());
-
+                finish();
             }
         });
     }

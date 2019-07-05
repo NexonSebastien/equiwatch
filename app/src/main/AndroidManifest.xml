@@ -16,9 +16,21 @@
         android:roundIcon="@mipmap/ic_launcher_equiwatch_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EnclosViewActivity"></activity>
-        <activity android:name=".view.EnclosUpdateActivity" />
-        <activity android:name=".view.EnclosCreateActivity" />
+        <activity
+            android:name=".view.EnclosViewActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".view.EnclosUpdateActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".view.EnclosCreateActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <activity
             android:name=".view.EnclosActivity"
             android:theme="@style/AppTheme.NoActionBar">

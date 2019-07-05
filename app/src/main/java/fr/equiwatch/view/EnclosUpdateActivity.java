@@ -1,6 +1,7 @@
 package fr.equiwatch.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,7 @@ import fr.equiwatch.R;
 import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.model.EnclosClass;
 
-public class EnclosUpdateActivity extends AppCompatActivity {
+public class EnclosUpdateActivity extends MenuEquiwatch  {
 
     // propriétés
     private EnclosController enclosController;
@@ -20,6 +21,9 @@ public class EnclosUpdateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_menu_equiwatch);
+        CoordinatorLayout dynamicContent = findViewById(R.id.dynamic_content);
+        getLayoutInflater().inflate(R.layout.activity_enclos_update, dynamicContent, true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enclos_update);
         this.enclosController = EnclosController.getInstance(this);
