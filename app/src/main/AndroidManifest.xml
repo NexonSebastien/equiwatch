@@ -17,7 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".view.EnclosActivity">
+        <activity
+            android:name=".view.EnclosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -26,6 +28,11 @@
         </activity>
         <activity
             android:name=".view.MenuEquiwatch"
+            android:label="@string/title_activity_menu_equiwatch"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
+            android:name=".view.MenuMapsActivity"
             android:label="@string/title_activity_menu_equiwatch"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--
@@ -39,6 +46,9 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version"/>
         <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

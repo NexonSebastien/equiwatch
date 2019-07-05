@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openMaps() {
-        Intent intent = new Intent(this, MenuEquiwatch.class);
+        Intent intent = new Intent(this, MenuMapsActivity.class);
         startActivity(intent);
     }
 }
