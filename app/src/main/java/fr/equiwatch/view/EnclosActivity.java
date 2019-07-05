@@ -1,18 +1,9 @@
 package fr.equiwatch.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import java.util.ArrayList;
 
@@ -20,15 +11,17 @@ import fr.equiwatch.R;
 import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.model.EnclosClass;
 
-public class EnclosActivity extends AppCompatActivity {
+public class EnclosActivity extends MenuEquiwatch {
 
     // propriétés
     private EnclosController enclosController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_menu_equiwatch);
+        CoordinatorLayout dynamicContent = findViewById(R.id.dynamic_content);
+        getLayoutInflater().inflate(R.layout.activity_enclos, dynamicContent, true);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enclos);
         init();
     }
 
@@ -46,7 +39,7 @@ public class EnclosActivity extends AppCompatActivity {
     {
         ArrayList<EnclosClass> lesEnclos = enclosController.getLesEnclos();
         if(lesEnclos != null){
-            ListView lvListeEnclos = (ListView) findViewById(R.id.lvListeEnclos);
+            ListView lvListeEnclos = findViewById(R.id.lvListeEnclos);
             EnclosListAdapter adapter = new EnclosListAdapter(this, lesEnclos);
             lvListeEnclos.setAdapter(adapter);
         }

@@ -2,91 +2,40 @@ package fr.equiwatch.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
 
 import fr.equiwatch.R;
 
 public class MenuEquiwatch extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private MapsEquiwatch mMapFragment;
-    private ArrayList<Marker> listMarkerEnclos;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMapFragment = new MapsEquiwatch();
-        listMarkerEnclos = new ArrayList<>();
 
-        setContentView(R.layout.activity_menu_equiwatch);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         String app_name = getString(R.string.app_name);
         getSupportActionBar().setTitle(app_name.toUpperCase());
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        // On ouvre le première item du menu
-        navigationView.setCheckedItem(R.id.nav_home);
-        onNavigationItemSelected(navigationView.getMenu().getItem(0));
-
-//        // Code pour les boutons flottants
-        Log.d("MenuEquiwatch","*********** "+ R.id.fab_add);
-        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Marker marker = placeMarkerInMapOnPositionUser("marqueur enclos");
-                listMarkerEnclos.add(marker);
-
-                if (listMarkerEnclos.size() > 3) {
-
-                }
-            }
-        });
-
-        FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
-        fabDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listMarkerEnclos.size() < 3) {
-
-                }
-            }
-        });
-
-        FloatingActionButton fabValidate = findViewById(R.id.fab_delete);
-        fabValidate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     @Override
@@ -133,7 +82,6 @@ public class MenuEquiwatch extends AppCompatActivity
         if (id == R.id.nav_chevaux) {
             // Handle the camera action
         } else if (id == R.id.nav_enclos) {
-//            showFragment(new EnclosFragment());
             Intent intent = new Intent(this, EnclosActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_capteurs) {
@@ -141,38 +89,12 @@ public class MenuEquiwatch extends AppCompatActivity
         } else if (id == R.id.nav_parametre) {
 
         } else if (id == R.id.nav_home) {
-            showFragment(mMapFragment);
+            Intent intent = new Intent(this, MenuMapsActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    /**
-     * Permet de remplacer le le contenu du container du DrawerNavigation par le fragment passé en paramètre
-     *
-     * @param fragment
-     */
-    private void showFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container_menu, fragment)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                .commit();
-    }
-
-    /**
-     * Permet de placer un marqueur sur la map en faisant en propriété du MenuEquiwatch grâce a une fonction de MapsEquiwatch
-     *
-     * @param title
-     */
-    private Marker placeMarkerInMapOnPositionUser(String title) {
-        Marker marker = null;
-        if (mMapFragment != null) {
-            marker = mMapFragment.placeMarkerOnUserPosition(title);
-        }
-
-        return marker;
     }
 }
