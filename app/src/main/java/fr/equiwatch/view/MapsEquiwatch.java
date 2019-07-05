@@ -4,6 +4,10 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,11 +21,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import fr.equiwatch.R;
 
 public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallback, OnMarkerClickListener {
 
@@ -78,12 +86,14 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+
         getLocationPermission();
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();
 
         // Get the current location of the device and set the position of the map.
-        getDeviceLocation(true);
+        getDeviceLocation();
         mMap.setOnMarkerClickListener(this);
     }
 
@@ -124,7 +134,7 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
     /**
      * Gets the current location of the device, and positions the map's camera.
      */
-    private void getDeviceLocation(final boolean addMarker) {
+    private void getDeviceLocation() {
         /*
          * Get the best and most recent location of the device, which may be null in rare
          * cases when a location is not available.
@@ -140,9 +150,7 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
                             mLastKnownLocation = task.getResult();
                             LatLng currentPos = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, DEFAULT_ZOOM));
-                            if (addMarker) {
-                                mMap.addMarker(new MarkerOptions().position(currentPos).title("Moi"));
-                            }
+
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
@@ -190,5 +198,17 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15));
             mMap.addMarker(new MarkerOptions().title(title).position(marker));
         }
+    }
+
+    public Marker placeMarkerOnUserPosition(String title) {
+        Marker marker = null;
+        if (mMap != null) {
+            getDeviceLocation();
+            LatLng markerPos = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPos, 15));
+            return mMap.addMarker(new MarkerOptions().title(title).position(markerPos));
+        }
+
+        return marker;
     }
 }
