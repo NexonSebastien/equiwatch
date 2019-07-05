@@ -1,6 +1,11 @@
 package fr.equiwatch.view;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +26,8 @@ public class EnclosListAdapter extends BaseAdapter {
     private ArrayList<EnclosClass> lesEnclos;
     private LayoutInflater inflater;
     private EnclosController enclosController;
+    private View uneView;
+
 
     public EnclosListAdapter(Context context, ArrayList<EnclosClass> lesEnclos){
         this.lesEnclos = lesEnclos;
@@ -97,19 +104,32 @@ public class EnclosListAdapter extends BaseAdapter {
         holder.imgBtnDeleteEnclos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int position = (int) view.getTag();
+                uneView = view;
 
-                Snackbar snackbarSupr = Snackbar.make(view, "Suppression de l'enclos : " + lesEnclos.get(position).getLabel(), Snackbar.LENGTH_LONG);
+                //Alterte avant suppression
+                Dialog d = new AlertDialog.Builder(enclosController.getContext())
+                        .setTitle("Alerte avant suppression")
+                        .setMessage("Voulez vous vraiment supprimer ?")
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                int position = (int) uneView.getTag();
+                                Snackbar snackbarSupr = Snackbar.make(uneView, "Suppression de l'enclos : " + lesEnclos.get(position).getLabel(), Snackbar.LENGTH_LONG);
 
-                //demande de suppression au controller
-                enclosController.deleteEnclos(lesEnclos.get(position));
+                                //demande de suppression au controller
+                                enclosController.deleteEnclos(lesEnclos.get(position));
 
-                View viewEnclos = snackbarSupr.getView();
-                viewEnclos.setBackgroundResource(R.color.colorPrimary);
-                snackbarSupr.show();
+                                View viewEnclos = snackbarSupr.getView();
+                                viewEnclos.setBackgroundResource(R.color.colorPrimary);
+                                snackbarSupr.show();
 
-                //rafraichir la liste
-                notifyDataSetChanged();
+                                //rafraichir la liste
+                                notifyDataSetChanged();
+                            }
+                        })
+                        .create();
+                d.show();
             }
         });
 
@@ -118,15 +138,21 @@ public class EnclosListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int position = (int) view.getTag();
-
-
-                //demande de l'affichage au controller
-//                enclosController.deleteEnclos(lesEnclos.get(position));
-
                 Snackbar snackbarSupr = Snackbar.make(view, "modifier " + lesEnclos.get(position).getId(), Snackbar.LENGTH_LONG);
+
+                Intent nextAct = new Intent(enclosController.getContext(), EnclosUpdateActivity.class);
+                enclosController.getContext().startActivity(nextAct);
+                //demande de suppression au controller
+                enclosController.setEnclosUpdate(lesEnclos.get(position));
+
                 View viewEnclos = snackbarSupr.getView();
+
                 viewEnclos.setBackgroundResource(R.color.colorPrimary);
+
                 snackbarSupr.show();
+
+                //rafraichir la liste
+                notifyDataSetChanged();
 
             }
         });

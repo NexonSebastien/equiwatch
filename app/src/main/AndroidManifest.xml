@@ -16,20 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_equiwatch_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".EnclosViewActivity"></activity>
+        <activity android:name=".view.EnclosUpdateActivity" />
+        <activity android:name=".view.EnclosCreateActivity" />
         <activity
             android:name=".view.EnclosActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
         </activity>
-        <activity
-            android:name=".view.MenuEquiwatch"
-            android:label="@string/title_activity_menu_equiwatch"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
             android:name=".view.MenuMapsActivity"
@@ -46,11 +39,8 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
-        <activity android:name=".view.MainActivity"
-            android:theme="@style/AppTheme">
+
+        <activity android:name=".view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -58,4 +48,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

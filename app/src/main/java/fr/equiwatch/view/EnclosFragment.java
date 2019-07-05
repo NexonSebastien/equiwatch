@@ -12,8 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import java.util.ArrayList;
 
@@ -61,7 +59,7 @@ public class EnclosFragment extends Fragment {
         getView().findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent nextAct = new Intent(getContext(),EnclosActivity.class);
+                Intent nextAct = new Intent(getContext(), EnclosCreateActivity.class);
                 startActivity(nextAct);
 //                MenuEquiwatch.getMenuEquiwatch().showFragment(new EnclosCreateFragment());
 

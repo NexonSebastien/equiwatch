@@ -57,7 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Création Enclos"
+                        android:text="Modification Enclos"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -88,12 +88,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnEnclosCreate"
+                android:id="@+id/btnEnclosUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Créer" />
+                android:text="Modifier" />
 
         </LinearLayout>
 
