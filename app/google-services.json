@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "445598243377",
+    "firebase_url": "https://equiwatch-d1c04.firebaseio.com",
+    "project_id": "equiwatch-d1c04",
+    "storage_bucket": "equiwatch-d1c04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445598243377:android:436a45c1051bd8ed",
+        "android_client_info": {
+          "package_name": "fr.equiwatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445598243377-ol3s60hqp1i7c0m20bt2i3g008s710np.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKvw5kPOS26Jc7T6USlqxYUWArQ-MH2uc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445598243377-ol3s60hqp1i7c0m20bt2i3g008s710np.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
