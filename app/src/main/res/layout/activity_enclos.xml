@@ -6,23 +6,18 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-<LinearLayout
-
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="0dp"
-    tools:ignore="MissingConstraints">
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:orientation="vertical">
+
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="50dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="102dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -31,16 +26,16 @@
                 android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="233dp"
-                    android:layout_height="match_parent"
+                    android:id="@+id/imageView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    app:srcCompat="@drawable/fence" />
+                    android:src="@drawable/fence" />
 
                 <TextView
                     android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Liste Enclos"
                     android:textSize="30sp" />
@@ -56,32 +51,28 @@
                 <ImageButton
                     android:id="@+id/imgBtnAdd"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background= "@android:color/transparent"
-                    android:focusableInTouchMode="false"
-                    android:foregroundGravity="right"
-                    android:verticalScrollbarPosition="defaultPosition"
-                    android:visibility="visible"
-                    app:srcCompat="@drawable/add" />
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/add" />
             </LinearLayout>
+
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/txtVide"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <ListView
-            android:id="@+id/lvListeEnclos"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            <TextView
+                android:id="@+id/txtVide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <ListView
+                android:id="@+id/lvListeEnclos"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
 </merge>

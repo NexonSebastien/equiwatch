@@ -6,9 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 import java.util.ArrayList;
 
 import fr.equiwatch.R;
@@ -37,8 +35,8 @@ public class EnclosActivity extends MenuEquiwatch  {
             EnclosListAdapter adapter = new EnclosListAdapter(this, lesEnclos);
             lvListeEnclos.setAdapter(adapter);
         } else {
-            TextView textVide = (TextView) findViewById(R.id.txtVide);
-            textVide.setText("Vous n'avez aucun enclos pour le moment cliqué sur le plus pour en ajouter.");
+//            TextView textVide = (TextView) findViewById(R.id.txtVide);
+//            textVide.setText("Vous n'avez aucun enclos pour le moment cliqué sur le plus pour en ajouter.");
         }
         findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
             @Override

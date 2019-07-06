@@ -3,6 +3,7 @@ package fr.equiwatch.view;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -25,8 +26,8 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
         CoordinatorLayout dynamicContent = findViewById(R.id.dynamic_content);
         getLayoutInflater().inflate(R.layout.activity_enclos_update, dynamicContent, true);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enclos_update);
-        this.enclosController = EnclosController.getInstance(this);
+//        setContentView(R.layout.activity_enclos_update);
+        this.enclosController = EnclosController.getInstance(this.getBaseContext());
         EditText inpNomEnclos = (EditText) findViewById(R.id.iptNomEnclos);
         this.enclosUpdate = enclosController.getEnclosUpdate();
         inpNomEnclos.setText(enclosUpdate.getLabel());
@@ -38,13 +39,15 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
                 enclosUpdate.setLabel(inpNomEnclos.getText().toString());
                 enclosController.updateEnclos(enclosUpdate);
 
-//              @todo refrech le fragment
-
-//              @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
+//                @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
                 Snackbar snackbarSupr = Snackbar.make(view, "Vous venez de modifier l'enclos : " + enclosUpdate.getLabel(), Snackbar.LENGTH_LONG);
                 View viewEnclos = snackbarSupr.getView();
                 viewEnclos.setBackgroundResource(R.color.colorPrimary);
                 snackbarSupr.show();
+
+//              @todo refrech le fragment
+                Intent nextAct = new Intent(enclosController.getContext(), EnclosActivity.class);
+                startActivity(nextAct);
                 finish();
             }
         });

@@ -27,6 +27,14 @@ public final class EnclosController {
      */
     private EnclosController(){
         super();
+        firebaseRefEnclos.child("1").child("label").setValue("Enclos1");
+        firebaseRefEnclos.child("2").child("label").setValue("Enclos2");
+        firebaseRefEnclos.child("3").child("label").setValue("Enclos3");
+        firebaseRefEnclos.child("4").child("label").setValue("Enclos4");
+        firebaseRefEnclos.child("5").child("label").setValue("Enclos5");
+        firebaseRefEnclos.child("6").child("label").setValue("Enclos6");
+        firebaseRefEnclos.child("7").child("label").setValue("Enclos7");
+        lesEnclos = new ArrayList<EnclosClass>();
         getAllEnclos();
         setLastInsertId();
     }
@@ -104,22 +112,23 @@ public final class EnclosController {
         firebaseRefEnclos.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                lesEnclos = new ArrayList<EnclosClass>();
+                lesEnclos.clear();
                 for (DataSnapshot unSnapshot : dataSnapshot.getChildren()) {
+                    Log.d("label","***********" + unSnapshot.child("label").getValue().toString());
                     lesEnclos.add(new EnclosClass(((int)Integer.parseInt(unSnapshot.getKey().toString())),unSnapshot.child("label").getValue().toString()));
                 }
-                for (EnclosClass unEnclos : lesEnclos){
-                    int id = unEnclos.getId();
-                    String label = unEnclos.getLabel();
-                    Log.d("label","***********" + label);
-                }
+//                for (EnclosClass unEnclos : lesEnclos){
+//                    int id = unEnclos.getId();
+//                    String label = unEnclos.getLabel();
+//                    Log.d("label","***********" + label);
+//                }
 
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
                 // Failed to read value
-//                Log.w("***********", "Failed to read value.", error.toException());
+                Log.w("***********", "Failed to read value.", error.toException());
             }
         });
     }

@@ -1,5 +1,6 @@
 package fr.equiwatch.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -21,7 +22,7 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
         CoordinatorLayout dynamicContent = findViewById(R.id.dynamic_content);
         getLayoutInflater().inflate(R.layout.activity_enclos_create, dynamicContent, true);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_enclos_create);
+//        setContentView(R.layout.activity_enclos_create);
         this.enclosController = EnclosController.getInstance(this);
         enclosController.setLastInsertId();
 
@@ -38,6 +39,8 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
                 View viewEnclos = snackbarSupr.getView();
                 viewEnclos.setBackgroundResource(R.color.colorPrimary);
                 snackbarSupr.show();
+                Intent nextAct = new Intent(enclosController.getContext(), EnclosActivity.class);
+                startActivity(nextAct);
                 finish();
             }
         });
