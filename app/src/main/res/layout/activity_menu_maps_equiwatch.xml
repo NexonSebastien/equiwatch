@@ -27,7 +27,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <FrameLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -38,10 +38,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_marginBottom="66dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
                 app:backgroundTint="@android:color/white"
                 app:fabSize="normal"
+                app:layout_constraintBottom_toTopOf="@+id/fab_delete"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@android:drawable/ic_input_add" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -49,10 +51,13 @@
                 android:layout_width="202dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
                 app:backgroundTint="@android:color/white"
                 app:fabSize="normal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@android:drawable/ic_delete" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -60,12 +65,15 @@
                 android:layout_width="202dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
-                android:layout_marginBottom="127dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:visibility="invisible"
                 app:backgroundTint="@android:color/white"
                 app:fabSize="normal"
+                app:layout_constraintBottom_toTopOf="@+id/fab_add"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:srcCompat="@drawable/sharp_done" />
-        </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

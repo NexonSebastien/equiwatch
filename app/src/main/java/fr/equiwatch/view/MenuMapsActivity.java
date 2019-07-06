@@ -54,38 +54,7 @@ public class MenuMapsActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_home);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
-//        // Code pour les boutons flottants
-        Log.d("MenuEquiwatch","*********** "+ R.id.fab_add);
-        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Marker marker = placeMarkerInMapOnPositionUser("marqueur enclos");
-                listMarkerEnclos.add(marker);
-
-                if (listMarkerEnclos.size() > 3) {
-
-                }
-            }
-        });
-
-        FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
-        fabDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (listMarkerEnclos.size() < 3) {
-
-                }
-            }
-        });
-
-        FloatingActionButton fabValidate = findViewById(R.id.fab_delete);
-        fabValidate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        setEventOnFloatingMapsButtons();
     }
 
     @Override
@@ -173,5 +142,58 @@ public class MenuMapsActivity extends AppCompatActivity
         }
 
         return marker;
+    }
+
+    public  void setEventOnFloatingMapsButtons() {
+        // Code pour les boutons flottants
+        final FloatingActionButton fabAdd = findViewById(R.id.fab_add);
+        final FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
+        final FloatingActionButton fabValidate = findViewById(R.id.fab_validate);
+
+        fabAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Marker marker = placeMarkerInMapOnPositionUser("marqueur enclos");
+                listMarkerEnclos.add(marker);
+                Log.d("FloatingButton", "*************" + listMarkerEnclos.size());
+
+                if (listMarkerEnclos.size() > 2) {
+                    Log.d("FloatingButton", "************* Vible Validate");
+                    fabValidate.show();
+                }
+
+                if (listMarkerEnclos.size() == 1) {
+                    fabDelete.show();
+                }
+            }
+        });
+
+
+        fabDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listMarkerEnclos.size() > 0) {
+                    Marker marker = listMarkerEnclos.get(listMarkerEnclos.size() - 1);
+                    marker.remove();
+                    listMarkerEnclos.remove(marker);
+                    Log.d("FloatingButton", "*************" + listMarkerEnclos.size());
+                }
+                if (listMarkerEnclos.size() < 3) {
+                    fabValidate.hide();
+                }
+
+                if (listMarkerEnclos.size() == 0) {
+                    fabDelete.hide();
+                }
+            }
+        });
+
+
+        fabValidate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 }
