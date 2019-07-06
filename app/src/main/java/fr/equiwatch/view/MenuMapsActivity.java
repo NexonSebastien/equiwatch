@@ -29,6 +29,7 @@ public class MenuMapsActivity extends AppCompatActivity
 
     private MapsEquiwatch mMapFragment;
     private ArrayList<Marker> listMarkerEnclos;
+    public static boolean isModificationModeEnabled = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
