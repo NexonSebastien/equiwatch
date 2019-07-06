@@ -34,16 +34,4 @@ public class EnclosClass implements Serializable{
         this.label = label;
     }
 
-
-    /**
-     * Convertion de l'enclos en format JSONArray
-     * @return
-     */
-    public JSONArray convertToJSONArray(){
-        List liste = new ArrayList();
-        liste.add(id);
-        liste.add(label);
-
-        return new JSONArray(liste);
-    }
 }
