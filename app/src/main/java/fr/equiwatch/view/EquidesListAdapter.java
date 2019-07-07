@@ -139,9 +139,7 @@ public class EquidesListAdapter extends BaseAdapter {
                 int position = (int) view.getTag();
                 Snackbar snackbarSupr = Snackbar.make(view, "modifier " + lesEquides.get(position).getId(), Snackbar.LENGTH_LONG);
 
-                Intent nextAct = new Intent(equidesController.getContext(), EquidesUpdateActivity.class);
-                equidesController.getContext().startActivity(nextAct);
-                //demande de suppression au controller
+                //demande de modification au controller
                 equidesController.setEquidesUpdate(lesEquides.get(position));
 
                 View viewEquides = snackbarSupr.getView();
@@ -151,7 +149,9 @@ public class EquidesListAdapter extends BaseAdapter {
                 snackbarSupr.show();
 
                 //rafraichir la liste
-                notifyDataSetChanged();
+//                notifyDataSetChanged();
+                Intent nextAct = new Intent(EquidesController.getContext(), EquidesUpdateActivity.class);
+                EquidesController.getContext().startActivity(nextAct);
 
             }
         });
@@ -161,15 +161,19 @@ public class EquidesListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int position = (int) view.getTag();
-
-
-                //demande de suppression au controller
-//                enclosController.deleteEnclos(lesEnclos.get(position));
-
                 Snackbar snackbarSupr = Snackbar.make(view, "voir " + lesEquides.get(position).getId(), Snackbar.LENGTH_LONG);
+
+                //demande de vue au controller
+                equidesController.setEquidesView(lesEquides.get(position));
+
                 View viewEquides = snackbarSupr.getView();
+
                 viewEquides.setBackgroundResource(R.color.colorPrimary);
+
                 snackbarSupr.show();
+
+                Intent nextAct = new Intent(EquidesController.getContext(), EquidesViewActivity.class);
+                EquidesController.getContext().startActivity(nextAct);
             }
         });
 

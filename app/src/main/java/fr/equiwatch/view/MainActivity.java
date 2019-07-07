@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         enclosController = EnclosController.getInstance(this);
+        equidesController = EquidesController.getInstance(this);
     }
 
     public void openMaps() {

@@ -16,9 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_equiwatch_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--<activity-->
-            <!--android:name=".view.ChevauxViewActivity"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"></activity>-->
+
+        <activity
+            android:name=".view.EquidesViewActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".view.EquidesUpdateActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>

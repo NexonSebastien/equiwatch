@@ -18,6 +18,7 @@ public class EquidesActivity extends MenuEquiwatch  {
     // propriétés
     private EquidesController equidesController;
     private static EquidesActivity equidesActivity;
+    private ArrayList<EquidesClass> lesEquides;
 
 
     @Override
@@ -26,14 +27,18 @@ public class EquidesActivity extends MenuEquiwatch  {
         CoordinatorLayout dynamicContent = findViewById(R.id.dynamic_content);
         getLayoutInflater().inflate(R.layout.activity_equides, dynamicContent, true);
         super.onCreate(savedInstanceState);
-
         equidesActivity = this;
+        equidesController = EquidesController.getInstance(this);
+        lesEquides = equidesController.getLesEquides();
         this.equidesController = EquidesController.getInstance(this);
-        ArrayList<EquidesClass> lesEquides = equidesController.getLesEquides();
-        Log.d("lesEquides", "**********" + lesEquides.size());
-        ListView lvListeEquides = (ListView) findViewById(R.id.lvListeEquides);
-        TextView textVide = (TextView) findViewById(R.id.txtVide);
-        equidesController.getAllEquides(this, lvListeEquides, textVide);
+        ListView lvListeEquides = findViewById(R.id.lvListeEquides);
+        TextView textVide = findViewById(R.id.txtVide);
+        if (lesEquides.size() != 0) {
+            EquidesListAdapter adapter = new EquidesListAdapter(this, lesEquides);
+            lvListeEquides.setAdapter(adapter);
+        } else {
+            textVide.setText("Vous n'avez aucun équidés pour le moment, cliquez sur le + pour en ajouter.");
+        }
         findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

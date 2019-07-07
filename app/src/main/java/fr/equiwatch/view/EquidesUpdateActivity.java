@@ -28,14 +28,22 @@ public class EquidesUpdateActivity extends MenuEquiwatch  {
 
         this.equidesController = EquidesController.getInstance(this.getBaseContext());
         EditText inpNomEquides = (EditText) findViewById(R.id.iptNomEquides);
-        this.equidesUpdate = equidesController.getEquidesUpdate();
-        inpNomEquides.setText(equidesUpdate.getNom());
+        final EditText inpIdEnclos = (EditText) findViewById(R.id.iptIdEnclos);
+        final EditText inpIdCapteur = (EditText) findViewById(R.id.iptIdCapteur);
 
-        findViewById(R.id.btnEnclosUpdate).setOnClickListener(new View.OnClickListener() {
+        equidesUpdate = equidesController.getEquidesUpdate();
+
+        inpNomEquides.setText(equidesUpdate.getNom());
+        inpIdEnclos.setText(Integer.toString(equidesUpdate.getIdEnclos()));
+        inpIdCapteur.setText(Integer.toString(equidesUpdate.getIdCapteur()));
+
+        findViewById(R.id.btnEquidesUpdate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText inpNomEquides = (EditText) findViewById(R.id.iptNomEquides);
                 equidesUpdate.setNom(inpNomEquides.getText().toString());
+                equidesUpdate.setIdEnclos(Integer.parseInt(inpIdEnclos.getText().toString()));
+                equidesUpdate.setIdCapteur(Integer.parseInt(inpIdCapteur.getText().toString()));
                 equidesController.updateEquides(equidesUpdate);
 
 //                @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
