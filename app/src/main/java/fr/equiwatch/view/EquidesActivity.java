@@ -10,41 +10,41 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import java.util.ArrayList;
 
 import fr.equiwatch.R;
-import fr.equiwatch.controller.ChevauxController;
-import fr.equiwatch.model.ChevauxClass;
+import fr.equiwatch.controller.EquidesController;
+import fr.equiwatch.model.EquidesClass;
 
-public class ChevauxActivity extends MenuEquiwatch  {
+public class EquidesActivity extends MenuEquiwatch  {
 
     // propriétés
-    private ChevauxController chevauxController;
-    private static ChevauxActivity chevauxActivity;
+    private EquidesController equidesController;
+    private static EquidesActivity equidesActivity;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_menu_equiwatch);
         CoordinatorLayout dynamicContent = findViewById(R.id.dynamic_content);
-        getLayoutInflater().inflate(R.layout.activity_chevaux, dynamicContent, true);
+        getLayoutInflater().inflate(R.layout.activity_equides, dynamicContent, true);
         super.onCreate(savedInstanceState);
 
-        chevauxActivity = this;
-        this.chevauxController = ChevauxController.getInstance(this);
-        ArrayList<ChevauxClass> lesChevaux = chevauxController.getLesChevaux();
-        Log.d("lesChevaux", "**********" + lesChevaux.size());
-        ListView lvListeChevaux = (ListView) findViewById(R.id.lvListeChevaux);
+        equidesActivity = this;
+        this.equidesController = EquidesController.getInstance(this);
+        ArrayList<EquidesClass> lesEquides = equidesController.getLesEquides();
+        Log.d("lesEquides", "**********" + lesEquides.size());
+        ListView lvListeEquides = (ListView) findViewById(R.id.lvListeEquides);
         TextView textVide = (TextView) findViewById(R.id.txtVide);
-        chevauxController.getAllChevaux(this, lvListeChevaux, textVide);
+        equidesController.getAllEquides(this, lvListeEquides, textVide);
         findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent nextAct = new Intent(chevauxActivity, ChevauxCreateActivity.class);
+                Intent nextAct = new Intent(equidesActivity, EquidesCreateActivity.class);
                 startActivity(nextAct);
                 finish();
             }
         });
     }
 
-    public static ChevauxActivity getChevauxActivity() {
-        return chevauxActivity;
+    public static EquidesActivity getEquidesActivity() {
+        return equidesActivity;
     }
 }

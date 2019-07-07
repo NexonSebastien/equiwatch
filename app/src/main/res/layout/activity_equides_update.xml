@@ -43,7 +43,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Création Chevaux"
+                        android:text="Modification Equides"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -67,10 +67,10 @@
                 android:layout_weight="1">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/iptNomChevaux"
+                    android:id="@+id/iptNomEquides"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nom Enclos" />
+                    android:hint="Nom Equides" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -100,12 +100,12 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btnChevauxCreate"
+                android:id="@+id/btnEquidesUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Créer" />
+                android:text="Modifier" />
 
         </LinearLayout>
 

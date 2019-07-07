@@ -20,13 +20,13 @@
             <!--android:name=".view.ChevauxViewActivity"-->
             <!--android:theme="@style/AppTheme.NoActionBar"></activity>-->
         <activity
-            android:name=".view.ChevauxUpdateActivity"
+            android:name=".view.EquidesUpdateActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".view.ChevauxCreateActivity"
+            android:name=".view.EquidesCreateActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".view.ChevauxActivity"
+            android:name=".view.EquidesActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity

@@ -7,14 +7,14 @@
     android:orientation="horizontal">
 
     <LinearLayout
-        android:id="@+id/txtViewListeChevaux"
+        android:id="@+id/txtViewListeEquides"
         android:layout_width="117dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/txtLabelListeChevaux"
+            android:id="@+id/txtLabelListeEquides"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -28,7 +28,7 @@
         android:layout_weight="1">
 
         <ImageButton
-            android:id="@+id/imgBtnViewChevaux"
+            android:id="@+id/imgBtnViewEquides"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -36,7 +36,7 @@
             app:srcCompat="@drawable/eye" />
 
         <ImageButton
-            android:id="@+id/imgBtnUpdateChevaux"
+            android:id="@+id/imgBtnUpdateEquides"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
@@ -44,7 +44,7 @@
             app:srcCompat="@drawable/edit" />
 
         <ImageButton
-            android:id="@+id/imgBtnDeleteChevaux"
+            android:id="@+id/imgBtnDeleteEquides"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"

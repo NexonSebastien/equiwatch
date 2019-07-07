@@ -107,7 +107,7 @@ public class MenuMapsActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_chevaux) {
-            Intent intent = new Intent(this, ChevauxActivity.class);
+            Intent intent = new Intent(this, EquidesActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_enclos) {
             Intent intent = new Intent(this, EnclosActivity.class);
