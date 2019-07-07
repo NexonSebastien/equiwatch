@@ -37,7 +37,7 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
             public void onClick(View view) {
                 EditText inpNomEnclos = (EditText) findViewById(R.id.iptNomEnclos);
                 enclosUpdate.setLabel(inpNomEnclos.getText().toString());
-                enclosController.updateEnclos(enclosUpdate);
+//                enclosController.updateEnclos(enclosUpdate);
 
 //                @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
                 Snackbar snackbarSupr = Snackbar.make(view, "Vous venez de modifier l'enclos : " + enclosUpdate.getLabel(), Snackbar.LENGTH_LONG);

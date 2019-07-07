@@ -10,12 +10,17 @@ import java.util.List;
 public class EnclosClass implements Serializable{
 
     // attributs
-    private int id;
+    private String id;
     private String label;
     private ArrayList<PointsGpsClass> pointsGps;
 
-    public EnclosClass(int id, String label, ArrayList<PointsGpsClass> pointsGps){
+    public EnclosClass(String id, String label, ArrayList<PointsGpsClass> pointsGps){
         this.id = id;
+        this.label = label;
+        this.pointsGps = pointsGps;
+    }
+
+    public EnclosClass(String label, ArrayList<PointsGpsClass> pointsGps){
         this.label = label;
         this.pointsGps = pointsGps;
     }
@@ -23,11 +28,11 @@ public class EnclosClass implements Serializable{
     public EnclosClass(){
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

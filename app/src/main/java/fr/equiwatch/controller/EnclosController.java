@@ -43,7 +43,6 @@ public final class EnclosController {
 
     private static EnclosController instance = null;
     private static EnclosClass enclos;
-    private static ArrayList<EnclosClass> lesEnclos;
     private static Context context;
     private int lastInsertId;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -56,15 +55,15 @@ public final class EnclosController {
      */
     private EnclosController(){
         super();
-        firebaseRefEnclos.child("1").child("label").setValue("Enclos1");
-        firebaseRefEnclos.child("2").child("label").setValue("Enclos2");
-        firebaseRefEnclos.child("3").child("label").setValue("Enclos3");
-        firebaseRefEnclos.child("4").child("label").setValue("Enclos4");
-        firebaseRefEnclos.child("5").child("label").setValue("Enclos5");
-        firebaseRefEnclos.child("6").child("label").setValue("Enclos6");
-        firebaseRefEnclos.child("7").child("label").setValue("Enclos7");
-        lesEnclos = new ArrayList<EnclosClass>();
-        setLastInsertId();
+//        firebaseRefEnclos.child("1").child("label").setValue("Enclos1");
+//        firebaseRefEnclos.child("2").child("label").setValue("Enclos2");
+//        firebaseRefEnclos.child("3").child("label").setValue("Enclos3");
+//        firebaseRefEnclos.child("4").child("label").setValue("Enclos4");
+//        firebaseRefEnclos.child("5").child("label").setValue("Enclos5");
+//        firebaseRefEnclos.child("6").child("label").setValue("Enclos6");
+//        firebaseRefEnclos.child("7").child("label").setValue("Enclos7");
+//        lesEnclos = new ArrayList<EnclosClass>();
+//        setLastInsertId();
     }
 
     public static final EnclosController getInstance(Context context){
@@ -78,7 +77,7 @@ public final class EnclosController {
         return EnclosController.instance;
     }
 
-    public void creerEnclosFirestore(EnclosClass enclos) {
+    public void creerEnclosFirestore(final EnclosClass enclos) {
         // Add a new document with a generated ID
         db.collection("enclos")
             .add(enclos)
@@ -86,6 +85,9 @@ public final class EnclosController {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    String key = documentReference.getId();
+                    enclos.setId(key);
+                    addUniqueIdToEnclos(enclos, key);
                 }
             })
             .addOnFailureListener(new OnFailureListener() {
@@ -96,68 +98,53 @@ public final class EnclosController {
             });
     }
 
-    public void deleteEnclos(EnclosClass unEnclos){
-        firebaseRefEnclos.child(Integer.toString(unEnclos.getId())).removeValue();
-        lesEnclos.remove(unEnclos);
+    public void addUniqueIdToEnclos(EnclosClass enclos, String id) {
+        enclos.setId(id);
+        db.collection("enclos").document(id)
+            .set(enclos)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
     }
 
-    public void updateEnclos(EnclosClass unEnclos){
-        firebaseRefEnclos.child(Integer.toString(unEnclos.getId())).child("label").setValue(unEnclos.getLabel());
+    public void deleteEnclos(EnclosClass unEnclos){
+        db.collection("enclos").document(unEnclos.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
 
     public void setEnclos(EnclosClass enclos){
         EnclosController.enclos = enclos;
     }
 
-    public ArrayList<EnclosClass> getLesEnclos() {
-        return lesEnclos;
-    }
-
-    public void setLesEnclos(ArrayList<EnclosClass> lesEnclos) {
-        EnclosController.lesEnclos = lesEnclos;
-    }
-
-    public void setLastInsertId() {
-        // FIREBASE  insertion enclos
-
-        firebaseRefEnclos.limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // access last enclos
-                    DataSnapshot messageSnapShot= dataSnapshot.getChildren().iterator().next();
-                    lastInsertId = Integer.parseInt(messageSnapShot.getKey());
-                    Log.v("lastInsertId","*********** "+ Integer.toString(lastInsertId));
-                }
-                else{
-                    lastInsertId = 0;
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-//                Log.w("***********", "Failed to read value.", error.toException());
-            }
-        });
-
-        this.lastInsertId = lastInsertId;
-    }
-
-    public void getAllEnclosFirestore(final Context context,final ListView lvListeEnclos, final TextView textVide) {
+    public void getAllEnclosForListAdapter(final Context context,final ListView lvListeEnclos, final TextView textVide) {
         db.collection("enclos")
             .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-//                        for (QueryDocumentSnapshot document : task.getResult()) {
-//                            test = document.getData();
-//
-//                            Log.d(TAG, document.getId() + " => " + document.getData());
-//                        }
-//                            testData = task.getResult().toObjects(EnclosClass.class);
-                            lesEnclos.clear();
+                            ArrayList<EnclosClass> lesEnclos = new ArrayList<>();
                             lesEnclos.addAll(task.getResult().toObjects(EnclosClass.class));
                             if (lesEnclos.size() != 0) {
 
@@ -175,37 +162,28 @@ public final class EnclosController {
 
     public void getAllEnclosWithPointsFirestore(final GoogleMap nmap) {
         db.collection("enclos")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            List<EnclosClass> enclos = task.getResult().toObjects(EnclosClass.class);
-                            ArrayList<LatLng> pointsEnclos = new ArrayList<LatLng>();
-                            for (int i = 0; enclos.size() > i; i++) {
-                                EnclosClass enclo = enclos.get(i);
-                                ArrayList<PointsGpsClass> pointsGps = enclo.getPointsGps();
-                                for (PointsGpsClass point: pointsGps) {
-                                    pointsEnclos.add(new LatLng(point.getLatitude(), point.getLongitude()));
-                                }
-                            }
-                            PolygonOptions rectOptions = new PolygonOptions()
-                                    .addAll(pointsEnclos);
-                            nmap.addPolygon(rectOptions);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<EnclosClass> enclos = task.getResult().toObjects(EnclosClass.class);
+                    ArrayList<LatLng> pointsEnclos = new ArrayList<LatLng>();
+                    for (int i = 0; enclos.size() > i; i++) {
+                        EnclosClass enclo = enclos.get(i);
+                        ArrayList<PointsGpsClass> pointsGps = enclo.getPointsGps();
+                        for (PointsGpsClass point: pointsGps) {
+                            pointsEnclos.add(new LatLng(point.getLatitude(), point.getLongitude()));
                         }
                     }
-                });
-//        db.collection("pointsGps").get()
-//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        List<PointsGpsClass> test = queryDocumentSnapshots.toObjects(PointsGpsClass.class);
-//                        test.get(1);
-//                    }
-//                });
-
+                    PolygonOptions rectOptions = new PolygonOptions()
+                            .addAll(pointsEnclos);
+                    nmap.addPolygon(rectOptions);
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+                }
+            });
     }
 
     public EnclosClass getEnclosUpdate() {

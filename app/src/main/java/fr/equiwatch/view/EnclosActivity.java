@@ -28,8 +28,6 @@ public class EnclosActivity extends MenuEquiwatch  {
         super.onCreate(savedInstanceState);
         enclosActivity = this;
         this.enclosController = EnclosController.getInstance(this);
-        ArrayList<EnclosClass> lesEnclos = enclosController.getLesEnclos();
-        Log.d("lesEnclos", "**********" + lesEnclos.size());
 //        if (lesEnclos.size() != 0) {
             ListView lvListeEnclos = (ListView) findViewById(R.id.lvListeEnclos);
 //            EnclosListAdapter adapter = new EnclosListAdapter(this, lesEnclos);
@@ -38,7 +36,7 @@ public class EnclosActivity extends MenuEquiwatch  {
             TextView textVide = (TextView) findViewById(R.id.txtVide);
 //            textVide.setText("Vous n'avez aucun enclos pour le moment, cliquez sur le + pour en ajouter.");
 //        }
-        enclosController.getAllEnclosFirestore(this, lvListeEnclos, textVide);
+        enclosController.getAllEnclosForListAdapter(this, lvListeEnclos, textVide);
         findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -29,8 +29,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+
 import fr.equiwatch.R;
 import fr.equiwatch.controller.EnclosController;
+import fr.equiwatch.model.EnclosClass;
+import fr.equiwatch.model.PointsGpsClass;
 
 public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallback, OnMarkerClickListener {
 
@@ -99,6 +103,13 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         getDeviceLocation();
         mMap.setOnMarkerClickListener(this);
         enclosController.getAllEnclosWithPointsFirestore(mMap);
+        ArrayList<PointsGpsClass> listPoint = new ArrayList<PointsGpsClass>();
+        listPoint.add(new PointsGpsClass(48.99487,2.201573, 1));
+        listPoint.add(new PointsGpsClass(48.995355,2.201935, 2));
+        listPoint.add(new PointsGpsClass(48.994996,2.202922, 3));
+        listPoint.add(new PointsGpsClass(48.994355,2.202847, 4));
+        EnclosClass enclos = new EnclosClass("enclos de test Id", listPoint);
+        enclosController.creerEnclosFirestore(enclos);
     }
 
     private void getLocationPermission() {

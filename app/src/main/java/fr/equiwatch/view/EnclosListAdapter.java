@@ -119,6 +119,7 @@ public class EnclosListAdapter extends BaseAdapter {
 
                                 //demande de suppression au controller
                                 enclosController.deleteEnclos(lesEnclos.get(position));
+                                lesEnclos.remove(position);
 
                                 View viewEnclos = snackbarSupr.getView();
                                 viewEnclos.setBackgroundResource(R.color.colorPrimary);
