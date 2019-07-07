@@ -2,6 +2,8 @@ package fr.equiwatch.controller;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -29,9 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import fr.equiwatch.R;
 import fr.equiwatch.model.EnclosClass;
 import fr.equiwatch.model.PointsGpsClass;
 import fr.equiwatch.view.EnclosActivity;
+import fr.equiwatch.view.EnclosListAdapter;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -60,9 +64,7 @@ public final class EnclosController {
         firebaseRefEnclos.child("6").child("label").setValue("Enclos6");
         firebaseRefEnclos.child("7").child("label").setValue("Enclos7");
         lesEnclos = new ArrayList<EnclosClass>();
-//        getAllEnclos();
         setLastInsertId();
-        getAllEnclosFirestore();
     }
 
     public static final EnclosController getInstance(Context context){
@@ -75,16 +77,6 @@ public final class EnclosController {
         }
         return EnclosController.instance;
     }
-
-//    public void creerEnclos(String label){
-//        int id = lastInsertId + 1;
-//        Log.v("lastInsertId1","*********** "+ lastInsertId);
-//        enclos = new EnclosClass(id, label);
-//        firebaseRefEnclos.child(Integer.toString(id)).child("label").setValue(enclos.getLabel());
-//        lesEnclos.add(enclos);
-//        Log.v("lastInsertId2","*********** "+ lastInsertId);
-//        Log.v("idForInsert","*********** "+ id);
-//    }
 
     public void creerEnclosFirestore(EnclosClass enclos) {
         // Add a new document with a generated ID
@@ -152,32 +144,7 @@ public final class EnclosController {
         this.lastInsertId = lastInsertId;
     }
 
-    public void getAllEnclos(){
-        firebaseRefEnclos.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                lesEnclos.clear();
-                for (DataSnapshot unSnapshot : dataSnapshot.getChildren()) {
-                    Log.d("label","***********" + unSnapshot.child("label").getValue().toString());
-//                    lesEnclos.add(new EnclosClass(((int)Integer.parseInt(unSnapshot.getKey().toString())),unSnapshot.child("label").getValue().toString()));
-                }
-//                for (EnclosClass unEnclos : lesEnclos){
-//                    int id = unEnclos.getId();
-//                    String label = unEnclos.getLabel();
-//                    Log.d("label","***********" + label);
-//                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("***********", "Failed to read value.", error.toException());
-            }
-        });
-    }
-
-    public void getAllEnclosFirestore() {
+    public void getAllEnclosFirestore(final Context context,final ListView lvListeEnclos, final TextView textVide) {
         db.collection("enclos")
             .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -190,6 +157,15 @@ public final class EnclosController {
 //                            Log.d(TAG, document.getId() + " => " + document.getData());
 //                        }
 //                            testData = task.getResult().toObjects(EnclosClass.class);
+                            lesEnclos.clear();
+                            lesEnclos.addAll(task.getResult().toObjects(EnclosClass.class));
+                            if (lesEnclos.size() != 0) {
+
+                                EnclosListAdapter adapter = new EnclosListAdapter(context, lesEnclos);
+                                lvListeEnclos.setAdapter(adapter);
+                            } else {
+                                textVide.setText("Vous n'avez aucun enclos pour le moment, cliquez sur le + pour en ajouter.");
+                            }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
