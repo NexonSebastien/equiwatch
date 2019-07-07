@@ -75,8 +75,21 @@ public final class EquidesController {
     }
 
     public void deleteEquides(EquidesClass equides){
-//        firebaseRefEquides.child(Integer.toString(equides.getId())).removeValue();
-//        lesEquides.remove(equides);
+        db.collection("equides").document(equides.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+        lesEquides.remove(equides);
     }
 
     public void updateEquides(EquidesClass equides){
@@ -105,7 +118,6 @@ public final class EquidesController {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-
                             lesEquides.clear();
                             lesEquides.addAll(task.getResult().toObjects(EquidesClass.class));
                             if (lesEquides.size() != 0) {

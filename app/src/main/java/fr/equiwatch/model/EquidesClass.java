@@ -5,12 +5,12 @@ import java.io.Serializable;
 public class EquidesClass implements Serializable{
 
     // attributs
-    private int id;
+    private String id;
     private String nom;
     private int idEnclos;
     private int idCapteur;
 
-    public EquidesClass(int id, String nom, int idEnclos, int idCapteur){
+    public EquidesClass(String id, String nom, int idEnclos, int idCapteur){
         this.id = id;
         this.nom = nom;
         this.idEnclos = idEnclos;
@@ -18,7 +18,7 @@ public class EquidesClass implements Serializable{
     }
 
     public EquidesClass(String nom, int idEnclos, int idCapteur){
-        this.id = 0;
+        this.id = "";
         this.nom = nom;
         this.idEnclos = idEnclos;
         this.idCapteur = idCapteur;
@@ -27,11 +27,11 @@ public class EquidesClass implements Serializable{
     public EquidesClass(){
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

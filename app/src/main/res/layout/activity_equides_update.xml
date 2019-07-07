@@ -36,7 +36,7 @@
                         android:layout_width="233dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/fence" />
+                        android:src="@drawable/horse" />
 
                     <TextView
                         android:id="@+id/textView3"
