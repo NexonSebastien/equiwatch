@@ -18,6 +18,7 @@ public class EnclosActivity extends MenuEquiwatch  {
     // propriétés
     private EnclosController enclosController;
     private static EnclosActivity enclosActivity;
+    private ArrayList<EnclosClass> lesEnclos;
 
 
     @Override
@@ -27,16 +28,18 @@ public class EnclosActivity extends MenuEquiwatch  {
         getLayoutInflater().inflate(R.layout.activity_enclos, dynamicContent, true);
         super.onCreate(savedInstanceState);
         enclosActivity = this;
+        enclosController = EnclosController.getInstance(this);
+        lesEnclos = enclosController.getLesEnclos();
         this.enclosController = EnclosController.getInstance(this);
-//        if (lesEnclos.size() != 0) {
-            ListView lvListeEnclos = (ListView) findViewById(R.id.lvListeEnclos);
-//            EnclosListAdapter adapter = new EnclosListAdapter(this, lesEnclos);
-//            lvListeEnclos.setAdapter(adapter);
-//        } else {
-            TextView textVide = (TextView) findViewById(R.id.txtVide);
-//            textVide.setText("Vous n'avez aucun enclos pour le moment, cliquez sur le + pour en ajouter.");
-//        }
-        enclosController.getAllEnclosForListAdapter(this, lvListeEnclos, textVide);
+        ListView lvListeEnclos = findViewById(R.id.lvListeEnclos);
+        TextView textVide = findViewById(R.id.txtVide);
+        if (lesEnclos.size() != 0) {
+            EnclosListAdapter adapter = new EnclosListAdapter(this, lesEnclos);
+            lvListeEnclos.setAdapter(adapter);
+        } else {
+            textVide.setText("Vous n'avez aucun enclos pour le moment, cliquez sur le + pour en ajouter.");
+        }
+//        enclosController.getAllEnclosForListAdapter(this, lvListeEnclos, textVide);
         findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

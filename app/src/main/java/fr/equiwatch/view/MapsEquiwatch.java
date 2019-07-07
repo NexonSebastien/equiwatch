@@ -103,13 +103,6 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         getDeviceLocation();
         mMap.setOnMarkerClickListener(this);
         enclosController.getAllEnclosWithPointsFirestore(mMap);
-        ArrayList<PointsGpsClass> listPoint = new ArrayList<PointsGpsClass>();
-        listPoint.add(new PointsGpsClass(48.99487,2.201573, 1));
-        listPoint.add(new PointsGpsClass(48.995355,2.201935, 2));
-        listPoint.add(new PointsGpsClass(48.994996,2.202922, 3));
-        listPoint.add(new PointsGpsClass(48.994355,2.202847, 4));
-        EnclosClass enclos = new EnclosClass("enclos de test Id", listPoint);
-        enclosController.creerEnclosFirestore(enclos);
     }
 
     private void getLocationPermission() {
@@ -163,9 +156,10 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = task.getResult();
-                            LatLng currentPos = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, DEFAULT_ZOOM));
-
+                            if (mLastKnownLocation != null) {
+                                LatLng currentPos = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, DEFAULT_ZOOM));
+                            }
                         } else {
                             Log.d(TAG, "Current location is null. Using defaults.");
                             Log.e(TAG, "Exception: %s", task.getException());
