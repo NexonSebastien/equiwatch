@@ -37,12 +37,13 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:src="@drawable/fence" />
+
                     <TextView
                         android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Création Enclos"
+                        android:text="Modification Chevaux"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -66,31 +67,45 @@
                 android:layout_weight="1">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/iptNomEnclos"
+                    android:id="@+id/iptNomChevaux"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Nom Enclos" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/iptIdEnclos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Id Enclos" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/iptIdCapteur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Id Capteur" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/bt_delimiter_enclos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/bt_delimiter_points" />
-
-            <TextView
-                android:id="@+id/tv_nb_points"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/btnEnclosCreate"
+                android:id="@+id/btnChevauxUpdate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Créer" />
+                android:text="Modifier" />
 
         </LinearLayout>
 

@@ -107,7 +107,8 @@ public class MenuMapsActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_chevaux) {
-            // Handle the camera action
+            Intent intent = new Intent(this, ChevauxActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_enclos) {
             Intent intent = new Intent(this, EnclosActivity.class);
             startActivity(intent);

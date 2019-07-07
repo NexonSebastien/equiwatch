@@ -9,12 +9,14 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import fr.equiwatch.R;
+import fr.equiwatch.controller.ChevauxController;
 import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.view.MapsEquiwatch;
 
 public class MainActivity extends AppCompatActivity {
     private Button bt_maps;
     private EnclosController enclosController;
+    private ChevauxController chevauxController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
