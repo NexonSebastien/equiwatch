@@ -21,8 +21,13 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 
 import fr.equiwatch.R;
+import fr.equiwatch.controller.EnclosController;
+import fr.equiwatch.controller.PointsGpsController;
+import fr.equiwatch.model.PointsGpsClass;
 
 public class MenuMapsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,12 +35,16 @@ public class MenuMapsActivity extends AppCompatActivity
     private MapsEquiwatch mMapFragment;
     private ArrayList<Marker> listMarkerEnclos;
     public static boolean isModificationModeEnabled = false;
+    private EnclosController enclosController;
+    private PointsGpsController pointsGpsController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMapFragment = new MapsEquiwatch();
         listMarkerEnclos = new ArrayList<>();
+        enclosController = EnclosController.getInstance(this);
+        pointsGpsController = pointsGpsController.getInstance(this);
 
         setContentView(R.layout.activity_menu_maps_equiwatch);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -55,6 +64,7 @@ public class MenuMapsActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_home);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
+//        ArrayList<PointsGpsClass> listAllPoints = pointsGpsController.getLesPoints();
         setEventOnFloatingMapsButtons();
     }
 
@@ -102,7 +112,6 @@ public class MenuMapsActivity extends AppCompatActivity
         if (id == R.id.nav_chevaux) {
             // Handle the camera action
         } else if (id == R.id.nav_enclos) {
-//            showFragment(new EnclosFragment());
             Intent intent = new Intent(this, EnclosActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_capteurs) {
@@ -156,10 +165,7 @@ public class MenuMapsActivity extends AppCompatActivity
             public void onClick(View view) {
                 Marker marker = placeMarkerInMapOnPositionUser("marqueur enclos");
                 listMarkerEnclos.add(marker);
-                Log.d("FloatingButton", "*************" + listMarkerEnclos.size());
-
                 if (listMarkerEnclos.size() > 2) {
-                    Log.d("FloatingButton", "************* Vible Validate");
                     fabValidate.show();
                 }
 
@@ -177,7 +183,6 @@ public class MenuMapsActivity extends AppCompatActivity
                     Marker marker = listMarkerEnclos.get(listMarkerEnclos.size() - 1);
                     marker.remove();
                     listMarkerEnclos.remove(marker);
-                    Log.d("FloatingButton", "*************" + listMarkerEnclos.size());
                 }
                 if (listMarkerEnclos.size() < 3) {
                     fabValidate.hide();
@@ -193,8 +198,19 @@ public class MenuMapsActivity extends AppCompatActivity
         fabValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                listMarkerEnclos.clear();
+                mMapFragment.clearAllMarker();
+                setAllFloatingButtonsGone();
             }
         });
+    }
+
+    public void setAllFloatingButtonsGone() {
+        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
+        fabAdd.hide();
+        FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
+        fabDelete.hide();
+        FloatingActionButton fabValidate = findViewById(R.id.fab_validate);
+        fabValidate.hide();
     }
 }

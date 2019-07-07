@@ -12,10 +12,15 @@ public class EnclosClass implements Serializable{
     // attributs
     private int id;
     private String label;
+    private ArrayList<PointsGpsClass> pointsGps;
 
-    public EnclosClass(int id, String label){
+    public EnclosClass(int id, String label, ArrayList<PointsGpsClass> pointsGps){
         this.id = id;
         this.label = label;
+        this.pointsGps = pointsGps;
+    }
+
+    public EnclosClass(){
     }
 
     public int getId() {
@@ -34,4 +39,7 @@ public class EnclosClass implements Serializable{
         this.label = label;
     }
 
+    public ArrayList<PointsGpsClass> getPointsGps() {
+        return pointsGps;
+    }
 }

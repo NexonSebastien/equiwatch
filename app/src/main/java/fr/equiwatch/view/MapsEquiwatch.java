@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import fr.equiwatch.R;
+import fr.equiwatch.controller.EnclosController;
 
 public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallback, OnMarkerClickListener {
 
@@ -45,6 +46,7 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
     // Keys for storing activity state.
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
+    private EnclosController enclosController;
 
 
     public MapsEquiwatch() {
@@ -59,6 +61,7 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         }
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
         getMapAsync(this);
+        enclosController = EnclosController.getInstance(getActivity());
     }
 
     /**
@@ -95,6 +98,7 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
         mMap.setOnMarkerClickListener(this);
+        enclosController.getAllEnclosWithPointsFirestore(mMap);
     }
 
     private void getLocationPermission() {
@@ -210,5 +214,9 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         }
 
         return marker;
+    }
+
+    public void clearAllMarker() {
+        this.mMap.clear();
     }
 }

@@ -24,14 +24,14 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_enclos_create);
         this.enclosController = EnclosController.getInstance(this);
-        enclosController.setLastInsertId();
+//        enclosController.setLastInsertId();
 
         findViewById(R.id.btnEnclosCreate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EditText inpNomEnclos = (EditText) findViewById(R.id.iptNomEnclos);
                 String nomEnclos = inpNomEnclos.getText().toString();
-                enclosController.creerEnclos(nomEnclos);
+//                enclosController.creerEnclos(nomEnclos);
 //              @todo refrech le fragment
 
 //              @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
