@@ -51,6 +51,7 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
     private EnclosController enclosController;
+    private float zoomLevel = 0;
 
 
     public MapsEquiwatch() {
@@ -98,6 +99,9 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         getLocationPermission();
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI();
+
+        // Ajout du listener pour garder récupérer le niveau de zoom actuels
+        cameraChangeListener();
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation();
@@ -200,6 +204,16 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         return true;
     }
 
+    public void cameraChangeListener() {
+        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+            @Override
+            public void onCameraIdle() {
+                zoomLevel = mMap.getCameraPosition().zoom;
+            }
+        });
+    }
+
+
     //Added public method to be called from the Activity
     public void placeMarker(String title, double lat, double lon) {
         if (mMap != null) {
@@ -209,16 +223,46 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         }
     }
 
-    public Marker placeMarkerOnUserPosition(String title) {
-        Marker marker = null;
-        if (mMap != null) {
-            getDeviceLocation();
-            LatLng markerPos = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPos, 15));
-            return mMap.addMarker(new MarkerOptions().title(title).position(markerPos));
-        }
+    public void placeMarkerOnUserPosition(final String title, final ArrayList<Marker> listMarkerEnclos, final FloatingActionButton fabValidate, final FloatingActionButton fabDelete) {
+        try {
+            if (mLocationPermissionGranted) {
+                Task<Location> locationResult = mFusedLocationProviderClient.getLastLocation();
+                locationResult.addOnCompleteListener(getActivity(), new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            // Set the map's camera position to the current location of the device.
+                            mLastKnownLocation = task.getResult();
+                            if (mLastKnownLocation != null) {
+                                LatLng currentPos = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, DEFAULT_ZOOM));
 
-        return marker;
+                                LatLng markerPos = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+                                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(markerPos, zoomLevel));
+                                Marker marker = mMap.addMarker(new MarkerOptions().title(title).position(markerPos));
+                                listMarkerEnclos.add(marker);
+
+                                if (listMarkerEnclos.size() > 2) {
+                                    fabValidate.show();
+                                }
+
+                                if (listMarkerEnclos.size() == 1) {
+                                    fabDelete.show();
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Current location is null. Using defaults.");
+                            Log.e(TAG, "Exception: %s", task.getException());
+                            mMap.moveCamera(CameraUpdateFactory
+                                    .newLatLngZoom(mDefaultLocation, DEFAULT_ZOOM));
+                            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+                        }
+                    }
+                });
+            }
+        } catch (SecurityException e)  {
+            Log.e("Exception: %s", e.getMessage());
+        }
     }
 
     public void clearAllMarker() {

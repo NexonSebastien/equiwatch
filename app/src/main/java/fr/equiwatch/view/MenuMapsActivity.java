@@ -145,13 +145,10 @@ public class MenuMapsActivity extends AppCompatActivity
      *
      * @param title
      */
-    private Marker placeMarkerInMapOnPositionUser(String title) {
-        Marker marker = null;
+    private void placeMarkerInMapOnPositionUser(String title, ArrayList<Marker> listMarkerEnclos, FloatingActionButton fabValidate, FloatingActionButton fabDelete) {
         if (mMapFragment != null) {
-            marker = mMapFragment.placeMarkerOnUserPosition(title);
+             mMapFragment.placeMarkerOnUserPosition(title, listMarkerEnclos, fabValidate, fabDelete);
         }
-
-        return marker;
     }
 
     public  void setEventOnFloatingMapsButtons() {
@@ -159,19 +156,12 @@ public class MenuMapsActivity extends AppCompatActivity
         final FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         final FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
         final FloatingActionButton fabValidate = findViewById(R.id.fab_validate);
+        final Button btQuit = findViewById(R.id.button_quit);
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Marker marker = placeMarkerInMapOnPositionUser("marqueur enclos");
-                listMarkerEnclos.add(marker);
-                if (listMarkerEnclos.size() > 2) {
-                    fabValidate.show();
-                }
-
-                if (listMarkerEnclos.size() == 1) {
-                    fabDelete.show();
-                }
+                placeMarkerInMapOnPositionUser("marqueur enclos", listMarkerEnclos, fabValidate, fabDelete);
             }
         });
 
