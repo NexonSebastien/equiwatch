@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import fr.equiwatch.R;
 
 import fr.equiwatch.controller.CapteursController;
@@ -16,6 +18,9 @@ import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.notifications.NotificationReceiver;
 
 public class MainActivity extends AppCompatActivity {
+    private Button bt_maps;
+    private EnclosController enclosController;
+    private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
