@@ -20,4 +20,6 @@
     <string name="menu_enclos">Mes enclos</string>
     <string name="menu_capteurs">Mes capteurs</string>
     <string name="menu_parametre">Paramètres</string>
+    <string name="bt_quitter">Quitter</string>
+    <string name="message_enclos">Vous n\'avez aucun enclos pour le moment, cliquez sur le + pour en ajouter.</string>
 </resources>
