@@ -1,10 +1,8 @@
 package fr.equiwatch.view;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,12 +22,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
 
 import fr.equiwatch.R;
 import fr.equiwatch.controller.EnclosController;
-import fr.equiwatch.controller.PointsGpsController;
 import fr.equiwatch.model.PointsGpsClass;
 
 public class MenuMapsActivity extends AppCompatActivity
@@ -38,7 +33,6 @@ public class MenuMapsActivity extends AppCompatActivity
     private MapsEquiwatch mMapFragment;
     private ArrayList<Marker> listMarkerEnclos;
     private EnclosController enclosController;
-    private PointsGpsController pointsGpsController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +40,6 @@ public class MenuMapsActivity extends AppCompatActivity
         mMapFragment = new MapsEquiwatch();
         listMarkerEnclos = new ArrayList<>();
         enclosController = EnclosController.getInstance(this);
-        pointsGpsController = pointsGpsController.getInstance(this);
 
         setContentView(R.layout.activity_menu_maps_equiwatch);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -66,7 +59,6 @@ public class MenuMapsActivity extends AppCompatActivity
         navigationView.setCheckedItem(R.id.nav_home);
         onNavigationItemSelected(navigationView.getMenu().getItem(0));
 
-//        ArrayList<PointsGpsClass> listAllPoints = pointsGpsController.getLesPoints();
         setEventOnFloatingMapsButtons();
         Intent intent = getIntent();
 
@@ -97,9 +89,7 @@ public class MenuMapsActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks here.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
