@@ -81,6 +81,34 @@ public final class EnclosController {
             });
     }
 
+    /**
+     * Méthode asynchrone permettant de mettre à jour le marqueur passé en paramètre dans Firestore.
+     *
+     * @param enclos
+     */
+    public void updateEnclos(final EnclosClass enclos) {
+        db.collection("enclos").document(enclos.getId())
+                .set(enclos)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    /**
+     * Méthode asynchrone qui permet d'ajouter l'id unique généré par Firestore a l'enclos passé en paramètre.
+     *
+     * @param enclos
+     * @param id
+     */
     public void addUniqueIdToEnclos(EnclosClass enclos, String id) {
         enclos.setId(id);
         db.collection("enclos").document(id)
