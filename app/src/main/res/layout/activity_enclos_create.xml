@@ -72,6 +72,18 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:id="@+id/bt_delimiter_enclos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/bt_delimiter_points" />
+
+            <TextView
+                android:id="@+id/tv_nb_points"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <Button
                 android:id="@+id/btnEnclosCreate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

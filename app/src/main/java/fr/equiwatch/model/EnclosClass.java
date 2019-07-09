@@ -47,4 +47,8 @@ public class EnclosClass implements Serializable{
     public ArrayList<PointsGpsClass> getPointsGps() {
         return pointsGps;
     }
+
+    public void setPointsGps(ArrayList<PointsGpsClass> pointsGps) {
+        this.pointsGps = pointsGps;
+    }
 }

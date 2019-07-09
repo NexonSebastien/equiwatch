@@ -183,7 +183,5 @@ public class EnclosListAdapter extends BaseAdapter {
         ImageButton imgBtnViewEnclos;
         ImageButton imgBtnUpdateEnclos;
         ImageButton imgBtnDeleteEnclos;
-
-
     }
 }

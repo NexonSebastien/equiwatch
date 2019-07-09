@@ -1,11 +1,14 @@
 package fr.equiwatch.view;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +37,6 @@ public class MenuMapsActivity extends AppCompatActivity
 
     private MapsEquiwatch mMapFragment;
     private ArrayList<Marker> listMarkerEnclos;
-    public static boolean isModificationModeEnabled = false;
     private EnclosController enclosController;
     private PointsGpsController pointsGpsController;
 
@@ -66,6 +68,11 @@ public class MenuMapsActivity extends AppCompatActivity
 
 //        ArrayList<PointsGpsClass> listAllPoints = pointsGpsController.getLesPoints();
         setEventOnFloatingMapsButtons();
+        Intent intent = getIntent();
+
+        if(intent != null && intent.getExtras() != null) {
+            enableCreateEnclos(); // Run the method with the ID Value passed through the Intent Extra
+        }
     }
 
     @Override
@@ -157,6 +164,7 @@ public class MenuMapsActivity extends AppCompatActivity
         final FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
         final FloatingActionButton fabValidate = findViewById(R.id.fab_validate);
         final Button btQuit = findViewById(R.id.button_quit);
+        final MenuMapsActivity context = this;
 
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,9 +196,31 @@ public class MenuMapsActivity extends AppCompatActivity
         fabValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listMarkerEnclos.clear();
-                mMapFragment.clearAllMarker();
+                ArrayList<PointsGpsClass> listPointsGps = new ArrayList<>();
+//                for (Marker marker: listMarkerEnclos) {
+                for (int i = 0; listMarkerEnclos.size() > i; i ++){
+                    Marker marker = listMarkerEnclos.get(i);
+                    listPointsGps.add(new PointsGpsClass(marker.getPosition().latitude, marker.getPosition().longitude, i));
+                }
+//                enclosCreateActivity.setListPoints(listPointsGps);
+//                Bundle extra = new Bundle();
+//                extra.putSerializable("listPoints", listPointsGps);
+
+                Intent returnIntent = getIntent();
+                returnIntent.putExtra("listPointsGps", listPointsGps);
+//                ArrayList<PointsGpsClass> test = (ArrayList<PointsGpsClass>) returnIntent.getSerializableExtra("listPointsGps");
+//                test.size();
+                setResult(Activity.RESULT_OK, returnIntent);
+                context.finish();
+            }
+        });
+
+        btQuit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 setAllFloatingButtonsGone();
+                listMarkerEnclos.clear();
+                context.finish();
             }
         });
     }
@@ -202,5 +232,14 @@ public class MenuMapsActivity extends AppCompatActivity
         fabDelete.hide();
         FloatingActionButton fabValidate = findViewById(R.id.fab_validate);
         fabValidate.hide();
+        Button btQuit = findViewById(R.id.button_quit);
+        btQuit.setVisibility(View.GONE);
+    }
+
+    public void enableCreateEnclos() {
+        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
+        fabAdd.show();
+        Button btQuit = findViewById(R.id.button_quit);
+        btQuit.setVisibility(View.VISIBLE);
     }
 }

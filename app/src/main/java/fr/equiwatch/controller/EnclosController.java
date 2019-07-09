@@ -31,7 +31,6 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public final class EnclosController {
 
     private static EnclosController instance = null;
-    private static EnclosClass enclos;
     private static Context context;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EnclosClass enclosUpdate;
@@ -56,7 +55,12 @@ public final class EnclosController {
         return EnclosController.instance;
     }
 
-    public void creerEnclosFirestore(final EnclosClass enclos) {
+    /**
+     * Méthode asynchrone qui permet de créer l'enclos passer en paramètre dans la base de données.
+     *
+     * @param enclos
+     */
+    public void creerEnclos(final EnclosClass enclos) {
         // Add a new document with a generated ID
         db.collection("enclos")
             .add(enclos)
