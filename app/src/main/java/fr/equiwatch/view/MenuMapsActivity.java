@@ -158,8 +158,10 @@ public class MenuMapsActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Créer les evenemnts OnClick pour les boutons
+     */
     public  void setEventOnFloatingMapsButtons() {
-        // Code pour les boutons flottants
         final FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         final FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
         final FloatingActionButton fabValidate = findViewById(R.id.fab_validate);
@@ -197,19 +199,14 @@ public class MenuMapsActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 ArrayList<PointsGpsClass> listPointsGps = new ArrayList<>();
-//                for (Marker marker: listMarkerEnclos) {
                 for (int i = 0; listMarkerEnclos.size() > i; i ++){
                     Marker marker = listMarkerEnclos.get(i);
                     listPointsGps.add(new PointsGpsClass(marker.getPosition().latitude, marker.getPosition().longitude, i));
                 }
-//                enclosCreateActivity.setListPoints(listPointsGps);
-//                Bundle extra = new Bundle();
-//                extra.putSerializable("listPoints", listPointsGps);
 
                 Intent returnIntent = getIntent();
                 returnIntent.putExtra("listPointsGps", listPointsGps);
-//                ArrayList<PointsGpsClass> test = (ArrayList<PointsGpsClass>) returnIntent.getSerializableExtra("listPointsGps");
-//                test.size();
+
                 setResult(Activity.RESULT_OK, returnIntent);
                 context.finish();
             }

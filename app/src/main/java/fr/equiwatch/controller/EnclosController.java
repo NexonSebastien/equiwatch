@@ -44,6 +44,12 @@ public final class EnclosController {
         getAllEnclos();
     }
 
+    /**
+     * Permet de récupérer l'instance de EnclosController
+     *
+     * @param context
+     * @return
+     */
     public static final EnclosController getInstance(Context context){
         if(context != null){
             EnclosController.context = context;
@@ -127,6 +133,11 @@ public final class EnclosController {
                 });
     }
 
+    /**
+     * Méthode asynchrone qui supprime l'enclos passé en parmètre de Firestore.
+     *
+     * @param unEnclos
+     */
     public void deleteEnclos(EnclosClass unEnclos){
         db.collection("enclos").document(unEnclos.getId())
             .delete()
@@ -144,10 +155,10 @@ public final class EnclosController {
             });
     }
 
-    public void setEnclos(EnclosClass enclos){
-        EnclosController.enclos = enclos;
-    }
-
+    /**
+     * Méthode asynchrone qui permet de récupérer tout les enclos depuis firestore.
+     * Le listener met à jour la liste a chaque modification en base de données.
+     */
     public void getAllEnclos() {
         db.collection("enclos")
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -164,6 +175,11 @@ public final class EnclosController {
             });
     }
 
+    /**
+     * Méthode asynchrone permettant de créer les polygons représentant les enclos sur la google map.
+     *
+     * @param nmap
+     */
     public void getAllEnclosWithPointsFirestore(final GoogleMap nmap) {
         db.collection("enclos")
             .get()
@@ -191,18 +207,38 @@ public final class EnclosController {
             });
     }
 
+    /**
+     * Getter de enclosUpdate
+     *
+     * @return
+     */
     public EnclosClass getEnclosUpdate() {
         return enclosUpdate;
     }
 
+    /**
+     * Setter de enclosUpdate
+     *
+     * @param enclosUpdate
+     */
     public void setEnclosUpdate(EnclosClass enclosUpdate) {
         this.enclosUpdate = enclosUpdate;
     }
 
+    /**
+     * Permet de récupérer le context ayant utilisant l'instance de EnclosController
+     *
+     * @return Context
+     */
     public static Context getContext() {
         return context;
     }
 
+    /**
+     * Permet de récupérer lesEnclos
+     *
+     * @return ArrayList<EnclosClass>
+     */
     public ArrayList<EnclosClass> getLesEnclos() {
         return lesEnclos;
     }
