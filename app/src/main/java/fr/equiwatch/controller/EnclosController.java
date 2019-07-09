@@ -187,19 +187,22 @@ public final class EnclosController {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    lesEnclos.clear();
-                    lesEnclos.addAll(task.getResult().toObjects(EnclosClass.class));
-                    ArrayList<LatLng> pointsEnclos = new ArrayList<LatLng>();
-                    for (int i = 0; lesEnclos.size() > i; i++) {
-                        EnclosClass enclo = lesEnclos.get(i);
-                        ArrayList<PointsGpsClass> pointsGps = enclo.getPointsGps();
+
+                    ArrayList<EnclosClass> listEnclos = (ArrayList<EnclosClass>) task.getResult().toObjects(EnclosClass.class);
+                    ArrayList<LatLng> pointsEnclos = new ArrayList<>();
+                    for (int i = 0; listEnclos.size() > i; i++) {
+                        pointsEnclos.clear();
+                        EnclosClass enclos = listEnclos.get(i);
+                        ArrayList<PointsGpsClass> pointsGps = enclos.getPointsGps();
                         for (PointsGpsClass point: pointsGps) {
                             pointsEnclos.add(new LatLng(point.getLatitude(), point.getLongitude()));
                         }
+
+                        PolygonOptions rectOptions = new PolygonOptions()
+                                .addAll(pointsEnclos);
+                        nmap.addPolygon(rectOptions);
                     }
-                    PolygonOptions rectOptions = new PolygonOptions()
-                            .addAll(pointsEnclos);
-                    nmap.addPolygon(rectOptions);
+
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
