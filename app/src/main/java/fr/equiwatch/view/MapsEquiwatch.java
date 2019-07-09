@@ -93,6 +93,7 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
         mMap.getUiSettings().setMapToolbarEnabled(false);
 
