@@ -46,19 +46,25 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
             public void onClick(View view) {
             EditText inpNomEnclos = (EditText) findViewById(R.id.iptNomEnclos);
             String nomEnclos = inpNomEnclos.getText().toString();
-
-            EnclosClass enclos = new EnclosClass(nomEnclos, listPoints);
-            enclosController.creerEnclos(enclos);
-            enclosController.getLesEnclos().add(enclos);
+            if(nomEnclos.length() > 0 && listPoints.size() > 0) {
+                EnclosClass enclos = new EnclosClass(nomEnclos, listPoints);
+                enclosController.creerEnclos(enclos);
+                enclosController.getLesEnclos().add(enclos);
 
 //              @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
-            Snackbar snackbarSupr = Snackbar.make(view, "Vous venez de créer l'enclos : " + nomEnclos, Snackbar.LENGTH_LONG);
-            View viewEnclos = snackbarSupr.getView();
-            viewEnclos.setBackgroundResource(R.color.colorPrimary);
-            snackbarSupr.show();
-            Intent nextAct = new Intent(enclosController.getContext(), EnclosActivity.class);
-            startActivity(nextAct);
-            finish();
+                Snackbar snackbarSupr = Snackbar.make(view, "Vous venez de créer l'enclos : " + nomEnclos, Snackbar.LENGTH_LONG);
+                View viewEnclos = snackbarSupr.getView();
+                viewEnclos.setBackgroundResource(R.color.colorPrimary);
+                snackbarSupr.show();
+                Intent nextAct = new Intent(enclosController.getContext(), EnclosActivity.class);
+                startActivity(nextAct);
+                finish();
+            } else {
+                Snackbar snackbarSupr = Snackbar.make(view, R.string.form_empty, Snackbar.LENGTH_SHORT);
+                View viewEnclos = snackbarSupr.getView();
+                viewEnclos.setBackgroundResource(R.color.colorRed);
+                snackbarSupr.show();
+            }
             }
         });
 
@@ -83,8 +89,6 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.
                 setListPoints(result);
-
-                // Do something with the contact here (bigger example below)
             }
         }
     }

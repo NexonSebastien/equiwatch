@@ -24,4 +24,5 @@
     <string name="message_enclos">Vous n\'avez aucun enclos pour le moment, cliquez sur le + pour en ajouter.</string>
     <string name="bt_delimiter_points">Délimiter l\'enclos</string>
     <string name="txt_nb_points">Nombres de points: %d</string>
+    <string name="form_empty">Veuillez compléter tous les champs du formulaire</string>
 </resources>
