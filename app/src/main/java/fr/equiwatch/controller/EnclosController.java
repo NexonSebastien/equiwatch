@@ -202,7 +202,11 @@ public final class EnclosController {
                                 .addAll(pointsEnclos);
                         nmap.addPolygon(rectOptions);
                     }
-
+                    if(pointsEnclos.size() != 0) {
+                        PolygonOptions rectOptions = new PolygonOptions()
+                                .addAll(pointsEnclos);
+                        nmap.addPolygon(rectOptions);
+                    }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
                 }
