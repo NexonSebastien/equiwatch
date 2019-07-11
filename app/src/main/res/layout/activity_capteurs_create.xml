@@ -9,22 +9,12 @@
     <LinearLayout
 
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="400dp"
         android:orientation="vertical"
         android:paddingTop="70dp"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints"/>
-
-    <LinearLayout
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="70dp"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="0dp"
-        tools:ignore="MissingConstraints">
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,14 +36,14 @@
                         android:layout_width="233dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/horse" />
+                        android:src="@drawable/captor" />
 
                     <TextView
                         android:id="@+id/textView3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Création Equides"
+                        android:text="@string/capteur_add_title"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -77,45 +67,34 @@
                 android:layout_weight="1">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/iptNomEquides"
+                    android:id="@+id/iptLabelCapteurs"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Nom Equides" />
+                    android:layout_height="match_parent"
+                    android:hint="@string/capteur_label" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="@string/capteur_type" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/iptIdEnclos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Id Enclos" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
+            <Spinner
+                android:id="@+id/spinnerTypeCapteurs"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/iptIdCapteur"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Id Capteur" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_weight="1" />
 
             <Button
-                android:id="@+id/btnEquidesCreate"
+                android:id="@+id/btnCapteursCreate"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Créer" />
+                android:text="@string/btn_create" />
 
         </LinearLayout>
 

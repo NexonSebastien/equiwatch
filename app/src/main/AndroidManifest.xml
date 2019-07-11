@@ -44,6 +44,19 @@
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <activity
+            android:name=".view.CapteursViewActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.CapteursUpdateActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.CapteursCreateActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.CapteursActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
             android:name=".view.MenuMapsActivity"
             android:label="@string/title_activity_menu_equiwatch"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -25,4 +25,22 @@
     <string name="bt_delimiter_points">Délimiter l\'enclos</string>
     <string name="txt_nb_points">Nombres de points: %d</string>
     <string name="form_empty">Veuillez compléter tous les champs du formulaire</string>
+
+    <string name="capteur_list_title">Liste Capteurs</string>
+    <string name="capteur_add_title">Création Capteurs</string>
+    <string name="capteur_view_title">Vue Capteurs</string>
+    <string name="capteur_update_title">Modification Capteurs</string>
+    <string name="capteur_label">Label Capteurs : </string>
+    <string name="capteur_type">Type Capteurs : </string>
+    <string name="capteur_information_vide">Vous n\'avez aucun capteur pour le moment, cliquez sur le + pour en ajouter.</string>
+    <string name="capteur_information_create">Vous venez de créer le capteur : </string>
+    <string name="capteur_information_update">Vous venez de modifier le capteur : </string>
+    <string name="capteur_information_delete">Suppression du capteurs : </string>
+    <string name="capteur_warning_label">Vous n\'avez pas remplis le label du capteur ! </string>
+
+    <string name="alerte_delete_title">Alerte avant suppression</string>
+    <string name="alerte_delete_message">Voulez vous vraiment supprimer ?</string>
+
+    <string name="btn_update">Modifier</string>
+    <string name="btn_create">Créer</string>
 </resources>

@@ -86,7 +86,8 @@ public class MenuEquiwatch extends AppCompatActivity
             Intent intent = new Intent(this, EnclosActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_capteurs) {
-
+            Intent intent = new Intent(this, CapteursActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_parametre) {
 
         } else if (id == R.id.nav_home) {
