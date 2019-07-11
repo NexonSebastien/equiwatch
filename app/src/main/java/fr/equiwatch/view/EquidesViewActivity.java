@@ -12,9 +12,20 @@ import fr.equiwatch.model.EquidesClass;
 public class EquidesViewActivity extends MenuEquiwatch  {
 
     // propriétés
+    /**
+     * Equides Controller
+     */
     private EquidesController equidesController;
+
+    /**
+     * L'equidés consulté
+     */
     private EquidesClass equidesView;
 
+    /**
+     * Lancement de la fonction au moment du lancement de l'activité (déclanché pas le click sur l'oeil dans EquidesActivity)
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_menu_equiwatch);
@@ -30,7 +41,7 @@ public class EquidesViewActivity extends MenuEquiwatch  {
         TextView txtIdCapteur = (TextView) findViewById(R.id.txtIdCapteur);
 
         txtNomEquides.setText(equidesView.getNom());
-        txtIdEnclos.setText(Integer.toString(equidesView.getIdEnclos()));
-        txtIdCapteur.setText(Integer.toString(equidesView.getIdCapteur()));
+        txtIdEnclos.setText(equidesView.getIdEnclos());
+        txtIdCapteur.setText(equidesView.getIdCapteur());
     }
 }

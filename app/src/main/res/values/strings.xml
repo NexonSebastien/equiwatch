@@ -38,6 +38,19 @@
     <string name="capteur_information_delete">Suppression du capteurs : </string>
     <string name="capteur_warning_label">Vous n\'avez pas remplis le label du capteur ! </string>
 
+    <string name="equide_list_title">Liste Equides</string>
+    <string name="equide_create_title">Création Equides</string>
+    <string name="equide_update_title">Modification Equides</string>
+    <string name="equide_view_title">Vue Equides</string>
+    <string name="equide_nom">Nom équidé : </string>
+    <string name="equide_enclos">Enclos : </string>
+    <string name="equide_capteur">Capteurs : </string>
+    <string name="equide_information_vide">Vous n\'avez aucun équidés pour le moment, cliquez sur le + pour en ajouter. </string>
+    <string name="equide_information_create">Vous venez de créer l\'équidés : </string>
+    <string name="equide_information_update">Vous venez de modifier l\'équidés : </string>
+    <string name="equide_information_delete">Suppression de l\'équidés : </string>
+    <string name="equide_warning_label">Vous n\'avez pas remplis le nom de l\'equide ! </string>
+
     <string name="alerte_delete_title">Alerte avant suppression</string>
     <string name="alerte_delete_message">Voulez vous vraiment supprimer ?</string>
 

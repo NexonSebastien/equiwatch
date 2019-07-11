@@ -2,7 +2,6 @@ package fr.equiwatch.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,11 +15,25 @@ import fr.equiwatch.model.EquidesClass;
 public class EquidesActivity extends MenuEquiwatch  {
 
     // propriétés
+    /**
+     * Equide controller
+     */
     private EquidesController equidesController;
+
+    /**
+     * Equide activity
+     */
     private static EquidesActivity equidesActivity;
+
+    /**
+     * Liste des equides
+     */
     private ArrayList<EquidesClass> lesEquides;
 
-
+    /**
+     *  Lancement de la fonction au moment du lancement de l'activité (déclanché par le click sur Mes Equides dans le menuEquiwatch ou menu mapEquiwatch)
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_menu_equiwatch);
@@ -37,7 +50,7 @@ public class EquidesActivity extends MenuEquiwatch  {
             EquidesListAdapter adapter = new EquidesListAdapter(this, lesEquides);
             lvListeEquides.setAdapter(adapter);
         } else {
-            textVide.setText("Vous n'avez aucun équidés pour le moment, cliquez sur le + pour en ajouter.");
+            textVide.setText(R.string.equide_information_vide);
         }
         findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
             @Override

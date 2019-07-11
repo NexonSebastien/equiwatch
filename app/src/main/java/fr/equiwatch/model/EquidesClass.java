@@ -7,17 +7,17 @@ public class EquidesClass implements Serializable{
     // attributs
     private String id;
     private String nom;
-    private int idEnclos;
-    private int idCapteur;
+    private String idEnclos;
+    private String idCapteur;
 
-    public EquidesClass(String id, String nom, int idEnclos, int idCapteur){
+    public EquidesClass(String id, String nom, String idEnclos, String idCapteur){
         this.id = id;
         this.nom = nom;
         this.idEnclos = idEnclos;
         this.idCapteur = idCapteur;
     }
 
-    public EquidesClass(String nom, int idEnclos, int idCapteur){
+    public EquidesClass(String nom, String idEnclos, String idCapteur){
         this.id = "";
         this.nom = nom;
         this.idEnclos = idEnclos;
@@ -43,19 +43,19 @@ public class EquidesClass implements Serializable{
         this.nom = nom;
     }
 
-    public int getIdEnclos() {
+    public String getIdEnclos() {
         return idEnclos;
     }
 
-    public void setIdEnclos(int idEnclos) {
+    public void setIdEnclos(String idEnclos) {
         this.idEnclos = idEnclos;
     }
 
-    public int getIdCapteur() {
+    public String getIdCapteur() {
         return idCapteur;
     }
 
-    public void setIdCapteur(int idCapteur) {
+    public void setIdCapteur(String idCapteur) {
         this.idCapteur = idCapteur;
     }
 }

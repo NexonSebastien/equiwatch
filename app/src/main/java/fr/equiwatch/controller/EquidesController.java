@@ -13,8 +13,6 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import fr.equiwatch.model.EquidesClass;
-import fr.equiwatch.view.EquidesListAdapter;
-
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public final class EquidesController {
@@ -36,6 +34,11 @@ public final class EquidesController {
         getAllEquides();
     }
 
+    /**
+     * constructeur public
+     * @param context
+     * @return
+     */
     public static final EquidesController getInstance(Context context){
         if(context != null){
             EquidesController.context = context;
@@ -46,7 +49,13 @@ public final class EquidesController {
         return EquidesController.instance;
     }
 
-    public void creerEquides(String nom, int idEnclos, int idCapteur){
+    /**
+     * Créer un equides
+     * @param nom
+     * @param idEnclos
+     * @param idCapteur
+     */
+    public void creerEquides(String nom, String idEnclos, String idCapteur){
         final EquidesClass equides = new EquidesClass(nom,idEnclos,idCapteur);
         // Add a new document with a generated ID
         db.collection("equides")
@@ -68,6 +77,11 @@ public final class EquidesController {
                 });
     }
 
+    /**
+     * Ajouter la clée primaire à l'équides
+     * @param equides
+     * @param id
+     */
     public void addUniqueIdToEquides(EquidesClass equides, String id) {
         equides.setId(id);
         db.collection("equides").document(id)
@@ -86,6 +100,10 @@ public final class EquidesController {
                 });
     }
 
+    /**
+     * supprimer un equides
+     * @param equides
+     */
     public void deleteEquides(EquidesClass equides){
         db.collection("equides").document(equides.getId())
                 .delete()
@@ -104,6 +122,10 @@ public final class EquidesController {
         lesEquides.remove(equides);
     }
 
+    /**
+     * Modifier un equides
+     * @param equides
+     */
     public void updateEquides(EquidesClass equides){
         db.collection("equides").document(equides.getId())
                 .set(equides)
@@ -122,14 +144,25 @@ public final class EquidesController {
         lesEquides.remove(equides);
     }
 
+    /**
+     * Définir un equides
+     * @param equides
+     */
     public void setEquides(EquidesClass equides){
         EquidesController.equides = equides;
     }
 
+    /**
+     * Récupérer la liste des equides
+     * @return
+     */
     public ArrayList<EquidesClass> getLesEquides() {
         return lesEquides;
     }
 
+    /**
+     * Récupérer tout les equidé de la base de donnée firestore
+     */
     public void getAllEquides() {
         db.collection("equides")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -146,23 +179,42 @@ public final class EquidesController {
                 });
     }
 
-
+    /**
+     * Récupérer l'equides à modifier
+     * @return
+     */
     public EquidesClass getEquidesUpdate() {
         return equidesUpdate;
     }
 
+    /**
+     * Définir l'equides à modifier
+     * @param equidesUpdate
+     */
     public void setEquidesUpdate(EquidesClass equidesUpdate) {
         this.equidesUpdate = equidesUpdate;
     }
 
+    /**
+     * Récupérer le context
+     * @return
+     */
     public static Context getContext() {
         return context;
     }
 
+    /**
+     * Récupérer l'equides à voir
+     * @return
+     */
     public EquidesClass getEquidesView() {
         return equidesView;
     }
 
+    /**
+     * Définir l'equides à voir
+     * @param equidesView
+     */
     public void setEquidesView(EquidesClass equidesView) {
         this.equidesView = equidesView;
     }

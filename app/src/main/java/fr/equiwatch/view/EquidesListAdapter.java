@@ -114,7 +114,7 @@ public class EquidesListAdapter extends BaseAdapter {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 int position = (int) uneView.getTag();
-                                Snackbar snackbarSupr = Snackbar.make(uneView, "Suppression du cheval : " + lesEquides.get(position).getNom(), Snackbar.LENGTH_LONG);
+                                Snackbar snackbarSupr = Snackbar.make(uneView, R.string.equide_information_delete  + lesEquides.get(position).getNom(), Snackbar.LENGTH_LONG);
 
                                 //demande de suppression au controller
                                 equidesController.deleteEquides(lesEquides.get(position));
@@ -137,7 +137,7 @@ public class EquidesListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int position = (int) view.getTag();
-                Snackbar snackbarSupr = Snackbar.make(view, "modifier " + lesEquides.get(position).getId(), Snackbar.LENGTH_LONG);
+                Snackbar snackbarSupr = Snackbar.make(view, R.string.equide_information_update + lesEquides.get(position).getId(), Snackbar.LENGTH_LONG);
 
                 //demande de modification au controller
                 equidesController.setEquidesUpdate(lesEquides.get(position));
@@ -161,16 +161,9 @@ public class EquidesListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int position = (int) view.getTag();
-                Snackbar snackbarSupr = Snackbar.make(view, "voir " + lesEquides.get(position).getId(), Snackbar.LENGTH_LONG);
 
                 //demande de vue au controller
                 equidesController.setEquidesView(lesEquides.get(position));
-
-                View viewEquides = snackbarSupr.getView();
-
-                viewEquides.setBackgroundResource(R.color.colorPrimary);
-
-                snackbarSupr.show();
 
                 Intent nextAct = new Intent(EquidesController.getContext(), EquidesViewActivity.class);
                 EquidesController.getContext().startActivity(nextAct);

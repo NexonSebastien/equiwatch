@@ -9,6 +9,16 @@
     <LinearLayout
 
         android:layout_width="wrap_content"
+        android:layout_height="500dp"
+        android:orientation="vertical"
+        android:paddingTop="70dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints"/>
+
+    <LinearLayout
+
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="70dp"
@@ -18,7 +28,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="102dp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -43,7 +53,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="Modification Equides"
+                        android:text="@string/equide_update_title"
                         android:textSize="30sp" />
                 </LinearLayout>
 
@@ -58,7 +68,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="339dp"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -70,34 +80,37 @@
                     android:id="@+id/iptNomEquides"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Nom Equides" />
+                    android:hint="@string/equide_nom" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="@string/equide_enclos" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/iptIdEnclos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Id Enclos" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
+            <Spinner
+                android:id="@+id/spinnerIdEnclos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/iptIdCapteur"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Id Capteur" />
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="bottom"
+                android:text="@string/equide_capteur" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/spinnerIdCapteurs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/btnEquidesUpdate"
@@ -105,7 +118,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/colorPrimary"
-                android:text="Modifier" />
+                android:text="Créer" />
 
         </LinearLayout>
 
