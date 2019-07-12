@@ -52,6 +52,7 @@ public final class CapteursController {
      */
     private ArrayList<CapteursClass> lesCapteurs = new ArrayList<>();
 
+    private static final String COLLECTION_CAPTEURS = "capteurs";
 
     /**
      * constructeur private
@@ -81,14 +82,15 @@ public final class CapteursController {
      * @param label
      * @param type
      */
-    public void creerCapteurs(String label, String type){
-        final CapteursClass capteurs = new CapteursClass(label,type);
+    public void creerCapteurs(final String label, final String type){
+
         // Add a new document with a generated ID
-        db.collection("capteurs")
+        db.collection(COLLECTION_CAPTEURS)
                 .add(capteurs)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+                        CapteursClass unCapteurs = new CapteursClass(label,type);
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                         String key = documentReference.getId();
                         capteurs.setId(key);
@@ -110,7 +112,7 @@ public final class CapteursController {
      */
     public void addUniqueIdToCapteurs(CapteursClass capteurs, String id) {
         capteurs.setId(id);
-        db.collection("capteurs").document(id)
+        db.collection(COLLECTION_CAPTEURS).document(id)
                 .set(capteurs)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -131,7 +133,7 @@ public final class CapteursController {
      * @param capteurs
      */
     public void deleteCapteurs(CapteursClass capteurs){
-        db.collection("capteurs").document(capteurs.getId())
+        db.collection(COLLECTION_CAPTEURS).document(capteurs.getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -153,7 +155,7 @@ public final class CapteursController {
      * @param capteurs
      */
     public void updateCapteurs(CapteursClass capteurs){
-        db.collection("capteurs").document(capteurs.getId())
+        db.collection(COLLECTION_CAPTEURS).document(capteurs.getId())
                 .set(capteurs)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -173,7 +175,7 @@ public final class CapteursController {
      * Permet de definir capteurs
      * @param capteurs
      */
-    public void setCapteurs(CapteursClass capteurs){
+    public static void setCapteurs(CapteursClass capteurs){
         CapteursController.capteurs = capteurs;
     }
 
@@ -189,19 +191,19 @@ public final class CapteursController {
      * Permet de récupérer sur la base de donnée
      */
     public void getAllCapteurs() {
-        db.collection("capteurs")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "Listen failed.", e);
-                            return;
-                        }
-                        lesCapteurs.clear();
-                        lesCapteurs.addAll(value.toObjects(CapteursClass.class));
-                    }
-                });
+        db.collection(COLLECTION_CAPTEURS)
+            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value,
+                                    @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                lesCapteurs.clear();
+                lesCapteurs.addAll(value.toObjects(CapteursClass.class));
+                }
+            });
     }
 
 
