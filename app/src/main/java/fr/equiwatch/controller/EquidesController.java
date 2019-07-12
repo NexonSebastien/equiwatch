@@ -24,6 +24,7 @@ public final class EquidesController {
     private EquidesClass equidesUpdate;
     private EquidesClass equidesView;
     private ArrayList<EquidesClass> lesEquides = new ArrayList<>();
+    private static final String COLLECTION_EQUIDES = "equides";
 
 
     /**
@@ -55,26 +56,26 @@ public final class EquidesController {
      * @param idEnclos
      * @param idCapteur
      */
-    public void creerEquides(String nom, String idEnclos, String idCapteur){
-        final EquidesClass equides = new EquidesClass(nom,idEnclos,idCapteur);
+    public void creerEquides(final String nom, final String idEnclos, final String idCapteur){
         // Add a new document with a generated ID
-        db.collection("equides")
-                .add(equides)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                        String key = documentReference.getId();
-                        equides.setId(key);
-                        addUniqueIdToEquides(equides,key);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        db.collection(COLLECTION_EQUIDES)
+            .add(equides)
+            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    EquidesClass unEquides = new EquidesClass(nom,idEnclos,idCapteur);
+                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    String key = documentReference.getId();
+                    unEquides.setId(key);
+                    addUniqueIdToEquides(unEquides,key);
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error adding document", e);
+                }
+            });
     }
 
     /**
@@ -84,7 +85,7 @@ public final class EquidesController {
      */
     public void addUniqueIdToEquides(EquidesClass equides, String id) {
         equides.setId(id);
-        db.collection("equides").document(id)
+        db.collection(COLLECTION_EQUIDES).document(id)
                 .set(equides)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -105,7 +106,7 @@ public final class EquidesController {
      * @param equides
      */
     public void deleteEquides(EquidesClass equides){
-        db.collection("equides").document(equides.getId())
+        db.collection(COLLECTION_EQUIDES).document(equides.getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -127,7 +128,7 @@ public final class EquidesController {
      * @param equides
      */
     public void updateEquides(EquidesClass equides){
-        db.collection("equides").document(equides.getId())
+        db.collection(COLLECTION_EQUIDES).document(equides.getId())
                 .set(equides)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -148,7 +149,7 @@ public final class EquidesController {
      * Définir un equides
      * @param equides
      */
-    public void setEquides(EquidesClass equides){
+    public static void setEquides(EquidesClass equides){
         EquidesController.equides = equides;
     }
 
@@ -164,7 +165,7 @@ public final class EquidesController {
      * Récupérer tout les equidé de la base de donnée firestore
      */
     public void getAllEquides() {
-        db.collection("equides")
+        db.collection(COLLECTION_EQUIDES)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value,
