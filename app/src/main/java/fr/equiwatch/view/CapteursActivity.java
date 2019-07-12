@@ -46,7 +46,7 @@ public class CapteursActivity extends MenuEquiwatch  {
         this.capteursController = CapteursController.getInstance(this);
         ListView lvListeCapteurs = findViewById(R.id.lvListeCapteurs);
         TextView textVide = findViewById(R.id.txtVide);
-        if (lesCapteurs.size() != 0) {
+        if (!lesCapteurs.isEmpty()) {
             CapteursListAdapter adapter = new CapteursListAdapter(this, lesCapteurs);
             lvListeCapteurs.setAdapter(adapter);
         } else {
