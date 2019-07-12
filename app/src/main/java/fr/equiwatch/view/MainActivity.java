@@ -14,12 +14,6 @@ import fr.equiwatch.controller.EquidesController;
 import fr.equiwatch.controller.EnclosController;
 
 public class MainActivity extends AppCompatActivity {
-    private Button bt_maps;
-    private EnclosController enclosController;
-    private EquidesController equidesController;
-    private CapteursController capteursController;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,8 +21,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide(); //hide the title bar
         setContentView(R.layout.activity_main);
 
-        bt_maps = findViewById(R.id.bt_maps);
-        bt_maps.setOnClickListener(new View.OnClickListener() {
+        Button btMaps = findViewById(R.id.bt_maps);
+        btMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openMaps();
@@ -36,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 //        Permet d'ajouter dans les differentes liste les enclos, equides et capteurs existant en base de donnée.
-        enclosController = EnclosController.getInstance(this);
-        equidesController = EquidesController.getInstance(this);
-        capteursController = CapteursController.getInstance(this);
+        EnclosController enclosController = EnclosController.getInstance(this);
+        EquidesController equidesController = EquidesController.getInstance(this);
+        CapteursController capteursController = CapteursController.getInstance(this);
     }
 
     public void openMaps() {
