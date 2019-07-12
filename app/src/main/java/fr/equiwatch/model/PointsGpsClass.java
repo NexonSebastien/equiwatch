@@ -20,11 +20,11 @@ public class PointsGpsClass implements Serializable {
         this.longitude = longitude;
         this.ordre = ordre;
     }
-
+    
     /**
      * Constructeur vide necéssaire pour que l'objet soit utilisable par Firestore
      */
-    public PointsGpsClass(){};
+    public PointsGpsClass(){}
 
     /**
      * Permet de récupérer la latitude du pointGps
