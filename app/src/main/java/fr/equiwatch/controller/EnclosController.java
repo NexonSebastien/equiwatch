@@ -35,6 +35,7 @@ public final class EnclosController {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EnclosClass enclosUpdate;
     private ArrayList<EnclosClass> lesEnclos = new ArrayList<>();
+    private static final String COLLECTION_ENCLOS = "enclos";
 
     /**
      * constructeur private
@@ -56,7 +57,6 @@ public final class EnclosController {
         }
         if(EnclosController.instance == null){
             EnclosController.instance = new EnclosController();
-//            @todo recuperer enclos
         }
         return EnclosController.instance;
     }
@@ -68,7 +68,7 @@ public final class EnclosController {
      */
     public void creerEnclos(final EnclosClass enclos) {
         // Add a new document with a generated ID
-        db.collection("enclos")
+        db.collection(COLLECTION_ENCLOS)
             .add(enclos)
             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
@@ -93,7 +93,7 @@ public final class EnclosController {
      * @param enclos
      */
     public void updateEnclos(final EnclosClass enclos) {
-        db.collection("enclos").document(enclos.getId())
+        db.collection(COLLECTION_ENCLOS).document(enclos.getId())
                 .set(enclos)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -117,7 +117,7 @@ public final class EnclosController {
      */
     public void addUniqueIdToEnclos(EnclosClass enclos, String id) {
         enclos.setId(id);
-        db.collection("enclos").document(id)
+        db.collection(COLLECTION_ENCLOS).document(id)
             .set(enclos)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -139,7 +139,7 @@ public final class EnclosController {
      * @param unEnclos
      */
     public void deleteEnclos(EnclosClass unEnclos){
-        db.collection("enclos").document(unEnclos.getId())
+        db.collection(COLLECTION_ENCLOS).document(unEnclos.getId())
             .delete()
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -160,7 +160,7 @@ public final class EnclosController {
      * Le listener met à jour la liste a chaque modification en base de données.
      */
     public void getAllEnclos() {
-        db.collection("enclos")
+        db.collection(COLLECTION_ENCLOS)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot value,
@@ -181,7 +181,7 @@ public final class EnclosController {
      * @param nmap
      */
     public void getAllEnclosWithPointsFirestore(final GoogleMap nmap) {
-        db.collection("enclos")
+        db.collection(COLLECTION_ENCLOS)
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -202,7 +202,7 @@ public final class EnclosController {
                                 .addAll(pointsEnclos);
                         nmap.addPolygon(rectOptions);
                     }
-                    if(pointsEnclos.size() != 0) {
+                    if(pointsEnclos.isEmpty()) {
                         PolygonOptions rectOptions = new PolygonOptions()
                                 .addAll(pointsEnclos);
                         nmap.addPolygon(rectOptions);
