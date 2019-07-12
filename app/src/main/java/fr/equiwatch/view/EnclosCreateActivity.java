@@ -6,12 +6,9 @@ import android.os.Bundle;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -34,7 +31,6 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
         CoordinatorLayout dynamicContent = findViewById(R.id.dynamic_content);
         getLayoutInflater().inflate(R.layout.activity_enclos_create, dynamicContent, true);
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_enclos_create);
         this.enclosController = EnclosController.getInstance(this);
 
         setEventFormButton();
@@ -46,7 +42,7 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
             public void onClick(View view) {
             EditText inpNomEnclos = (EditText) findViewById(R.id.iptNomEnclos);
             String nomEnclos = inpNomEnclos.getText().toString();
-            if(nomEnclos.length() > 0 && listPoints.size() > 0) {
+            if(nomEnclos.length() > 0 && !listPoints.isEmpty()) {
                 EnclosClass enclos = new EnclosClass(nomEnclos, listPoints);
                 enclosController.creerEnclos(enclos);
                 enclosController.getLesEnclos().add(enclos);
