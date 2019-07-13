@@ -13,6 +13,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -27,9 +28,10 @@ public class EnclosListAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private EnclosController enclosController;
     private View uneView;
-
+    private Context context;
 
     public EnclosListAdapter(Context context, ArrayList<EnclosClass> lesEnclos){
+        this.context = context;
         this.lesEnclos = lesEnclos;
         this.inflater = LayoutInflater.from(context);
         this.enclosController = EnclosController.getInstance(null);
@@ -163,10 +165,12 @@ public class EnclosListAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 int position = (int) view.getTag();
+                EnclosClass enclos = lesEnclos.get(position);
 
-
-                //demande de suppression au controller
-//                enclosController.deleteEnclos(lesEnclos.get(position));
+                Intent intent = new Intent(enclosController.getContext(), MenuMapsActivity.class);
+                intent.putExtra("id_key", 2); // Set your ID as a Intent Extra
+                intent.putExtra("latlong", new LatLng(enclos.getPointsGps().get(0).getLatitude(), enclos.getPointsGps().get(0).getLongitude()));
+                context.startActivity(intent);
 
                 Snackbar snackbarSupr = Snackbar.make(view, "voir " + lesEnclos.get(position).getId(), Snackbar.LENGTH_LONG);
                 View viewEnclos = snackbarSupr.getView();

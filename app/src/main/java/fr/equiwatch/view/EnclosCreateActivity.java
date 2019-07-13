@@ -72,7 +72,7 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(enclosController.getContext(), MenuMapsActivity.class);
-                intent.putExtra("id_key", view.getId()); // Set your ID as a Intent Extra
+                intent.putExtra("id_key", 1); // Set your ID as a Intent Extra
                 startActivityForResult(intent, 1);
             }
         });

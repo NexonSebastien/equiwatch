@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -63,7 +64,14 @@ public class MenuMapsActivity extends AppCompatActivity
         Intent intent = getIntent();
 
         if(intent != null && intent.getExtras() != null) {
-            enableCreateEnclos(); // Run the method with the ID Value passed through the Intent Extra
+            if ((int)intent.getExtras().get("id_key") == 1) {
+                enableCreateEnclos(); // Run the method with the ID Value passed through the Intent Extra
+            } else if ((int)intent.getExtras().get("id_key") == 2) {
+                LatLng cameraPos =  intent.getParcelableExtra("latlong");
+                if (cameraPos != null) {
+                    mMapFragment.moveMapCameraEnclos(cameraPos);
+                }
+            }
         }
     }
 

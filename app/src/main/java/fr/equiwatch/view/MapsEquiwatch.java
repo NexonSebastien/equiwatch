@@ -40,7 +40,7 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
 
     private static final String TAG = MapsEquiwatch.class.getSimpleName();
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    private static final int DEFAULT_ZOOM = 15;
+    private static final int DEFAULT_ZOOM = 17;
     private final LatLng mDefaultLocation = new LatLng(49.040604, 2.029899);
     private GoogleMap mMap;
     private boolean mLocationPermissionGranted;
@@ -53,6 +53,7 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
     private EnclosController enclosController;
     private float zoomLevel = 0;
 
+    private LatLng cameraEnclosPosition;
 
     public MapsEquiwatch() {
         // Required empty public constructor
@@ -161,7 +162,10 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
                         if (task.isSuccessful()) {
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = task.getResult();
-                            if (mLastKnownLocation != null) {
+                            if (cameraEnclosPosition != null) {
+                                moveMapCameraEnclos(cameraEnclosPosition);
+                                cameraEnclosPosition = null;
+                            }else if (mLastKnownLocation != null) {
                                 LatLng currentPos = new LatLng(mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
                                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentPos, DEFAULT_ZOOM));
                             }
@@ -268,5 +272,14 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
 
     public void clearAllMarker() {
         this.mMap.clear();
+    }
+
+    public void moveMapCameraEnclos(LatLng point) {
+        if (mMap != null) {
+            mMap.moveCamera(CameraUpdateFactory
+                    .newLatLngZoom(point, DEFAULT_ZOOM));
+        } else {
+            cameraEnclosPosition = point;
+        }
     }
 }
