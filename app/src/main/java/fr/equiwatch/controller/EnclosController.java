@@ -23,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import fr.equiwatch.R;
 import fr.equiwatch.model.EnclosClass;
 import fr.equiwatch.model.PointsGpsClass;
 
@@ -200,6 +201,8 @@ public final class EnclosController {
 
                         if (!pointsEnclos.isEmpty()) {
                             PolygonOptions rectOptions = new PolygonOptions()
+                                    .strokeColor(R.color.colorRed)
+                                    .fillColor(R.color.colorRedTransparent)
                                     .addAll(pointsEnclos);
                             nmap.addPolygon(rectOptions);
                         }

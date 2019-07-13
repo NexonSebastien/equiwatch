@@ -6,5 +6,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorBlue">#4c96d7</color>
     <color name="colorRed">#FF0000</color>
+    <color name="colorRedTransparent">#55FF0000</color>
     <color name="colorError">#dc0d1f</color>
+    <color name="colorYellow">#55FFFF00</color>
 </resources>
