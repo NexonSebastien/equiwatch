@@ -9,9 +9,11 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import fr.equiwatch.R;
+
 import fr.equiwatch.controller.CapteursController;
 import fr.equiwatch.controller.EquidesController;
 import fr.equiwatch.controller.EnclosController;
+import fr.equiwatch.notifications.NotificationReceiver;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openMaps() {
+        NotificationReceiver.setupAlarm(getApplicationContext());
         Intent intent = new Intent(this, MenuMapsActivity.class);
         startActivity(intent);
     }

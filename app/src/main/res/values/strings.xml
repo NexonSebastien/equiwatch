@@ -56,4 +56,14 @@
 
     <string name="btn_update">Modifier</string>
     <string name="btn_create">Créer</string>
+
+    <string name="nom_channel">Alerte</string>
+    <string name="description_channel">Les alertes</string>
+
+    <string name="notif_alerte_cheval_descriptif">L\'equidé %1$s c\'est échappé de l\'enclos %2$s</string>
+
+    <string name="dialog_map_quitter_message">Voulez vous vraiment annuler la délimitation de l\'enclos ?</string>
+    <string name="dialog_map_quitter_titre">Annulation de la délimitation de l\'enclos</string>
+    <string name="dialog_map_valider_message">Voulez vous valider la délimitation de l\'enclos ?</string>
+    <string name="dialog_map_valider_titre">Valider la délimitation de l\'enclos</string>
 </resources>

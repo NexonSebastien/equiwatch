@@ -1,6 +1,9 @@
 package fr.equiwatch.view;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,9 +20,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -63,7 +68,15 @@ public class MenuMapsActivity extends AppCompatActivity
         Intent intent = getIntent();
 
         if(intent != null && intent.getExtras() != null) {
-            enableCreateEnclos(); // Run the method with the ID Value passed through the Intent Extra
+            if ((int)intent.getExtras().get("id_key") == 1) {
+                getSupportActionBar().hide();
+                enableCreateEnclos(); // Run the method with the ID Value passed through the Intent Extra
+            } else if ((int)intent.getExtras().get("id_key") == 2) {
+                LatLng cameraPos =  intent.getParcelableExtra("latlong");
+                if (cameraPos != null) {
+                    mMapFragment.moveMapCameraEnclos(cameraPos);
+                }
+            }
         }
     }
 
@@ -190,26 +203,50 @@ public class MenuMapsActivity extends AppCompatActivity
         fabValidate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ArrayList<PointsGpsClass> listPointsGps = new ArrayList<>();
-                for (int i = 0; listMarkerEnclos.size() > i; i ++){
-                    Marker marker = listMarkerEnclos.get(i);
-                    listPointsGps.add(new PointsGpsClass(marker.getPosition().latitude, marker.getPosition().longitude, i));
-                }
+                //Alterte avant suppression
+                Dialog d = new AlertDialog.Builder(MenuMapsActivity.this)
+                        .setTitle(R.string.dialog_map_valider_titre)
+                        .setMessage(R.string.dialog_map_valider_message)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ArrayList<PointsGpsClass> listPointsGps = new ArrayList<>();
+                                for (int i = 0; listMarkerEnclos.size() > i; i ++){
+                                    Marker marker = listMarkerEnclos.get(i);
+                                    listPointsGps.add(new PointsGpsClass(marker.getPosition().latitude, marker.getPosition().longitude, i));
+                                }
 
-                Intent returnIntent = getIntent();
-                returnIntent.putExtra("listPointsGps", listPointsGps);
+                                Intent returnIntent = getIntent();
+                                returnIntent.putExtra("listPointsGps", listPointsGps);
 
-                setResult(Activity.RESULT_OK, returnIntent);
-                context.finish();
+                                setResult(Activity.RESULT_OK, returnIntent);
+                                context.finish();
+                            }
+                        })
+                        .create();
+                d.show();
             }
         });
 
         btQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setAllFloatingButtonsGone();
-                listMarkerEnclos.clear();
-                context.finish();
+                //Alterte avant suppression
+                Dialog d = new AlertDialog.Builder(MenuMapsActivity.this)
+                        .setTitle(R.string.dialog_map_quitter_titre)
+                        .setMessage(R.string.dialog_map_quitter_message)
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            setAllFloatingButtonsGone();
+                            listMarkerEnclos.clear();
+                            context.finish();
+                            }
+                        })
+                        .create();
+                d.show();
             }
         });
     }
