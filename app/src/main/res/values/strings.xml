@@ -56,4 +56,10 @@
 
     <string name="btn_update">Modifier</string>
     <string name="btn_create">Créer</string>
+
+    <string name="nom_channel">Alerte</string>
+    <string name="description_channel">Les alertes</string>
+
+    <string name="notif_alerte_cheval_descriptif">L\'equidé %1$s c\'est échappé de l\'enclos %2$s</string>
+
 </resources>

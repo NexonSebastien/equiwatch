@@ -84,7 +84,6 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
         if (requestCode == Get_Points_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-//                Bundle extra = data.getBundleExtra("extra");
                 ArrayList<PointsGpsClass> result = (ArrayList<PointsGpsClass>) data.getSerializableExtra("listPointsGps");
                 // The user picked a contact.
                 // The Intent's data Uri identifies which contact was selected.

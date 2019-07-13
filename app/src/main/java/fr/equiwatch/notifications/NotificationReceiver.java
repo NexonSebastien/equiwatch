@@ -1,0 +1,51 @@
+package fr.equiwatch.notifications;
+
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+
+import java.util.Calendar;
+import java.util.Date;
+
+public class NotificationReceiver extends BroadcastReceiver {
+    public static final int REQUEST_CODE=101;
+    private static final String ACTION_START_NOTIFICATION_SERVICE = "ACTION_START_NOTIFICATION_SERVICE";
+
+    public static void setupAlarm(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent alarmIntent = getStartPendingIntent(context);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+                getTriggerAt(new Date()),
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES / 5,
+                alarmIntent);
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        String action = intent.getAction();
+        Intent serviceIntent = null;
+        if (ACTION_START_NOTIFICATION_SERVICE.equals(action)) {
+            Log.i(getClass().getSimpleName(), "onReceive from alarm, starting notification service");
+            serviceIntent = NotificationService.createIntentStartNotificationService(context);
+        }
+
+        if (serviceIntent != null) {
+            context.startService(serviceIntent);
+        }
+    }
+
+    private static long getTriggerAt(Date now) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(now);
+        return calendar.getTimeInMillis();
+    }
+
+    private static PendingIntent getStartPendingIntent(Context context) {
+        Intent intent = new Intent(context, NotificationReceiver.class);
+        intent.setAction(ACTION_START_NOTIFICATION_SERVICE);
+        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+}

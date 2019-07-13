@@ -198,14 +198,11 @@ public final class EnclosController {
                             pointsEnclos.add(new LatLng(point.getLatitude(), point.getLongitude()));
                         }
 
-                        PolygonOptions rectOptions = new PolygonOptions()
-                                .addAll(pointsEnclos);
-                        nmap.addPolygon(rectOptions);
-                    }
-                    if(pointsEnclos.isEmpty()) {
-                        PolygonOptions rectOptions = new PolygonOptions()
-                                .addAll(pointsEnclos);
-                        nmap.addPolygon(rectOptions);
+                        if (!pointsEnclos.isEmpty()) {
+                            PolygonOptions rectOptions = new PolygonOptions()
+                                    .addAll(pointsEnclos);
+                            nmap.addPolygon(rectOptions);
+                        }
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
