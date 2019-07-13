@@ -4,11 +4,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -21,7 +16,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -31,10 +25,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-import fr.equiwatch.R;
 import fr.equiwatch.controller.EnclosController;
-import fr.equiwatch.model.EnclosClass;
-import fr.equiwatch.model.PointsGpsClass;
 
 public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallback, OnMarkerClickListener {
 
@@ -111,6 +102,9 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         enclosController.getAllEnclosWithPointsFirestore(mMap);
     }
 
+    /**
+     * Permet d'obtenir ou non la permission d'utiliser la postition de l'utilisateur
+     */
     private void getLocationPermission() {
         /*
          * Request location permission, so that we can get the location of the
@@ -184,6 +178,9 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         }
     }
 
+    /**
+     * Affiche ou non le bouton position si la permission de localisation a été accordé
+     */
     private void updateLocationUI() {
         if (mMap == null) {
             return;
@@ -218,16 +215,14 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         });
     }
 
-
-    //Added public method to be called from the Activity
-    public void placeMarker(String title, double lat, double lon) {
-        if (mMap != null) {
-            LatLng marker = new LatLng(lat, lon);
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(marker, 15));
-            mMap.addMarker(new MarkerOptions().title(title).position(marker));
-        }
-    }
-
+    /**
+     * Méthode asynchrone permettant d'ajouter un marqueur sur la position actuelle de l'utilisateur et d'afficher ou de cacher les boutons en fonction du nombre de marker créer
+     *
+     * @param title
+     * @param listMarkerEnclos
+     * @param fabValidate
+     * @param fabDelete
+     */
     public void placeMarkerOnUserPosition(final String title, final ArrayList<Marker> listMarkerEnclos, final FloatingActionButton fabValidate, final FloatingActionButton fabDelete) {
         try {
             if (mLocationPermissionGranted) {
@@ -270,10 +265,11 @@ public class MapsEquiwatch extends SupportMapFragment implements OnMapReadyCallb
         }
     }
 
-    public void clearAllMarker() {
-        this.mMap.clear();
-    }
-
+    /**
+     * Positionne la caméra sur la latitude et la longitude donnée
+     *
+     * @param point
+     */
     public void moveMapCameraEnclos(LatLng point) {
         if (mMap != null) {
             mMap.moveCamera(CameraUpdateFactory

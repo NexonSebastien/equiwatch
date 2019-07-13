@@ -36,31 +36,29 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
         setEventFormButton();
     }
 
+    /**
+     * Créer les evenements onClick des boutons
+     */
     public void setEventFormButton() {
         findViewById(R.id.btnEnclosCreate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            EditText inpNomEnclos = (EditText) findViewById(R.id.iptNomEnclos);
-            String nomEnclos = inpNomEnclos.getText().toString();
-            if(nomEnclos.length() > 0 && !listPoints.isEmpty()) {
-                EnclosClass enclos = new EnclosClass(nomEnclos, listPoints);
-                enclosController.creerEnclos(enclos);
-                enclosController.getLesEnclos().add(enclos);
+                EditText inpNomEnclos = (EditText) findViewById(R.id.iptNomEnclos);
+                String nomEnclos = inpNomEnclos.getText().toString();
+                if(nomEnclos.length() > 0 && !listPoints.isEmpty()) {
+                    EnclosClass enclos = new EnclosClass(nomEnclos, listPoints);
+                    enclosController.creerEnclos(enclos);
+                    enclosController.getLesEnclos().add(enclos);
 
-//              @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
-                Snackbar snackbarSupr = Snackbar.make(view, "Vous venez de créer l'enclos : " + nomEnclos, Snackbar.LENGTH_LONG);
-                View viewEnclos = snackbarSupr.getView();
-                viewEnclos.setBackgroundResource(R.color.colorPrimary);
-                snackbarSupr.show();
-                Intent nextAct = new Intent(enclosController.getContext(), EnclosActivity.class);
-                startActivity(nextAct);
-                finish();
-            } else {
-                Snackbar snackbarSupr = Snackbar.make(view, R.string.form_empty, Snackbar.LENGTH_SHORT);
-                View viewEnclos = snackbarSupr.getView();
-                viewEnclos.setBackgroundResource(R.color.colorRed);
-                snackbarSupr.show();
-            }
+                    Intent nextAct = new Intent(enclosController.getContext(), EnclosActivity.class);
+                    startActivity(nextAct);
+                    finish();
+                } else {
+                    Snackbar snackbarSupr = Snackbar.make(view, R.string.form_empty, Snackbar.LENGTH_SHORT);
+                    View viewEnclos = snackbarSupr.getView();
+                    viewEnclos.setBackgroundResource(R.color.colorRed);
+                    snackbarSupr.show();
+                }
             }
         });
 
@@ -88,10 +86,11 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
         }
     }
 
-    public ArrayList<PointsGpsClass> getListPoints() {
-        return listPoints;
-    }
-
+    /**
+     * Affiche le nombre de point gps de l'enclos
+     *
+     * @param listPoints
+     */
     public void setListPoints(ArrayList<PointsGpsClass> listPoints) {
         this.listPoints = listPoints;
         TextView textView = findViewById(R.id.tv_nb_points);

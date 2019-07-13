@@ -24,6 +24,9 @@ public class EquidesClass implements Serializable{
         this.idCapteur = idCapteur;
     }
 
+    /**
+     * Constructeur vide necéssaire pour que l'objet soit utilisable par Firestore
+     */
     public EquidesClass(){
     }
 

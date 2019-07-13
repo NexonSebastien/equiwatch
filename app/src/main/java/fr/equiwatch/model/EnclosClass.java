@@ -21,6 +21,9 @@ public class EnclosClass implements Serializable{
         this.pointsGps = pointsGps;
     }
 
+    /**
+     * Constructeur vide necéssaire pour que l'objet soit utilisable par Firestore
+     */
     public EnclosClass(){
     }
 

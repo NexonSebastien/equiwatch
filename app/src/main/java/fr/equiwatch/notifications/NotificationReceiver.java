@@ -14,12 +14,17 @@ public class NotificationReceiver extends BroadcastReceiver {
     public static final int REQUEST_CODE=101;
     private static final String ACTION_START_NOTIFICATION_SERVICE = "ACTION_START_NOTIFICATION_SERVICE";
 
+    /**
+     * Créer l'alarme qui va permmettre d'effectuer une vérification toutes les minutes
+     *
+     * @param context
+     */
     public static void setupAlarm(Context context) {
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
                 getTriggerAt(new Date()),
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES / 5,
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES / 15,
                 alarmIntent);
     }
 

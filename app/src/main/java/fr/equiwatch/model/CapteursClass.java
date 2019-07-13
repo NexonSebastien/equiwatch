@@ -21,6 +21,9 @@ public class CapteursClass implements Serializable{
         this.type = type;
     }
 
+    /**
+     * Constructeur vide necéssaire pour que l'objet soit utilisable par Firestore
+     */
     public CapteursClass(){
     }
 

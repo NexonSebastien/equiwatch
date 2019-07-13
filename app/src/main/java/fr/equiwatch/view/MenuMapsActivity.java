@@ -24,7 +24,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -68,6 +67,10 @@ public class MenuMapsActivity extends AppCompatActivity
         Intent intent = getIntent();
 
         if(intent != null && intent.getExtras() != null) {
+            /**
+             * id_key = 1: Va activer le mode édition d'enclos de la map
+             * id_key = 2: va positionner la camera sur une position précise lors de la création de la map
+             */
             if ((int)intent.getExtras().get("id_key") == 1) {
                 getSupportActionBar().hide();
                 enableCreateEnclos(); // Run the method with the ID Value passed through the Intent Extra
@@ -113,7 +116,6 @@ public class MenuMapsActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -240,8 +242,6 @@ public class MenuMapsActivity extends AppCompatActivity
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                            setAllFloatingButtonsGone();
-                            listMarkerEnclos.clear();
                             context.finish();
                             }
                         })
@@ -251,17 +251,9 @@ public class MenuMapsActivity extends AppCompatActivity
         });
     }
 
-    public void setAllFloatingButtonsGone() {
-        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
-        fabAdd.hide();
-        FloatingActionButton fabDelete = findViewById(R.id.fab_delete);
-        fabDelete.hide();
-        FloatingActionButton fabValidate = findViewById(R.id.fab_validate);
-        fabValidate.hide();
-        Button btQuit = findViewById(R.id.button_quit);
-        btQuit.setVisibility(View.GONE);
-    }
-
+    /**
+     * Affiche les boutons permettant de délimiter un enclos
+     */
     public void enableCreateEnclos() {
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
         fabAdd.show();

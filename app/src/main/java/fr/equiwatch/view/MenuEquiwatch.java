@@ -25,8 +25,8 @@ public class MenuEquiwatch extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String app_name = getString(R.string.app_name);
-        getSupportActionBar().setTitle(app_name.toUpperCase());
+        String appName = getString(R.string.app_name);
+        getSupportActionBar().setTitle(appName.toUpperCase());
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

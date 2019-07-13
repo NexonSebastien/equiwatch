@@ -1,9 +1,8 @@
 package fr.equiwatch.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 import android.os.Bundle;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import fr.equiwatch.R;
 

@@ -37,7 +37,7 @@ public class EnclosActivity extends MenuEquiwatch  {
             EnclosListAdapter adapter = new EnclosListAdapter(this, lesEnclos);
             lvListeEnclos.setAdapter(adapter);
         } else {
-            textVide.setText("Vous n'avez aucun enclos pour le moment, cliquez sur le + pour en ajouter.");
+            textVide.setText(R.string.enclos_information_vide);
         }
         findViewById(R.id.imgBtnAdd).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,8 +109,8 @@ public class EnclosListAdapter extends BaseAdapter {
 
                 //Alterte avant suppression
                 Dialog d = new AlertDialog.Builder(enclosController.getContext())
-                        .setTitle("Alerte avant suppression")
-                        .setMessage("Voulez vous vraiment supprimer ?")
+                        .setTitle(R.string.enclos_suppression_titre)
+                        .setMessage(R.string.enclos_suppression_descriptif)
                         .setNegativeButton(android.R.string.cancel, null)
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             @Override

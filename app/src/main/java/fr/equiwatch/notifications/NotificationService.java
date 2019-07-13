@@ -58,7 +58,10 @@ public class NotificationService extends IntentService {
         listEnclos = enclosController.getLesEnclos();
     }
 
-    private void showForegroundNotification() {
+    /**
+     * Affiche une notification
+     */
+    private void showNotification() {
         createNotificationChannel();
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -82,6 +85,9 @@ public class NotificationService extends IntentService {
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
+    /**
+     * Créer un channel pour les notifications de l'applications
+     */
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
@@ -98,6 +104,12 @@ public class NotificationService extends IntentService {
         }
     }
 
+    /**
+     * Créer une notification si les coordonnées du cheval sont en dehors de celles de l'enclos
+     *
+     * @param chevalPos
+     */
+    // TODO: 13/07/2019 En attente du capteur gps et de la finalisation de la gestion des utilisateurs pour compléter le code
     private void geoFencing(LatLng chevalPos) {
         ArrayList<LatLng> pointsEnclos = new ArrayList<>();
         ArrayList<Polygon> listPolygon = new ArrayList<>();
@@ -113,7 +125,7 @@ public class NotificationService extends IntentService {
                 PolygonOptions rectOptions = new PolygonOptions()
                         .addAll(pointsEnclos);
                 if(!PolyUtil.containsLocation(chevalPos, rectOptions.getPoints(), false)) {
-                    showForegroundNotification();
+                    showNotification();
                 }
             }
         }

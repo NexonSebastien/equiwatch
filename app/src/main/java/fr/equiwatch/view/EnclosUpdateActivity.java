@@ -1,15 +1,12 @@
 package fr.equiwatch.view;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.android.material.snackbar.Snackbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import java.util.ArrayList;
 
@@ -53,13 +50,7 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
                 enclosUpdate.setLabel(inpNomEnclos.getText().toString());
                 enclosController.updateEnclos(enclosUpdate);
 
-//                @todo Ajouter le snackbar d'information d'insetion(mauvaise fenetre)
-                Snackbar snackbarSupr = Snackbar.make(view, "Vous venez de modifier l'enclos : " + enclosUpdate.getLabel(), Snackbar.LENGTH_LONG);
-                View viewEnclos = snackbarSupr.getView();
-                viewEnclos.setBackgroundResource(R.color.colorPrimary);
-                snackbarSupr.show();
-
-                Intent nextAct = new Intent(enclosController.getContext(), EnclosActivity.class);
+                Intent nextAct = new Intent(EnclosUpdateActivity.this, EnclosActivity.class);
                 startActivity(nextAct);
                 finish();
             }
@@ -71,7 +62,7 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
         findViewById(R.id.bt_delimiter_enclos).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(enclosController.getContext(), MenuMapsActivity.class);
+                Intent intent = new Intent(EnclosUpdateActivity.this, MenuMapsActivity.class);
                 intent.putExtra("id_key", view.getId()); // Set your ID as a Intent Extra
                 startActivityForResult(intent, 1);
             }
@@ -82,20 +73,23 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Check which request we're responding to
-        if (requestCode == Get_Points_REQUEST) {
+        if (requestCode == Get_Points_REQUEST && resultCode == RESULT_OK) {
             // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-//                Bundle extra = data.getBundleExtra("extra");
-                ArrayList<PointsGpsClass> result = (ArrayList<PointsGpsClass>) data.getSerializableExtra("listPointsGps");
-                // The user picked a contact.
-                // The Intent's data Uri identifies which contact was selected.
-                setListPoints(result, enclosUpdate);
+            ArrayList<PointsGpsClass> result = (ArrayList<PointsGpsClass>) data.getSerializableExtra("listPointsGps");
+            // The user picked a contact.
+            // The Intent's data Uri identifies which contact was selected.
+            setListPoints(result, enclosUpdate);
 
-                // Do something with the contact here (bigger example below)
-            }
+            // Do something with the contact here (bigger example below)
         }
     }
 
+    /**
+     * Affiche le nombre de point gps de l'enclos
+     *
+     * @param listPoints
+     * @param enclos
+     */
     public void setListPoints(ArrayList<PointsGpsClass> listPoints, EnclosClass enclos) {
         enclos.setPointsGps(listPoints);
         TextView textView = findViewById(R.id.tv_nb_points);
