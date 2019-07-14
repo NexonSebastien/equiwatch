@@ -22,7 +22,7 @@
     <string name="menu_parametre">Paramètres</string>
     <string name="bt_quitter">Quitter</string>
     <string name="bt_delimiter_points">Délimiter l\'enclos</string>
-    <string name="txt_nb_points">Nombres de points: %d</string>
+    <string name="txt_nb_points">Nombres de points gps de l\'enclos: %d</string>
     <string name="form_empty">Veuillez compléter tous les champs du formulaire</string>
 
     <string name="capteur_list_title">Liste Capteurs</string>
@@ -53,6 +53,7 @@
     <string name="enclos_information_vide">Vous n\'avez aucun enclos pour le moment, cliquez sur le + pour en ajouter.</string>
     <string name="enclos_suppression_titre">Alerte avant suppression de l\'enclos</string>
     <string name="enclos_suppression_descriptif">Voulez vous vraiment supprimer l\'enclos ?</string>
+    <string name="enclos_label_selction_capteur">Sélectionnez les capteurs que vous voulez ajouter a l\'enclos :</string>
 
     <string name="alerte_delete_title">Alerte avant suppression</string>
     <string name="alerte_delete_message">Voulez vous vraiment supprimer ?</string>

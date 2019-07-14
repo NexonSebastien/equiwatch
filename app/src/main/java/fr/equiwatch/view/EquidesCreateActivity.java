@@ -42,11 +42,6 @@ public class EquidesCreateActivity extends MenuEquiwatch  {
     private Spinner spinnerEnclos;
 
     /**
-     * Spinner enclos
-     */
-    private Spinner spinnerCapteurs;
-
-    /**
      * Lancement de la fonction au moment du lancement de l'activité (déclanché pas le click sur le + de EquideActivity)
      * @param savedInstanceState
      */
@@ -125,14 +120,19 @@ public class EquidesCreateActivity extends MenuEquiwatch  {
      */
     public void addItemsOnSpinnerCapteurs() {
 
-        spinnerCapteurs = (Spinner) findViewById(R.id.spinnerIdCapteurs);
-        List<String> list = new ArrayList<String>();
+        /**
+         * Spinner enclos
+         */
+        Spinner spinnerCapteurs = findViewById(R.id.spinnerIdCapteurs);
+        List<String> list = new ArrayList<>();
         ArrayList<CapteursClass> lesCapteurs = CapteursController.getInstance(null).getLesCapteurs();
         list.add("Vide");
         for (CapteursClass capteur: lesCapteurs) {
-            list.add(capteur.getLabel());
+            if (capteur.getType().equals("GPS")) {
+                list.add(capteur.getLabel());
+            }
         }
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCapteurs.setAdapter(dataAdapter);

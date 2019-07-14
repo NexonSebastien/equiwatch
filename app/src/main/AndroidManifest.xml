@@ -49,10 +49,12 @@
 
         <activity
             android:name=".view.EnclosUpdateActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
         <activity
             android:name=".view.EnclosCreateActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
         <activity
             android:name=".view.EnclosActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>

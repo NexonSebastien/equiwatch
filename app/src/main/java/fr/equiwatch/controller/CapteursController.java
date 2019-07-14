@@ -83,7 +83,7 @@ public final class CapteursController {
      * @param type
      */
     public void creerCapteurs(final String label, final String type){
-
+        setCapteurs(new CapteursClass(label, type));
         // Add a new document with a generated ID
         db.collection(COLLECTION_CAPTEURS)
                 .add(capteurs)

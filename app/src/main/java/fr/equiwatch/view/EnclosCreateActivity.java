@@ -5,25 +5,40 @@ import android.os.Bundle;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import android.util.Log;
+import android.util.SparseArray;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import fr.equiwatch.R;
+import fr.equiwatch.controller.CapteursController;
 import fr.equiwatch.controller.EnclosController;
+import fr.equiwatch.model.CapteursClass;
 import fr.equiwatch.model.EnclosClass;
 import fr.equiwatch.model.PointsGpsClass;
 
-public class EnclosCreateActivity extends MenuEquiwatch  {
+public class EnclosCreateActivity extends MenuEquiwatch {
 
     // propriétés
     private EnclosController enclosController;
-    private ArrayList<PointsGpsClass> listPoints;
+    private ArrayList<PointsGpsClass> listPoints = new ArrayList<>();
     static final int Get_Points_REQUEST = 1;  // The request code
+    private ArrayList<CapteursClass> listCapteurs;
+    private ArrayList<CapteursClass> listEnclosCapteur = new ArrayList<>();
+    private ArrayAdapter<CapteursClass> listEnclosCapteurAdapter;
+    private ListView listCapteur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +49,31 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
         this.enclosController = EnclosController.getInstance(this);
 
         setEventFormButton();
+        listCapteurs = CapteursController.getInstance(null).getLesCapteurs();
+
+        // On veut tout les capteurs sauf GPS
+        for (CapteursClass capteur : listCapteurs) {
+            if(!capteur.getType().equals("GPS")) {
+                listEnclosCapteur.add(capteur);
+            }
+        }
+
+        listCapteur = findViewById(R.id.enclos_list_capteurs);
+        ListView listViewEnclosCapteurs = findViewById(R.id.enclos_list_capteurs);
+        listEnclosCapteurAdapter = new ArrayAdapter<>(this, R.layout.enclos_create_list_row, listEnclosCapteur);
+        listViewEnclosCapteurs.setAdapter(listEnclosCapteurAdapter);
+        listViewEnclosCapteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                if (listCapteur.isItemChecked(pos)) {
+                    listCapteur.setItemChecked(pos, true);
+                } else {
+                    listCapteur.setItemChecked(pos, false);
+                }
+                SparseBooleanArray i = listCapteur.getCheckedItemPositions();
+//                Log.d("Nb selected Items", "**************************" + i.toString());
+            }
+        });
     }
 
     /**
@@ -43,14 +83,23 @@ public class EnclosCreateActivity extends MenuEquiwatch  {
         findViewById(R.id.btnEnclosCreate).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText inpNomEnclos = (EditText) findViewById(R.id.iptNomEnclos);
+                EditText inpNomEnclos = findViewById(R.id.iptNomEnclos);
                 String nomEnclos = inpNomEnclos.getText().toString();
                 if(nomEnclos.length() > 0 && !listPoints.isEmpty()) {
                     EnclosClass enclos = new EnclosClass(nomEnclos, listPoints);
                     enclosController.creerEnclos(enclos);
                     enclosController.getLesEnclos().add(enclos);
 
-                    Intent nextAct = new Intent(enclosController.getContext(), EnclosActivity.class);
+                    SparseBooleanArray checkedItemPositionsList = listCapteur.getCheckedItemPositions();
+                    Log.d("tests", "************************************** debut: "+checkedItemPositionsList);
+                    ArrayList<CapteursClass> listCapteurSelected = new ArrayList<>();
+                    for (int i=0; i < checkedItemPositionsList.size(); i++) {
+                        if (checkedItemPositionsList.valueAt(i)) {
+                            listCapteurSelected.add(listEnclosCapteur.get(checkedItemPositionsList.keyAt(i)));
+                        }
+                    }
+                    // TODO: 14/07/2019 Finir insertion capteurs sélectionné
+                    Intent nextAct = new Intent(EnclosCreateActivity.this, EnclosActivity.class);
                     startActivity(nextAct);
                     finish();
                 } else {
