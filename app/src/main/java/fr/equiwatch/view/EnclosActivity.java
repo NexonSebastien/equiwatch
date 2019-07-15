@@ -2,7 +2,9 @@ package fr.equiwatch.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,7 +16,7 @@ import fr.equiwatch.R;
 import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.model.EnclosClass;
 
-public class EnclosActivity extends MenuEquiwatch  {
+public class EnclosActivity extends MenuEquiwatch {
 
     // propriétés
     private static EnclosActivity enclosActivity;

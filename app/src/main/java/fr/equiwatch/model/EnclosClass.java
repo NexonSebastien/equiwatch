@@ -50,4 +50,9 @@ public class EnclosClass implements Serializable{
     public void setPointsGps(ArrayList<PointsGpsClass> pointsGps) {
         this.pointsGps = pointsGps;
     }
+
+    @Override
+    public String toString() {
+        return this.getLabel();
+    }
 }

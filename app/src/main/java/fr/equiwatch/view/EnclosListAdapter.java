@@ -97,6 +97,7 @@ public class EnclosListAdapter extends BaseAdapter {
         }
         //valorisation du contenu du holder de la ligne
         holder.txtLabelListeEnclos.setText(lesEnclos.get(i).getLabel());
+        holder.txtLabelListeEnclos.setTag(i);
         holder.imgBtnViewEnclos.setTag(i);
         holder.imgBtnUpdateEnclos.setTag(i);
         holder.imgBtnDeleteEnclos.setTag(i);
@@ -175,6 +176,18 @@ public class EnclosListAdapter extends BaseAdapter {
                 View viewEnclos = snackbarSupr.getView();
                 viewEnclos.setBackgroundResource(R.color.colorPrimary);
                 snackbarSupr.show();
+            }
+        });
+
+        holder.txtLabelListeEnclos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = (int) view.getTag();
+                EnclosClass enclos = lesEnclos.get(position);
+
+                Intent intent = new Intent(enclosController.getContext(), EnclosViewActivity.class);
+                intent.putExtra("enclos", enclos);
+                context.startActivity(intent);
             }
         });
 
