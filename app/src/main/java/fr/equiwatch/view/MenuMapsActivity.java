@@ -46,7 +46,7 @@ public class MenuMapsActivity extends AppCompatActivity
         enclosController = EnclosController.getInstance(this);
 
         setContentView(R.layout.activity_menu_maps_equiwatch);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarche);
         setSupportActionBar(toolbar);
         String app_name = getString(R.string.app_name);
         getSupportActionBar().setTitle(app_name.toUpperCase());
@@ -131,7 +131,8 @@ public class MenuMapsActivity extends AppCompatActivity
             Intent intent = new Intent(this, CapteursActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_parametre) {
-
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_home) {
             showFragment(mMapFragment);
         }

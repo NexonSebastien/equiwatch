@@ -15,6 +15,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "445598243377-r8edv5igmb6iu2ghi38ql8jhrl9hcgal.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.equiwatch",
+            "certificate_hash": "3a0abeb3e23b441cd6fdb80cfc25d9d29e2561cc"
+          }
+        },
+        {
+          "client_id": "445598243377-jvla7js4ud389a2pbccjl3selq01b6d4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.equiwatch",
+            "certificate_hash": "ef5bae1a346f8f5a3f11e23773bce5688def1490"
+          }
+        },
+        {
+          "client_id": "445598243377-j1b9bop5ehqc3iuk2a3dvlqhen1c0p2k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.equiwatch",
+            "certificate_hash": "513a962402e07f9abc43e4dca9fd393beeffbbd6"
+          }
+        },
+        {
           "client_id": "445598243377-ol3s60hqp1i7c0m20bt2i3g008s710np.apps.googleusercontent.com",
           "client_type": 3
         }

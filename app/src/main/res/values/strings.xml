@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">equiwatch</string>
+    <string name="app_name">Equiwatch</string>
     <string name="title_activity_maps_equiwatch">Map</string>
     <string name="bt_maps_text">go to maps !</string>
     <string name="title_activity_menu_equiwatch">menuEquiwatch</string>

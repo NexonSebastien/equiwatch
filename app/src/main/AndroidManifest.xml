@@ -14,12 +14,35 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
+        android:name=".model.Home"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_equiwatch"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_equiwatch_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".view.EquidesViewActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.EquidesUpdateActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.EquidesCreateActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.EquidesActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <receiver
+            android:name=".notifications.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
+        <service
+            android:name=".notifications.NotificationService"
+            android:enabled="true"
+            android:exported="false" />
 
         <activity
             android:name=".view.EquidesViewActivity"
@@ -58,7 +81,6 @@
         <activity
             android:name=".view.EnclosActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
         <activity
             android:name=".view.CapteursViewActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
@@ -71,7 +93,8 @@
         <activity
             android:name=".view.CapteursActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
+        <activity android:name=".view.ProfileActivity"></activity>
+        <activity android:name=".view.LoginActivity" />
         <activity
             android:name=".view.MenuMapsActivity"
             android:label="@string/title_activity_menu_equiwatch"
