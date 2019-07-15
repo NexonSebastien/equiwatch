@@ -9,13 +9,13 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import fr.equiwatch.R;
+
+import fr.equiwatch.controller.CapteursController;
+import fr.equiwatch.controller.EquidesController;
 import fr.equiwatch.controller.EnclosController;
-import fr.equiwatch.view.MapsEquiwatch;
+import fr.equiwatch.notifications.NotificationReceiver;
 
 public class MainActivity extends AppCompatActivity {
-    private Button bt_maps;
-    private EnclosController enclosController;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,18 +23,22 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide(); //hide the title bar
         setContentView(R.layout.activity_main);
 
-        bt_maps = findViewById(R.id.bt_maps);
-        bt_maps.setOnClickListener(new View.OnClickListener() {
+        Button btMaps = findViewById(R.id.bt_maps);
+        btMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openMaps();
             }
         });
 
-        enclosController = EnclosController.getInstance(this);
+//        Permet d'ajouter dans les differentes liste les enclos, equides et capteurs existant en base de donnée.
+        EnclosController enclosController = EnclosController.getInstance(this);
+        EquidesController equidesController = EquidesController.getInstance(this);
+        CapteursController capteursController = CapteursController.getInstance(this);
     }
 
     public void openMaps() {
+        NotificationReceiver.setupAlarm(getApplicationContext());
         Intent intent = new Intent(this, MenuMapsActivity.class);
         startActivity(intent);
     }

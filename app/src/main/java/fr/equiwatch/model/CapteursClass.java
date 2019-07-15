@@ -1,30 +1,30 @@
 package fr.equiwatch.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class EnclosClass implements Serializable{
+public class CapteursClass implements Serializable{
 
     // attributs
     private String id;
     private String label;
-    private ArrayList<PointsGpsClass> pointsGps;
+    private String type;
 
-    public EnclosClass(String id, String label, ArrayList<PointsGpsClass> pointsGps){
+    public CapteursClass(String id, String label, String type){
         this.id = id;
         this.label = label;
-        this.pointsGps = pointsGps;
+        this.type = type;
     }
 
-    public EnclosClass(String label, ArrayList<PointsGpsClass> pointsGps){
+    public CapteursClass(String label, String type){
+        this.id = "";
         this.label = label;
-        this.pointsGps = pointsGps;
+        this.type = type;
     }
 
     /**
      * Constructeur vide necéssaire pour que l'objet soit utilisable par Firestore
      */
-    public EnclosClass(){
+    public CapteursClass(){
     }
 
     public String getId() {
@@ -43,11 +43,16 @@ public class EnclosClass implements Serializable{
         this.label = label;
     }
 
-    public ArrayList<PointsGpsClass> getPointsGps() {
-        return pointsGps;
+    public String getType() {
+        return type;
     }
 
-    public void setPointsGps(ArrayList<PointsGpsClass> pointsGps) {
-        this.pointsGps = pointsGps;
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return this.label;
     }
 }

@@ -3,146 +3,251 @@ package fr.equiwatch.controller;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+
+import fr.equiwatch.R;
 import fr.equiwatch.model.EnclosClass;
+import fr.equiwatch.model.PointsGpsClass;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public final class EnclosController {
 
     private static EnclosController instance = null;
-    private static EnclosClass enclos;
-    private static ArrayList<EnclosClass> lesEnclos;
     private static Context context;
-    private int lastInsertId;
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference firebaseRefEnclos = database.getReference("/equiwatch/equiwatch/enclos");
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private EnclosClass enclosUpdate;
+    private ArrayList<EnclosClass> lesEnclos = new ArrayList<>();
+    private static final String COLLECTION_ENCLOS = "enclos";
 
     /**
      * constructeur private
      */
     private EnclosController(){
         super();
-        firebaseRefEnclos.child("1").child("label").setValue("Enclos1");
-        firebaseRefEnclos.child("2").child("label").setValue("Enclos2");
-        firebaseRefEnclos.child("3").child("label").setValue("Enclos3");
-        firebaseRefEnclos.child("4").child("label").setValue("Enclos4");
-        firebaseRefEnclos.child("5").child("label").setValue("Enclos5");
-        firebaseRefEnclos.child("6").child("label").setValue("Enclos6");
-        firebaseRefEnclos.child("7").child("label").setValue("Enclos7");
-        lesEnclos = new ArrayList<EnclosClass>();
         getAllEnclos();
-        setLastInsertId();
     }
 
+    /**
+     * Permet de récupérer l'instance de EnclosController
+     *
+     * @param context
+     * @return
+     */
     public static final EnclosController getInstance(Context context){
         if(context != null){
             EnclosController.context = context;
         }
         if(EnclosController.instance == null){
             EnclosController.instance = new EnclosController();
-//            @todo recuperer enclos
         }
         return EnclosController.instance;
     }
 
-    public void creerEnclos(String label){
-        int id = lastInsertId + 1;
-        Log.v("lastInsertId1","*********** "+ lastInsertId);
-        enclos = new EnclosClass(id, label);
-        firebaseRefEnclos.child(Integer.toString(id)).child("label").setValue(enclos.getLabel());
-        lesEnclos.add(enclos);
-        Log.v("lastInsertId2","*********** "+ lastInsertId);
-        Log.v("idForInsert","*********** "+ id);
+    /**
+     * Méthode asynchrone qui permet de créer l'enclos passer en paramètre dans la base de données.
+     *
+     * @param enclos
+     */
+    public void creerEnclos(final EnclosClass enclos) {
+        // Add a new document with a generated ID
+        db.collection(COLLECTION_ENCLOS)
+            .add(enclos)
+            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                @Override
+                public void onSuccess(DocumentReference documentReference) {
+                    Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    String key = documentReference.getId();
+                    enclos.setId(key);
+                    addUniqueIdToEnclos(enclos, key);
+                }
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error adding document", e);
+                }
+            });
     }
 
+    /**
+     * Méthode asynchrone permettant de mettre à jour le marqueur passé en paramètre dans Firestore.
+     *
+     * @param enclos
+     */
+    public void updateEnclos(final EnclosClass enclos) {
+        db.collection(COLLECTION_ENCLOS).document(enclos.getId())
+                .set(enclos)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    /**
+     * Méthode asynchrone qui permet d'ajouter l'id unique généré par Firestore a l'enclos passé en paramètre.
+     *
+     * @param enclos
+     * @param id
+     */
+    public void addUniqueIdToEnclos(EnclosClass enclos, String id) {
+        enclos.setId(id);
+        db.collection(COLLECTION_ENCLOS).document(id)
+            .set(enclos)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully written!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+    }
+
+    /**
+     * Méthode asynchrone qui supprime l'enclos passé en parmètre de Firestore.
+     *
+     * @param unEnclos
+     */
     public void deleteEnclos(EnclosClass unEnclos){
-        firebaseRefEnclos.child(Integer.toString(unEnclos.getId())).removeValue();
-        lesEnclos.remove(unEnclos);
-    }
-
-    public void updateEnclos(EnclosClass unEnclos){
-        firebaseRefEnclos.child(Integer.toString(unEnclos.getId())).child("label").setValue(unEnclos.getLabel());
-    }
-
-    public void setEnclos(EnclosClass enclos){
-        EnclosController.enclos = enclos;
-    }
-
-    public ArrayList<EnclosClass> getLesEnclos() {
-        return lesEnclos;
-    }
-
-    public void setLesEnclos(ArrayList<EnclosClass> lesEnclos) {
-        EnclosController.lesEnclos = lesEnclos;
-    }
-
-    public void setLastInsertId() {
-        // FIREBASE  insertion enclos
-
-        firebaseRefEnclos.limitToLast(1).addListenerForSingleValueEvent(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // access last enclos
-                    DataSnapshot messageSnapShot= dataSnapshot.getChildren().iterator().next();
-                    lastInsertId = Integer.parseInt(messageSnapShot.getKey());
-                    Log.v("lastInsertId","*********** "+ Integer.toString(lastInsertId));
+        db.collection(COLLECTION_ENCLOS).document(unEnclos.getId())
+            .delete()
+            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d(TAG, "DocumentSnapshot successfully deleted!");
                 }
-                else{
-                    lastInsertId = 0;
+            })
+            .addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w(TAG, "Error deleting document", e);
                 }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                // Failed to read value
-//                Log.w("***********", "Failed to read value.", error.toException());
-            }
-        });
-
-        this.lastInsertId = lastInsertId;
+            });
     }
 
-    public void getAllEnclos(){
-        firebaseRefEnclos.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                lesEnclos.clear();
-                for (DataSnapshot unSnapshot : dataSnapshot.getChildren()) {
-                    Log.d("label","***********" + unSnapshot.child("label").getValue().toString());
-                    lesEnclos.add(new EnclosClass(((int)Integer.parseInt(unSnapshot.getKey().toString())),unSnapshot.child("label").getValue().toString()));
+    /**
+     * Méthode asynchrone qui permet de récupérer tout les enclos depuis firestore.
+     * Le listener met à jour la liste a chaque modification en base de données.
+     */
+    public void getAllEnclos() {
+        db.collection(COLLECTION_ENCLOS)
+            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value,
+                                    @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
+                    }
+                    lesEnclos.clear();
+                    lesEnclos.addAll(value.toObjects(EnclosClass.class));
                 }
-//                for (EnclosClass unEnclos : lesEnclos){
-//                    int id = unEnclos.getId();
-//                    String label = unEnclos.getLabel();
-//                    Log.d("label","***********" + label);
-//                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("***********", "Failed to read value.", error.toException());
-            }
-        });
+            });
     }
 
+    /**
+     * Méthode asynchrone permettant de créer les polygons représentant les enclos sur la google map.
+     *
+     * @param nmap
+     */
+    public void getAllEnclosWithPointsFirestore(final GoogleMap nmap) {
+        db.collection(COLLECTION_ENCLOS)
+            .get()
+            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+
+                    ArrayList<EnclosClass> listEnclos = (ArrayList<EnclosClass>) task.getResult().toObjects(EnclosClass.class);
+                    ArrayList<LatLng> pointsEnclos = new ArrayList<>();
+                    for (int i = 0; listEnclos.size() > i; i++) {
+                        pointsEnclos.clear();
+                        EnclosClass enclos = listEnclos.get(i);
+                        ArrayList<PointsGpsClass> pointsGps = enclos.getPointsGps();
+                        for (PointsGpsClass point: pointsGps) {
+                            pointsEnclos.add(new LatLng(point.getLatitude(), point.getLongitude()));
+                        }
+
+                        if (!pointsEnclos.isEmpty()) {
+                            PolygonOptions rectOptions = new PolygonOptions()
+                                    .strokeColor(R.color.colorRed)
+                                    .fillColor(R.color.colorRedTransparent)
+                                    .addAll(pointsEnclos);
+                            nmap.addPolygon(rectOptions);
+                        }
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+                }
+            });
+    }
+
+    /**
+     * Getter de enclosUpdate
+     *
+     * @return
+     */
     public EnclosClass getEnclosUpdate() {
         return enclosUpdate;
     }
 
+    /**
+     * Setter de enclosUpdate
+     *
+     * @param enclosUpdate
+     */
     public void setEnclosUpdate(EnclosClass enclosUpdate) {
         this.enclosUpdate = enclosUpdate;
     }
 
+    /**
+     * Permet de récupérer le context ayant utilisant l'instance de EnclosController
+     *
+     * @return Context
+     */
     public static Context getContext() {
         return context;
+    }
+
+    /**
+     * Permet de récupérer lesEnclos
+     *
+     * @return ArrayList<EnclosClass>
+     */
+    public ArrayList<EnclosClass> getLesEnclos() {
+        return lesEnclos;
     }
 }
 

@@ -25,8 +25,8 @@ public class MenuEquiwatch extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String app_name = getString(R.string.app_name);
-        getSupportActionBar().setTitle(app_name.toUpperCase());
+        String appName = getString(R.string.app_name);
+        getSupportActionBar().setTitle(appName.toUpperCase());
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -80,12 +80,14 @@ public class MenuEquiwatch extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_chevaux) {
-            // Handle the camera action
+            Intent intent = new Intent(this, EquidesActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_enclos) {
             Intent intent = new Intent(this, EnclosActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_capteurs) {
-
+            Intent intent = new Intent(this, CapteursActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_parametre) {
 
         } else if (id == R.id.nav_home) {
