@@ -86,19 +86,21 @@ public class EnclosCreateActivity extends MenuEquiwatch {
                 EditText inpNomEnclos = findViewById(R.id.iptNomEnclos);
                 String nomEnclos = inpNomEnclos.getText().toString();
                 if(nomEnclos.length() > 0 && !listPoints.isEmpty()) {
-                    EnclosClass enclos = new EnclosClass(nomEnclos, listPoints);
-                    enclosController.creerEnclos(enclos);
-                    enclosController.getLesEnclos().add(enclos);
+                    ArrayList<String> listIdCapteurs = new ArrayList<>();
 
                     SparseBooleanArray checkedItemPositionsList = listCapteur.getCheckedItemPositions();
                     Log.d("tests", "************************************** debut: "+checkedItemPositionsList);
                     ArrayList<CapteursClass> listCapteurSelected = new ArrayList<>();
                     for (int i=0; i < checkedItemPositionsList.size(); i++) {
                         if (checkedItemPositionsList.valueAt(i)) {
-                            listCapteurSelected.add(listEnclosCapteur.get(checkedItemPositionsList.keyAt(i)));
+                            listIdCapteurs.add(listEnclosCapteur.get(checkedItemPositionsList.keyAt(i)).getId());
                         }
                     }
-                    // TODO: 14/07/2019 Finir insertion capteurs sélectionné
+
+                    EnclosClass enclos = new EnclosClass(nomEnclos, listPoints, listIdCapteurs);
+                    enclosController.creerEnclos(enclos);
+                    enclosController.getLesEnclos().add(enclos);
+
                     Intent nextAct = new Intent(EnclosCreateActivity.this, EnclosActivity.class);
                     startActivity(nextAct);
                     finish();

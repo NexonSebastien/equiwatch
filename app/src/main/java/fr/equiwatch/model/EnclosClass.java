@@ -9,6 +9,7 @@ public class EnclosClass implements Serializable{
     private String id;
     private String label;
     private ArrayList<PointsGpsClass> pointsGps;
+    private ArrayList<String> listIdCapteur;
 
     public EnclosClass(String id, String label, ArrayList<PointsGpsClass> pointsGps){
         this.id = id;
@@ -16,9 +17,10 @@ public class EnclosClass implements Serializable{
         this.pointsGps = pointsGps;
     }
 
-    public EnclosClass(String label, ArrayList<PointsGpsClass> pointsGps){
+    public EnclosClass(String label, ArrayList<PointsGpsClass> pointsGps, ArrayList<String> listIdCapteur){
         this.label = label;
         this.pointsGps = pointsGps;
+        this.listIdCapteur = listIdCapteur;
     }
 
     /**
@@ -54,5 +56,13 @@ public class EnclosClass implements Serializable{
     @Override
     public String toString() {
         return this.getLabel();
+    }
+
+    public ArrayList<String> getListIdCapteur() {
+        return listIdCapteur;
+    }
+
+    public void setListIdCapteur(ArrayList<String> listIdCapteur) {
+        this.listIdCapteur = listIdCapteur;
     }
 }
