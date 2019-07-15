@@ -64,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //        Permet d'ajouter dans les differentes liste les enclos, equides et capteurs existant en base de donnée.
-                EnclosController enclosController = EnclosController.getInstance(MainActivity.this);
-                EquidesController equidesController = EquidesController.getInstance(MainActivity.this);
-                CapteursController capteursController = CapteursController.getInstance(MainActivity.this);
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             }
         });
