@@ -11,10 +11,11 @@ public class EnclosClass implements Serializable{
     private ArrayList<PointsGpsClass> pointsGps;
     private ArrayList<String> listIdCapteur;
 
-    public EnclosClass(String id, String label, ArrayList<PointsGpsClass> pointsGps){
+    public EnclosClass(String id, String label, ArrayList<PointsGpsClass> pointsGps, ArrayList<String> listIdCapteur){
         this.id = id;
         this.label = label;
         this.pointsGps = pointsGps;
+        this.listIdCapteur = listIdCapteur;
     }
 
     public EnclosClass(String label, ArrayList<PointsGpsClass> pointsGps, ArrayList<String> listIdCapteur){

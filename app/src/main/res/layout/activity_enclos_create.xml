@@ -93,7 +93,7 @@
                 android:id="@+id/enclos_list_capteurs"
                 android:layout_width="match_parent"
                 android:layout_height="248dp"
-                android:choiceMode="multipleChoice"></ListView>
+                android:choiceMode="multipleChoice" />
 
             <Button
                 android:id="@+id/btnEnclosCreate"

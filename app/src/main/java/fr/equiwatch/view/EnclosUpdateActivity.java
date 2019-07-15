@@ -2,16 +2,25 @@ package fr.equiwatch.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 import fr.equiwatch.R;
+import fr.equiwatch.controller.CapteursController;
 import fr.equiwatch.controller.EnclosController;
+import fr.equiwatch.model.CapteursClass;
 import fr.equiwatch.model.EnclosClass;
 import fr.equiwatch.model.PointsGpsClass;
 
@@ -22,6 +31,11 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
     // propriétés
     private EnclosController enclosController;
     private EnclosClass enclosUpdate;
+    private ArrayList<PointsGpsClass> listPoints = new ArrayList<>();
+    private ArrayList<CapteursClass> listCapteurs;
+    private ArrayList<CapteursClass> listEnclosCapteur = new ArrayList<>();
+    private ArrayAdapter<CapteursClass> listEnclosCapteurAdapter;
+    private ListView listCapteur;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +46,7 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
         this.enclosController = EnclosController.getInstance(this.getBaseContext());
         EditText inpNomEnclos = findViewById(R.id.iptNomEnclos);
         this.enclosUpdate = enclosController.getEnclosUpdate();
+        this.listPoints = enclosUpdate.getPointsGps();
 
         // On insère le label de l'enclos dans le champs de texte
         inpNomEnclos.setText(enclosUpdate.getLabel());
@@ -47,12 +62,32 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
             @Override
             public void onClick(View view) {
                 EditText inpNomEnclos = findViewById(R.id.iptNomEnclos);
-                enclosUpdate.setLabel(inpNomEnclos.getText().toString());
-                enclosController.updateEnclos(enclosUpdate);
+                String nomEnclos = inpNomEnclos.getText().toString();
 
-                Intent nextAct = new Intent(EnclosUpdateActivity.this, EnclosActivity.class);
-                startActivity(nextAct);
-                finish();
+                if(nomEnclos.length() > 0 && !listPoints.isEmpty()) {
+                    ArrayList<String> listIdCapteurs = new ArrayList<>();
+
+                    SparseBooleanArray checkedItemPositionsList = listCapteur.getCheckedItemPositions();
+                    for (int i=0; i < checkedItemPositionsList.size(); i++) {
+                        if (checkedItemPositionsList.valueAt(i)) {
+                            listIdCapteurs.add(listEnclosCapteur.get(checkedItemPositionsList.keyAt(i)).getId());
+                        }
+                    }
+
+                    enclosUpdate.setListIdCapteur(listIdCapteurs);
+                    enclosUpdate.setLabel(nomEnclos);
+                    enclosUpdate.setPointsGps(listPoints);
+                    enclosController.updateEnclos(enclosUpdate);
+
+                    Intent nextAct = new Intent(EnclosUpdateActivity.this, EnclosActivity.class);
+                    startActivity(nextAct);
+                    finish();
+                } else {
+                    Snackbar snackbarSupr = Snackbar.make(view, R.string.form_empty, Snackbar.LENGTH_SHORT);
+                    View viewEnclos = snackbarSupr.getView();
+                    viewEnclos.setBackgroundResource(R.color.colorRed);
+                    snackbarSupr.show();
+                }
             }
         });
 
@@ -68,6 +103,37 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
             }
         });
 
+        listCapteurs = CapteursController.getInstance(null).getLesCapteurs();
+
+        // On veut tout les capteurs sauf GPS
+        for (CapteursClass capteur : listCapteurs) {
+            if(!capteur.getType().equals("GPS")) {
+                listEnclosCapteur.add(capteur);
+            }
+        }
+
+        listCapteur = findViewById(R.id.enclos_list_capteurs);
+        ListView listViewEnclosCapteurs = findViewById(R.id.enclos_list_capteurs);
+        listEnclosCapteurAdapter = new ArrayAdapter<>(this, R.layout.enclos_create_list_row, listEnclosCapteur);
+        listViewEnclosCapteurs.setAdapter(listEnclosCapteurAdapter);
+        listViewEnclosCapteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
+                if (listCapteur.isItemChecked(pos)) {
+                    listCapteur.setItemChecked(pos, true);
+                } else {
+                    listCapteur.setItemChecked(pos, false);
+                }
+            }
+        });
+
+        if (enclosUpdate.getListIdCapteur() != null && !enclosUpdate.getListIdCapteur().isEmpty()) {
+            for (int i = 0; listEnclosCapteur.size() > i; i++) {
+                if (enclosUpdate.getListIdCapteur().contains(listEnclosCapteur.get(i).getId())) {
+                    listCapteur.setItemChecked(i, true);
+                }
+            }
+        }
     }
 
     @Override
@@ -78,7 +144,7 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
             ArrayList<PointsGpsClass> result = (ArrayList<PointsGpsClass>) data.getSerializableExtra("listPointsGps");
             // The user picked a contact.
             // The Intent's data Uri identifies which contact was selected.
-            setListPoints(result, enclosUpdate);
+            setListPoints(result);
 
             // Do something with the contact here (bigger example below)
         }
@@ -88,12 +154,11 @@ public class EnclosUpdateActivity extends MenuEquiwatch  {
      * Affiche le nombre de point gps de l'enclos
      *
      * @param listPoints
-     * @param enclos
      */
-    public void setListPoints(ArrayList<PointsGpsClass> listPoints, EnclosClass enclos) {
-        enclos.setPointsGps(listPoints);
+    public void setListPoints(ArrayList<PointsGpsClass> listPoints) {
+        this.listPoints = listPoints;
         TextView textView = findViewById(R.id.tv_nb_points);
-        textView.setText( String.format(getString(R.string.txt_nb_points), enclos.getPointsGps().size()));
+        textView.setText( String.format(getString(R.string.txt_nb_points), listPoints.size()));
         textView.setVisibility(View.VISIBLE);
     }
 }
