@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -25,7 +26,9 @@ public final class EquidesController {
     private EquidesClass equidesView;
     private ArrayList<EquidesClass> lesEquides = new ArrayList<>();
     private static final String COLLECTION_EQUIDES = "equides";
+    private static final String COLLECTION_USERS = "users";
 
+    private static FirebaseAuth firebaseAuth;
 
     /**
      * constructeur private
@@ -41,6 +44,7 @@ public final class EquidesController {
      * @return
      */
     public static final EquidesController getInstance(Context context){
+        firebaseAuth = FirebaseAuth.getInstance();
         if(context != null){
             EquidesController.context = context;
         }
@@ -57,8 +61,9 @@ public final class EquidesController {
      * @param idCapteur
      */
     public void creerEquides(final String nom, final String idEnclos, final String idCapteur){
+        equides =  new EquidesClass(nom, idEnclos, idCapteur);
         // Add a new document with a generated ID
-        db.collection(COLLECTION_EQUIDES)
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_EQUIDES)
             .add(equides)
             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
@@ -85,7 +90,7 @@ public final class EquidesController {
      */
     public void addUniqueIdToEquides(EquidesClass equides, String id) {
         equides.setId(id);
-        db.collection(COLLECTION_EQUIDES).document(id)
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_EQUIDES).document(id)
                 .set(equides)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -106,7 +111,7 @@ public final class EquidesController {
      * @param equides
      */
     public void deleteEquides(EquidesClass equides){
-        db.collection(COLLECTION_EQUIDES).document(equides.getId())
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_EQUIDES).document(equides.getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -128,7 +133,7 @@ public final class EquidesController {
      * @param equides
      */
     public void updateEquides(EquidesClass equides){
-        db.collection(COLLECTION_EQUIDES).document(equides.getId())
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_EQUIDES).document(equides.getId())
                 .set(equides)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -165,19 +170,19 @@ public final class EquidesController {
      * Récupérer tout les equidé de la base de donnée firestore
      */
     public void getAllEquides() {
-        db.collection(COLLECTION_EQUIDES)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value,
-                                        @Nullable FirebaseFirestoreException e) {
-                        if (e != null) {
-                            Log.w(TAG, "Listen failed.", e);
-                            return;
-                        }
-                        lesEquides.clear();
-                        lesEquides.addAll(value.toObjects(EquidesClass.class));
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_EQUIDES)
+            .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot value,
+                                    @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(TAG, "Listen failed.", e);
+                        return;
                     }
-                });
+                    lesEquides.clear();
+                    lesEquides.addAll(value.toObjects(EquidesClass.class));
+                }
+            });
     }
 
     /**

@@ -12,6 +12,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
@@ -37,6 +38,9 @@ public final class EnclosController {
     private EnclosClass enclosUpdate;
     private ArrayList<EnclosClass> lesEnclos = new ArrayList<>();
     private static final String COLLECTION_ENCLOS = "enclos";
+    private static final String COLLECTION_USERS = "users";
+
+    private static FirebaseAuth firebaseAuth;
 
     /**
      * constructeur private
@@ -53,6 +57,7 @@ public final class EnclosController {
      * @return
      */
     public static final EnclosController getInstance(Context context){
+        firebaseAuth = FirebaseAuth.getInstance();
         if(context != null){
             EnclosController.context = context;
         }
@@ -69,7 +74,7 @@ public final class EnclosController {
      */
     public void creerEnclos(final EnclosClass enclos) {
         // Add a new document with a generated ID
-        db.collection(COLLECTION_ENCLOS)
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_ENCLOS)
             .add(enclos)
             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                 @Override
@@ -94,7 +99,7 @@ public final class EnclosController {
      * @param enclos
      */
     public void updateEnclos(final EnclosClass enclos) {
-        db.collection(COLLECTION_ENCLOS).document(enclos.getId())
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_ENCLOS).document(enclos.getId())
                 .set(enclos)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -118,7 +123,7 @@ public final class EnclosController {
      */
     public void addUniqueIdToEnclos(EnclosClass enclos, String id) {
         enclos.setId(id);
-        db.collection(COLLECTION_ENCLOS).document(id)
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_ENCLOS).document(id)
             .set(enclos)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -140,7 +145,7 @@ public final class EnclosController {
      * @param unEnclos
      */
     public void deleteEnclos(EnclosClass unEnclos){
-        db.collection(COLLECTION_ENCLOS).document(unEnclos.getId())
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_ENCLOS).document(unEnclos.getId())
             .delete()
             .addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -161,7 +166,7 @@ public final class EnclosController {
      * Le listener met à jour la liste a chaque modification en base de données.
      */
     public void getAllEnclos() {
-        db.collection(COLLECTION_ENCLOS)
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_ENCLOS)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot value,
@@ -182,7 +187,7 @@ public final class EnclosController {
      * @param nmap
      */
     public void getAllEnclosWithPointsFirestore(final GoogleMap nmap) {
-        db.collection(COLLECTION_ENCLOS)
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_ENCLOS)
             .get()
             .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
