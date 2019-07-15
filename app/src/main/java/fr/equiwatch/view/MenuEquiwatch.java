@@ -22,7 +22,7 @@ public class MenuEquiwatch extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarche);
         setSupportActionBar(toolbar);
 
         String appName = getString(R.string.app_name);
@@ -89,7 +89,8 @@ public class MenuEquiwatch extends AppCompatActivity
             Intent intent = new Intent(this, CapteursActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_parametre) {
-
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_home) {
             Intent intent = new Intent(this, MenuMapsActivity.class);
             startActivity(intent);
