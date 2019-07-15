@@ -84,6 +84,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/enclos_label_selction_capteur"/>
+
+            <ListView
+                android:id="@+id/enclos_list_capteurs"
+                android:layout_width="match_parent"
+                android:layout_height="248dp"
+                android:choiceMode="multipleChoice" />
+
             <Button
                 android:id="@+id/btnEnclosUpdate"
                 android:layout_width="match_parent"

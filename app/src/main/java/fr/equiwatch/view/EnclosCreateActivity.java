@@ -65,13 +65,11 @@ public class EnclosCreateActivity extends MenuEquiwatch {
         listViewEnclosCapteurs.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int pos, long l) {
-                if (listCapteur.isItemChecked(pos)) {
-                    listCapteur.setItemChecked(pos, true);
-                } else {
-                    listCapteur.setItemChecked(pos, false);
-                }
-                SparseBooleanArray i = listCapteur.getCheckedItemPositions();
-//                Log.d("Nb selected Items", "**************************" + i.toString());
+            if (listCapteur.isItemChecked(pos)) {
+                listCapteur.setItemChecked(pos, true);
+            } else {
+                listCapteur.setItemChecked(pos, false);
+            }
             }
         });
     }
@@ -89,8 +87,6 @@ public class EnclosCreateActivity extends MenuEquiwatch {
                     ArrayList<String> listIdCapteurs = new ArrayList<>();
 
                     SparseBooleanArray checkedItemPositionsList = listCapteur.getCheckedItemPositions();
-                    Log.d("tests", "************************************** debut: "+checkedItemPositionsList);
-                    ArrayList<CapteursClass> listCapteurSelected = new ArrayList<>();
                     for (int i=0; i < checkedItemPositionsList.size(); i++) {
                         if (checkedItemPositionsList.valueAt(i)) {
                             listIdCapteurs.add(listEnclosCapteur.get(checkedItemPositionsList.keyAt(i)).getId());
