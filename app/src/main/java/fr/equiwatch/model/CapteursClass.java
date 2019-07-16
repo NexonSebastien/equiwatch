@@ -10,16 +10,18 @@ public class CapteursClass implements Serializable{
     private String type;
     private String donnee;
 
-    public CapteursClass(String id, String label, String type, String donnee){
+    public CapteursClass(String id, String label, String type){
         this.id = id;
         this.label = label;
         this.type = type;
+        this.donnee = "null";
     }
 
     public CapteursClass(String label, String type){
         this.id = "";
         this.label = label;
         this.type = type;
+        this.donnee = "null";
     }
 
     /**
