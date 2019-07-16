@@ -1,4 +1,4 @@
-package fr.equiwatch.model;
+package fr.equiwatch.view;
 
 import android.app.Application;
 import android.content.Intent;
@@ -10,9 +10,6 @@ import fr.equiwatch.controller.CapteursController;
 import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.controller.EquidesController;
 import fr.equiwatch.notifications.NotificationReceiver;
-import fr.equiwatch.view.MainActivity;
-import fr.equiwatch.view.MenuMapsActivity;
-import fr.equiwatch.view.ProfileActivity;
 
 public class Home extends Application {
     @Override

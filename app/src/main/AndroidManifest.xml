@@ -14,7 +14,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".model.Home"
+        android:name=".view.Home"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_equiwatch"
         android:label="@string/app_name"
@@ -44,18 +44,6 @@
             android:enabled="true"
             android:exported="false" />
 
-        <activity
-            android:name=".view.EquidesViewActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".view.EquidesUpdateActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".view.EquidesCreateActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".view.EquidesActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <receiver
             android:name=".notifications.NotificationReceiver"
             android:enabled="true"
