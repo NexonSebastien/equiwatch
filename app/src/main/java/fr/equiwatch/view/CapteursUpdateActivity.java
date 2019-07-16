@@ -101,11 +101,7 @@ public class CapteursUpdateActivity extends MenuEquiwatch  {
     public void addItemsOnSpinner(String selectedItem) {
 
         spinner = (Spinner) findViewById(R.id.spinnerTypeCapteurs);
-        List<String> list = new ArrayList<String>();
-        list.add("Vide");
-        list.add("GPS");
-        list.add("Hydraulique");
-        list.add("Electrique");
+        List<String> list = capteursController.getListTypeCapteur();
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

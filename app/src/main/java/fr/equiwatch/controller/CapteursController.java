@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
@@ -12,6 +13,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
+import java.util.List;
+
 import fr.equiwatch.model.CapteursClass;
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -53,6 +56,8 @@ public final class CapteursController {
     private ArrayList<CapteursClass> lesCapteurs = new ArrayList<>();
 
     private static final String COLLECTION_CAPTEURS = "capteurs";
+    private static final String COLLECTION_USERS = "users";
+    private static FirebaseAuth firebaseAuth;
 
     /**
      * constructeur private
@@ -68,6 +73,7 @@ public final class CapteursController {
      * @return
      */
     public static final CapteursController getInstance(Context context){
+        firebaseAuth = FirebaseAuth.getInstance();
         if(context != null){
             CapteursController.context = context;
         }
@@ -85,7 +91,7 @@ public final class CapteursController {
     public void creerCapteurs(final String label, final String type){
         setCapteurs(new CapteursClass(label, type));
         // Add a new document with a generated ID
-        db.collection(COLLECTION_CAPTEURS)
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_CAPTEURS)
                 .add(capteurs)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -112,7 +118,7 @@ public final class CapteursController {
      */
     public void addUniqueIdToCapteurs(CapteursClass capteurs, String id) {
         capteurs.setId(id);
-        db.collection(COLLECTION_CAPTEURS).document(id)
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_CAPTEURS).document(id)
                 .set(capteurs)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -133,7 +139,7 @@ public final class CapteursController {
      * @param capteurs
      */
     public void deleteCapteurs(CapteursClass capteurs){
-        db.collection(COLLECTION_CAPTEURS).document(capteurs.getId())
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_CAPTEURS).document(capteurs.getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -155,7 +161,7 @@ public final class CapteursController {
      * @param capteurs
      */
     public void updateCapteurs(CapteursClass capteurs){
-        db.collection(COLLECTION_CAPTEURS).document(capteurs.getId())
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_CAPTEURS).document(capteurs.getId())
                 .set(capteurs)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -191,7 +197,7 @@ public final class CapteursController {
      * Permet de récupérer sur la base de donnée
      */
     public void getAllCapteurs() {
-        db.collection(COLLECTION_CAPTEURS)
+        db.collection(COLLECTION_USERS).document(firebaseAuth.getCurrentUser().getEmail()).collection(COLLECTION_CAPTEURS)
             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot value,
@@ -245,6 +251,16 @@ public final class CapteursController {
      */
     public void setCapteursView(CapteursClass capteursView) {
         this.capteursView = capteursView;
+    }
+
+    public List<String> getListTypeCapteur(){
+        List<String> list = new ArrayList<String>();
+        list.add("Vide");
+        list.add("GPS");
+        list.add("Hydraulique");
+        list.add("Electrique");
+        list.add("Thermique");
+        return list;
     }
 }
 
