@@ -21,67 +21,65 @@
         android:roundIcon="@mipmap/ic_launcher_equiwatch_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".notifications.NotificationService"
+            android:exported="false"></service>
+
+        <receiver
+            android:name=".notifications.NotificationReceiver"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity
             android:name=".view.EquidesViewActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.EquidesUpdateActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.EquidesCreateActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.EquidesActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <receiver
-            android:name=".notifications.NotificationReceiver"
-            android:enabled="true"
-            android:exported="true"></receiver>
-
-        <service
-            android:name=".notifications.NotificationService"
-            android:enabled="true"
-            android:exported="false" />
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <receiver
-            android:name=".notifications.NotificationReceiver"
+            android:name=".notifications.NotificationGpsReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
 
         <service
-            android:name=".notifications.NotificationService"
+            android:name=".notifications.NotificationGpsService"
             android:enabled="true"
             android:exported="false" />
 
         <activity
             android:name=".view.EnclosViewActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".view.EnclosUpdateActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".view.EnclosCreateActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustPan|adjustResize"></activity>
+            android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
             android:name=".view.EnclosActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.CapteursViewActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.CapteursUpdateActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.CapteursCreateActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.CapteursActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".view.ProfileActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.ProfileActivity" />
         <activity android:name=".view.LoginActivity" />
         <activity
             android:name=".view.MenuMapsActivity"

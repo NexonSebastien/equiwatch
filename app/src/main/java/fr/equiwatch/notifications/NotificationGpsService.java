@@ -28,27 +28,28 @@ import fr.equiwatch.model.EquidesClass;
 import fr.equiwatch.model.PointsGpsClass;
 import fr.equiwatch.view.MainActivity;
 
-
-public class NotificationService extends IntentService {
-    private static final int NOTIFICATION_ID = 2;
-    private static final String CHANNEL_ID = "1";
+public class NotificationGpsService extends IntentService {
+    private static final int NOTIFICATION_ID = 1;
+    private static final String CHANNEL_ID = "0";
     private static final String ACTION_START_NOTIFICATION_SERVICE = "ACTION_START_NOTIFICATION_SERVICE";
     private static final String ACTION_START = "ACTION_START";
     private static ArrayList<EnclosClass> listEnclos;
     private static ArrayList<CapteursClass> listCapteurs;
+    private static ArrayList<EquidesClass> listEquides;
     private EnclosController enclosController;
     private CapteursController capteursController;
+    private EquidesController equidesController;
     private final double LIMIT_TEMP = 30;
 
     public static Intent createIntentStartNotificationService(Context context) {
-        Intent intent = new Intent(context, NotificationService.class);
+        Intent intent = new Intent(context, NotificationGpsService.class);
         intent.setAction(ACTION_START);
         return intent;
     }
 
 
-    public NotificationService() {
-        super("NotificationService");
+    public NotificationGpsService() {
+        super("NotificationGpsService");
     }
 
     @Override
@@ -57,6 +58,7 @@ public class NotificationService extends IntentService {
         Log.i(getClass().getSimpleName(), "onStartCommand");
         enclosController = EnclosController.getInstance(this);
         capteursController = CapteursController.getInstance(this);
+        equidesController = EquidesController.getInstance(this);
         return START_NOT_STICKY;
     }
 
@@ -64,20 +66,27 @@ public class NotificationService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         enclosController.getAllEnclos();
         capteursController.getAllCapteurs();
+        equidesController.getAllEquides();
         listEnclos = enclosController.getLesEnclos();
         listCapteurs = capteursController.getLesCapteurs();
+        listEquides =  equidesController.getLesEquides();
 
         for (int n = 0; listCapteurs.size() > n;n++) {
             CapteursClass capteur = listCapteurs.get(n);
-            if (!capteur.getType().equals("GPS") && !capteur.getType().equals("VIDE")) {
-                for (int i = 0; listEnclos.size() > i; i++) {
-                    EnclosClass enclos = listEnclos.get(i);
-                    if (enclos.getListIdCapteur().contains(capteur.getId())) {
-                        if (capteur.getType().equals("Thermique")) {
-                            Log.i(getClass().getSimpleName(), "tentative notif thermique");
-                            checkTemperature(capteur, enclos);
+            if (capteur.getType().equals("GPS")){
+                for (int i = 0; listEquides.size() > i; i++) {
+                    EquidesClass equides = listEquides.get(i);
+                    if (capteur.getId().equals(equides.getIdCapteur())) {
+                        for (int t = 0; listEnclos.size() > t; t++) {
+                            EnclosClass enclos = listEnclos.get(t);
+                            if (equides.getIdEnclos().equals(enclos.getId())) {
+                                String donnee = capteur.getDonnee();
+                                if (donnee.contains(";")) {
+                                    String[] arrayCoordonnee = donnee.split(";");
+                                    geoFencing(new LatLng(Double. valueOf(arrayCoordonnee[0]), Double.valueOf(arrayCoordonnee[1])), enclos, equides);
+                                }
+                            }
                         }
-                        return;
                     }
                 }
             }
@@ -94,13 +103,9 @@ public class NotificationService extends IntentService {
         intent.setAction(ACTION_START_NOTIFICATION_SERVICE);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         String notificationDescriptif = "";
-        if (type.equals("Thermique")) {
-            EnclosClass enclos = (EnclosClass) sujet;
-            notificationDescriptif = String.format(getString(R.string.notif_alerte_temperature_descriptif), enclos.getLabel(), Double.toString(LIMIT_TEMP));
-        } else if (type.equals("Electrique")) {
-
-        } else if (type.equals("Hydraulique")) {
-
+        if (type.equals("GPS")) {
+            EquidesClass equides = (EquidesClass) sujet;
+            notificationDescriptif = String.format(getString(R.string.notif_alerte_cheval_descriptif), equides.getNom());
         }
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.horse)
@@ -125,7 +130,7 @@ public class NotificationService extends IntentService {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.nom_channel);
+            CharSequence name = getString(R.string.nom_channel_gps);
             String description = getString(R.string.description_channel);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
@@ -137,9 +142,24 @@ public class NotificationService extends IntentService {
         }
     }
 
-    private void checkTemperature(CapteursClass capteur, EnclosClass enclos) {
-        if (LIMIT_TEMP < Double.valueOf(capteur.getDonnee())) {
-            showNotification("Thermique", enclos);
+    /**
+     * Créer une notification si les coordonnées du cheval sont en dehors de celles de l'enclos
+     *
+     * @param chevalPos
+     */
+    private void geoFencing(LatLng chevalPos, EnclosClass enclos, EquidesClass equides) {
+        ArrayList<LatLng> pointsEnclos = new ArrayList<>();
+        ArrayList<PointsGpsClass> pointsGps = enclos.getPointsGps();
+        for (PointsGpsClass point: pointsGps) {
+            pointsEnclos.add(new LatLng(point.getLatitude(), point.getLongitude()));
+        }
+
+        if (!pointsEnclos.isEmpty()) {
+            PolygonOptions rectOptions = new PolygonOptions()
+                    .addAll(pointsEnclos);
+            if(!PolyUtil.containsLocation(chevalPos, rectOptions.getPoints(), false)) {
+                showNotification("GPS", equides);
+            }
         }
     }
 }

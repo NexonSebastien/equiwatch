@@ -63,9 +63,11 @@
     <string name="btn_create">Créer</string>
 
     <string name="nom_channel">Alerte</string>
+    <string name="nom_channel_gps">Alerte fuite equides</string>
     <string name="description_channel">Les alertes</string>
 
-    <string name="notif_alerte_cheval_descriptif">L\'equidé %1$s c\'est échappé de l\'enclos %2$s</string>
+    <string name="notif_alerte_cheval_descriptif">L\'equidé %s c\'est échappé</string>
+    <string name="notif_alerte_temperature_descriptif">La chaleur au niveau de l\'enclos %1$s dépasse les %2$s degrés</string>
 
     <string name="dialog_map_quitter_message">Voulez vous vraiment annuler la délimitation de l\'enclos ?</string>
     <string name="dialog_map_quitter_titre">Annulation de la délimitation de l\'enclos</string>

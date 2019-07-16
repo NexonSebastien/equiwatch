@@ -18,10 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import fr.equiwatch.R;
 
-import fr.equiwatch.controller.CapteursController;
-import fr.equiwatch.controller.EquidesController;
 import fr.equiwatch.controller.EnclosController;
-import fr.equiwatch.notifications.NotificationReceiver;
+import fr.equiwatch.notifications.NotificationGpsReceiver;
 
 public class MainActivity extends AppCompatActivity {
     private EnclosController enclosController;
@@ -96,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openMaps() {
-        NotificationReceiver.setupAlarm(getApplicationContext());
+        NotificationGpsReceiver.setupAlarm(getApplicationContext());
         Intent intent = new Intent(this, MenuMapsActivity.class);
         startActivity(intent);
     }

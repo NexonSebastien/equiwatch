@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseUser;
 import fr.equiwatch.controller.CapteursController;
 import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.controller.EquidesController;
+import fr.equiwatch.notifications.NotificationGpsReceiver;
 import fr.equiwatch.notifications.NotificationReceiver;
 
 public class Home extends Application {
@@ -20,6 +21,7 @@ public class Home extends Application {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
         if(firebaseUser != null){
+            NotificationGpsReceiver.setupAlarm(getApplicationContext());
             NotificationReceiver.setupAlarm(getApplicationContext());
             EnclosController enclosController = EnclosController.getInstance(Home.this);
             EquidesController equidesController = EquidesController.getInstance(Home.this);
