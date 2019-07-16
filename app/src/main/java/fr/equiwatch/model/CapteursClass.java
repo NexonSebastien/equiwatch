@@ -8,8 +8,9 @@ public class CapteursClass implements Serializable{
     private String id;
     private String label;
     private String type;
+    private String donnee;
 
-    public CapteursClass(String id, String label, String type){
+    public CapteursClass(String id, String label, String type, String donnee){
         this.id = id;
         this.label = label;
         this.type = type;
@@ -49,6 +50,14 @@ public class CapteursClass implements Serializable{
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getDonnee() {
+        return donnee;
+    }
+
+    public void setDonnee(String donnee) {
+        this.donnee = donnee;
     }
 
     @Override

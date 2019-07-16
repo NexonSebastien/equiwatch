@@ -38,8 +38,10 @@ public class CapteursViewActivity extends MenuEquiwatch  {
 
         TextView txtLabelCapteurs = (TextView) findViewById(R.id.txtLabelCapteurs);
         TextView txtTypeCapteurs = (TextView) findViewById(R.id.txtTypeCapteurs);
+        TextView txtDonneeCapteurs = (TextView) findViewById(R.id.txtDonneeCapteur);
 
         txtLabelCapteurs.setText(capteursView.getLabel());
         txtTypeCapteurs.setText(capteursView.getType());
+        txtDonneeCapteurs.setText(capteursView.getDonnee());
     }
 }
