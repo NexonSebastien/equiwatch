@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -38,12 +40,15 @@ public class MenuMapsActivity extends AppCompatActivity
     private ArrayList<Marker> listMarkerEnclos;
     private EnclosController enclosController;
 
+    private FirebaseAuth firebaseAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mMapFragment = new MapsEquiwatch();
         listMarkerEnclos = new ArrayList<>();
         enclosController = EnclosController.getInstance(this);
+        firebaseAuth = FirebaseAuth.getInstance();
 
         setContentView(R.layout.activity_menu_maps_equiwatch);
         Toolbar toolbar = findViewById(R.id.toolbarche);
@@ -80,6 +85,13 @@ public class MenuMapsActivity extends AppCompatActivity
                     mMapFragment.moveMapCameraEnclos(cameraPos);
                 }
             }
+        }
+
+        if (firebaseAuth.getCurrentUser() != null) {
+            NavigationView nav = findViewById(R.id.nav_view);
+            View headerView = nav.getHeaderView(0);
+            TextView emailUser = headerView.findViewById(R.id.emailUser);
+            emailUser.setText(firebaseAuth.getCurrentUser().getEmail());
         }
     }
 
