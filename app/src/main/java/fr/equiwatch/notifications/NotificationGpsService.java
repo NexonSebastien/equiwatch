@@ -64,6 +64,9 @@ public class NotificationGpsService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        if (enclosController == null && capteursController == null && equidesController == null) {
+            return;
+        }
         enclosController.getAllEnclos();
         capteursController.getAllCapteurs();
         equidesController.getAllEquides();

@@ -26,7 +26,9 @@ public class Home extends Application {
             EnclosController enclosController = EnclosController.getInstance(Home.this);
             EquidesController equidesController = EquidesController.getInstance(Home.this);
             CapteursController capteursController = CapteursController.getInstance(Home.this);
-            startActivity(new Intent(Home.this, MenuMapsActivity.class));
+            Intent intent = new Intent(getApplicationContext(), MenuMapsActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
 
     }

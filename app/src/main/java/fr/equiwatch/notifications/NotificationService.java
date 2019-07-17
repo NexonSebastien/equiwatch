@@ -62,6 +62,11 @@ public class NotificationService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        Log.i(getClass().getSimpleName(), "onStartHandle");
+        if (enclosController == null && capteursController == null) {
+            return;
+        }
+        Log.i(getClass().getSimpleName(), "tentative de condition");
         enclosController.getAllEnclos();
         capteursController.getAllCapteurs();
         listEnclos = enclosController.getLesEnclos();
@@ -77,7 +82,6 @@ public class NotificationService extends IntentService {
                             Log.i(getClass().getSimpleName(), "tentative notif thermique");
                             checkTemperature(capteur, enclos);
                         }
-                        return;
                     }
                 }
             }
