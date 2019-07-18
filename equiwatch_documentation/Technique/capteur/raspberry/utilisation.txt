@@ -1,0 +1,5 @@
+lancer dans le terminal 
+bash script.sh
+
+lancement automatique au démarrage de la rasberry
+/etc/rc.local
