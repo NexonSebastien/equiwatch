@@ -81,7 +81,9 @@ public class MainActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     progressBar.setVisibility(View.GONE);
                                     if (task.isSuccessful()) {
-                                        startActivity(new Intent(MainActivity.this, MenuMapsActivity.class));
+                                        Intent intent = new Intent(MainActivity.this, MenuMapsActivity.class);
+                                        intent.putExtra("id_key", 3);
+                                        startActivity(intent);
                                     } else {
                                         Toast.makeText(MainActivity.this, task.getException().getMessage()
                                                 , Toast.LENGTH_LONG).show();

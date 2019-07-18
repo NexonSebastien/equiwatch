@@ -14,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.maps.android.PolyUtil;
 
 import java.util.ArrayList;
@@ -41,9 +42,12 @@ public class NotificationGpsService extends IntentService {
     private EquidesController equidesController;
     private final double LIMIT_TEMP = 30;
 
+    private static FirebaseAuth firebaseAuth;
+
     public static Intent createIntentStartNotificationService(Context context) {
         Intent intent = new Intent(context, NotificationGpsService.class);
         intent.setAction(ACTION_START);
+        firebaseAuth = FirebaseAuth.getInstance();
         return intent;
     }
 
@@ -64,7 +68,7 @@ public class NotificationGpsService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (enclosController == null && capteursController == null && equidesController == null) {
+        if (enclosController == null && capteursController == null && equidesController == null && firebaseAuth.getCurrentUser() != null) {
             return;
         }
         enclosController.getAllEnclos();

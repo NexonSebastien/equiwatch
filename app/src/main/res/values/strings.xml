@@ -55,6 +55,7 @@
     <string name="enclos_suppression_titre">Alerte avant suppression de l\'enclos</string>
     <string name="enclos_suppression_descriptif">Voulez vous vraiment supprimer l\'enclos ?</string>
     <string name="enclos_label_selction_capteur">Sélectionnez les capteurs que vous voulez ajouter a l\'enclos :</string>
+    <string name="enclos_donnees_capteur_thermique">%s °C</string>
 
     <string name="alerte_delete_title">Alerte avant suppression</string>
     <string name="alerte_delete_message">Voulez vous vraiment supprimer ?</string>

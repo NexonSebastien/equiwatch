@@ -100,7 +100,11 @@ public class EnclosViewCapteursListAdapter extends BaseAdapter {
         }
         //valorisation du contenu du holder de la ligne
         holder.txtLabelCapteurs.setText(lesCapteurs.get(i).getLabel());
-        holder.txtDonneeCapteur.setText(lesCapteurs.get(i).getDonnee());
+        if (lesCapteurs.get(i).getType().equals("Thermique")) {
+            holder.txtDonneeCapteur.setText(lesCapteurs.get(i).getDonnee() + " °C");
+        } else {
+            holder.txtDonneeCapteur.setText(lesCapteurs.get(i).getDonnee());
+        }
 
         return view;
     }

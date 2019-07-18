@@ -14,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.maps.android.PolyUtil;
 
 import java.util.ArrayList;
@@ -40,9 +41,12 @@ public class NotificationService extends IntentService {
     private CapteursController capteursController;
     private final double LIMIT_TEMP = 30;
 
+    private static FirebaseAuth firebaseAuth;
+
     public static Intent createIntentStartNotificationService(Context context) {
         Intent intent = new Intent(context, NotificationService.class);
         intent.setAction(ACTION_START);
+        firebaseAuth = FirebaseAuth.getInstance();
         return intent;
     }
 
@@ -63,7 +67,7 @@ public class NotificationService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.i(getClass().getSimpleName(), "onStartHandle");
-        if (enclosController == null && capteursController == null) {
+        if (enclosController == null && capteursController == null && firebaseAuth.getCurrentUser() != null) {
             return;
         }
         Log.i(getClass().getSimpleName(), "tentative de condition");

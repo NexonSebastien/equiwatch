@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import fr.equiwatch.R;
+import fr.equiwatch.controller.CapteursController;
 import fr.equiwatch.controller.EnclosController;
 import fr.equiwatch.model.PointsGpsClass;
 
@@ -39,6 +41,7 @@ public class MenuMapsActivity extends AppCompatActivity
     private MapsEquiwatch mMapFragment;
     private ArrayList<Marker> listMarkerEnclos;
     private EnclosController enclosController;
+    private CapteursController capteursController;
 
     private FirebaseAuth firebaseAuth;
 
@@ -84,6 +87,8 @@ public class MenuMapsActivity extends AppCompatActivity
                 if (cameraPos != null) {
                     mMapFragment.moveMapCameraEnclos(cameraPos);
                 }
+            } else if ((int)intent.getExtras().get("id_key") == 3) {
+                capteursController = CapteursController.getInstance(this);
             }
         }
 
