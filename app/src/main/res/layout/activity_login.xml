@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".view.loginActivity">
+    tools:context=".view.LoginActivity">
 
     <EditText
         android:id="@+id/etUserEmail"
@@ -28,4 +28,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Enregistrement" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:visibility="gone" />
 </LinearLayout>

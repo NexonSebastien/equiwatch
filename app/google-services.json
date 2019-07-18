@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "445598243377-rqcto8hgdp6jg6p6qsmrcf3a896sgnun.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.equiwatch",
+            "certificate_hash": "cde0dfc004201824d12a00b9248d530182acad76"
+          }
+        },
+        {
           "client_id": "445598243377-r8edv5igmb6iu2ghi38ql8jhrl9hcgal.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
