@@ -1,4 +1,5 @@
-Projet EQUIWATCH créé par des éleves d'Itescia en M2i L3 DEV
+#Projet EQUIWATCH
+Projet réalisé par des éleves d'Itescia en M2i L3 DEV
 
 EMERY Yann
 GOUGEON Nolan
